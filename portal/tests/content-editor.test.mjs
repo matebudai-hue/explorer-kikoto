@@ -1,0 +1,3 @@
+import test from'node:test';import assert from'node:assert/strict';import{updateDay}from'../content-editor.mjs';
+test('content editing preserves questions, cases and opening state',()=>{const day={id:'a',open:true,questions:[{id:'q'}],cases:[{text:'case'}],reading:{title:'old'},materials:[]};const next=updateDay(day,{title:'Új',contentText:'Szöveg',materials:[{title:'Drive',url:'https://example.com'}]});assert.deepEqual(next.questions,day.questions);assert.deepEqual(next.cases,day.cases);assert.equal(next.open,true);assert.deepEqual(next.reading,day.reading);assert.equal(day.materials.length,0);});
+test('unsafe material URLs are rejected',()=>{assert.throws(()=>updateDay({}, {title:'Nap',materials:[{title:'x',url:'javascript:alert(1)'}]}));});
