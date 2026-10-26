@@ -15,6 +15,9 @@ test('database access, approval, independent copies and conflict protection',asy
    grant execute on function auth.uid() to anon,authenticated;`);
   await db.exec(await readFile(new URL('../supabase/schema.sql',import.meta.url),'utf8'));
   await db.exec(await readFile(new URL('../supabase/access-and-indexes.sql',import.meta.url),'utf8'));
+  await db.exec(`create schema storage;create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);create table storage.objects(bucket_id text,name text);alter table storage.objects enable row level security;grant usage on schema storage to authenticated;grant select,insert on storage.objects to authenticated;`);
+  await db.exec(await readFile(new URL('../supabase/material-storage.sql',import.meta.url),'utf8'));
+  await db.exec(await readFile(new URL('../supabase/catalog-publishing.sql',import.meta.url),'utf8'));
   const cohort=(await db.query('select * from public.explorer_cohorts')).rows[0];
   const admin='00000000-0000-4000-8000-000000000001',anna='00000000-0000-4000-8000-000000000002',gabor='00000000-0000-4000-8000-000000000003';
   for(const [id,name]of[[admin,'Máté'],[anna,'Anna'],[gabor,'Gábor']])await db.query('insert into auth.users(id,raw_user_meta_data) values($1,$2)',[id,{display_name:name,invite_code:cohort.invite_code,role:'admin'}]);
@@ -56,6 +59,18 @@ test('database access, approval, independent copies and conflict protection',asy
    await assert.rejects(as(anna,'select public.explorer_save_state($1,0,$2)',[cohort.id,{...payload,earned:200}]),e=>e.code==='40001');
    assert.equal((await as(anna,'select public.explorer_save_state($1,1,$2) as revision',[cohort.id,payload]))[0].revision,1);
    const row=(await as(admin,'select * from public.explorer_learning_states'))[0];assert.equal(row.payload.earned,100);assert.equal(row.revision,1);
+  });
+  await t.test('private file access requires an open day and approved membership, including copied catalogs',async()=>{
+   const fileCatalog={days:[{id:'d',open:false,questions:[],materials:[{storagePath:'source/file.pdf'}]}]};
+   await as(admin,'select public.explorer_set_catalog($1,$2)',[cohort.id,fileCatalog]);
+   assert.equal((await as(anna,"select explorer_private.can_read_material('source/file.pdf') as ok"))[0].ok,false);
+   const opened=structuredClone(fileCatalog);opened.days[0].open=true;
+   await as(admin,'select public.explorer_publish_catalog($1,$2,$3)',[cohort.id,fileCatalog,opened]);
+   assert.equal((await as(anna,"select explorer_private.can_read_material('source/file.pdf') as ok"))[0].ok,true);
+   assert.equal((await as(anna,"select explorer_private.can_read_material('other/file.pdf') as ok"))[0].ok,false);
+   await assert.rejects(as(anna,"insert into storage.objects values('explorer-materials','source/file.pdf')"));
+   await assert.rejects(as(admin,'select public.explorer_publish_catalog($1,$2,$3)',[cohort.id,fileCatalog,opened]),e=>e.code==='40001');
+   await assert.rejects(as(admin,'select public.explorer_publish_catalog($1,$2,$3)',[cohort.id,opened,fileCatalog]));
   });
   const catalog={casePrompts:['Kérdés'],days:[{id:'day1',title:'Nyitott nap',open:true,questions:[{id:'q1',correct:[0]}],materials:[]},{id:'day2',title:'Zárt nap',open:false,reading:{secret:'future'},questions:[{id:'q2',correct:[1]}],materials:[{url:'https://example.com/future'}],cases:[{text:'future case'}]}]};
   await t.test('unpublished day contents cannot be downloaded through an alternate direct table query',async()=>{
