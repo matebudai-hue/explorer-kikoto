@@ -1,0 +1,98 @@
+{
+  "source_repository": "matebudai-hue/ultimatum",
+  "date": "2026-10-26",
+  "files": [
+    {
+      "path": "explorer/README.md",
+      "sha": "dae5f8c7f36d677fcc465ff13ec8caf3f38c06aa"
+    },
+    {
+      "path": "explorer/app.js",
+      "sha": "f8a1619c84cf48aa3937b1a110512c6cf5beac30"
+    },
+    {
+      "path": "explorer/attempts.mjs",
+      "sha": "b2e2a147aaf38c2dd3525d7d330384e30ea8a07e"
+    },
+    {
+      "path": "explorer/content.json",
+      "sha": "19eff3747970692a236108874ef0ceb5b39fb0d5"
+    },
+    {
+      "path": "explorer/engine.mjs",
+      "sha": "26667bf2a38b47001b099a3f00b895920341248e"
+    },
+    {
+      "path": "explorer/index.html",
+      "sha": "176d3dac61ab1c7cd93a7cd665409572e0ec4028"
+    },
+    {
+      "path": "explorer/persistence.mjs",
+      "sha": "c62c3f6a630499b60172d2ba545c931a92cb1a40"
+    },
+    {
+      "path": "explorer/points-help.js",
+      "sha": "98844232c156fa3fda42927a8d5dcf6e26f2a61b"
+    },
+    {
+      "path": "explorer/quiz-results.mjs",
+      "sha": "caa7e56c689c91c74cdf4cb7ee687288dfd490d5"
+    },
+    {
+      "path": "explorer/quiz-ui.mjs",
+      "sha": "6caf8874feb9f29193dbad02a33e3c639854b684"
+    },
+    {
+      "path": "explorer/results-dashboard.mjs",
+      "sha": "6a244ff52e4651482a757129f102e41a87320f55"
+    },
+    {
+      "path": "explorer/room-art.mjs",
+      "sha": "7f9bed1cb2605e9e64b31edb524fe493e60da82f"
+    },
+    {
+      "path": "explorer/room-catalog.mjs",
+      "sha": "492aad2fe0480facf9fc9ee7c8839f6430316cb3"
+    },
+    {
+      "path": "explorer/room-engine.mjs",
+      "sha": "5d9f18aa191ba5f6f82e02f85b5bb610909c3bbe"
+    },
+    {
+      "path": "explorer/room-ui.mjs",
+      "sha": "1bc784c0e421eafb7a41b6d9308ff8c5c7dea4ef"
+    },
+    {
+      "path": "explorer/room.css",
+      "sha": "54f504d72184ff2fa6e98d89ecf1d77a6b769a05"
+    },
+    {
+      "path": "explorer/style.css",
+      "sha": "7813f98b3cd728a10a07be3a89fde18f3028ceee"
+    },
+    {
+      "path": "explorer/tests/attempts.test.mjs",
+      "sha": "83ea71bc94de7eb67c8a08b2e1ba65da54bbb32d"
+    },
+    {
+      "path": "explorer/tests/engine.test.mjs",
+      "sha": "61ad55dc6d2ae7634c04d1beb78d7d4572b0de61"
+    },
+    {
+      "path": "explorer/tests/persistence.test.mjs",
+      "sha": "116e25aada047e600d7fc4a1afb8eb5cca29ea60"
+    },
+    {
+      "path": "explorer/tests/quiz-results.test.mjs",
+      "sha": "d41a7377cb2e1f20e7889bf523d2c10c5d25bf8d"
+    },
+    {
+      "path": "explorer/tests/quiz-v2.test.mjs",
+      "sha": "c5fbbeb1233f0860f5632536ea9de2ffc6b3a159"
+    },
+    {
+      "path": "explorer/tests/room.test.mjs",
+      "sha": "e1d57167d24a45c3f28df66cbaa0cf39e0827927"
+    }
+  ]
+}
