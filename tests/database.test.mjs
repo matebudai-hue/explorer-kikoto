@@ -13,7 +13,8 @@ test('database access, approval, independent copies and conflict protection',asy
    create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid; $$;
    grant usage on schema public,auth to anon,authenticated;
    grant execute on function auth.uid() to anon,authenticated;`);
-  await db.exec(await readFile(new URL('../supabase/schema-draft.sql',import.meta.url),'utf8'));
+  await db.exec(await readFile(new URL('../supabase/schema.sql',import.meta.url),'utf8'));
+  await db.exec(await readFile(new URL('../supabase/access-and-indexes.sql',import.meta.url),'utf8'));
   const cohort=(await db.query('select * from public.explorer_cohorts')).rows[0];
   const admin='00000000-0000-4000-8000-000000000001',anna='00000000-0000-4000-8000-000000000002',gabor='00000000-0000-4000-8000-000000000003';
   for(const [id,name]of[[admin,'Máté'],[anna,'Anna'],[gabor,'Gábor']])await db.query('insert into auth.users(id,raw_user_meta_data) values($1,$2)',[id,{display_name:name,invite_code:cohort.invite_code,role:'admin'}]);

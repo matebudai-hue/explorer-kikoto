@@ -8,6 +8,7 @@ const time=v=>v?new Intl.DateTimeFormat('hu-HU',{dateStyle:'short',timeStyle:'sh
 let client,current,cohortId,cohorts=[],mode='login',recovery=false;
 const report=e=>{let el=root.querySelector('[role=alert]');if(!el){el=document.createElement('p');el.setAttribute('role','alert');el.className='message';root.append(el);}el.textContent=e?.message||String(e);};
 const invite=new URL(location.href).searchParams.get('invite')||'';
+if(invite)mode='signup';
 async function boot(){
  try{
   client=await getClient();

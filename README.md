@@ -6,7 +6,7 @@ A jelenlegi Kikötő önálló másolata és a portál elfogadott követelménye
 
 - Az `explorer/` könyvtár a működő Kikötő átvett forrása, saját tesztjeivel.
 - Saját GitHub-repó: `matebudai-hue/explorer-kikoto`.
-- A belépés, központi adatmentés és az adminisztráció első részének kódja elkészült. A Supabase-bekötés és az élő használati ellenőrzés még hátravan; a portál nem üzemkész.
+- A belépés, központi adatmentés és az adminisztráció első részének kódja elkészült. A külön Supabase-projekt és a tananyag már bekötve; a webes közzététel, az első saját fiók és az élő használati próba még hátravan. A portál még nem üzemkész.
 - Az eredeti `matebudai-hue/ultimatum` repó nem változott.
 
 ## Helyi indítás

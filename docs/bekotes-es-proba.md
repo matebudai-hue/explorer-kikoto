@@ -15,11 +15,11 @@ Előkészített műveletek:
 
 ## Még szükséges a működő próbához
 
-1. A Supabase projektkezelő eszközök elérhetősége, új külön projekt kiválasztása/létrehozása a felhasználó fiókjában. Meglévő más alkalmazás adatbázisát nem használjuk fel.
+1. ELKÉSZÜLT: külön Supabase-projekt (`explorer-kikoto`, Frankfurt, Free), meglévő más alkalmazás adatainak felhasználása nélkül.
 2. Az ingyenes projekt és az e-mail-szolgáltatás korlátainak ellenőrzése. Fizetős szolgáltatás csak a felhasználó külön jóváhagyásával.
-3. A `supabase/schema-draft.sql` telepítése és ellenőrzése a külön projektben. Ez egy helyben tesztelt terv, még nem alkalmazott Supabase-migráció. A végleges migrációt a Supabase CLI saját parancsával kell generálni.
-4. A Data API kitettség, oszlopjogok, RLS, RPC végrehajtási jogok és biztonsági tanácsadók ellenőrzése a tényleges projektben.
-5. Nyilvános projektcím és publishable kulcs a `portal/config.json` fájlba. Titkos/service_role kulcs nem kerülhet sem böngészőbe, sem repóba.
+3. ELKÉSZÜLT: a `supabase/schema.sql` és az `access-and-indexes.sql` a külön projektben alkalmazva. A szerveroldali migrációk az `applied-migrations.json` fájlban szerepelnek. A `schema.sql` az alkalmazott alap séma pillanatképe, nem kézzel számozott CLI-migráció.
+4. ELKÉSZÜLT: az oszlopjogok és az RLS a tényleges projektben ellenőrizve; a biztonsági tanácsadó nem jelez hibát. A nyilvános API-n a meghívó feloldható, a résztvevők adatai anonimként nem olvashatók.
+5. ELKÉSZÜLT: nyilvános projektcím és publishable kulcs a `portal/config.json` fájlban. Titkos/service_role kulcs nincs benne.
 6. Kezdő regisztráció a saját évfolyammeghívón keresztül, majd Máté és Adri adminisztrátori jogának biztonságos beállítása a privát admin-táblában. A név és felhasználói metadata nem adhat jogosultságot.
 7. A megerősítő és visszaállító levelek működésének ellenőrzése, pontos visszatérési címekkel. A Supabase alap e-mail-küldése nem tekinthető ellenőrzés nélkül résztvevőknek használható levelezésnek.
 8. A próbafelület közzététele, majd tényleges, két fiókkal és két böngészővel végzett használati próba.

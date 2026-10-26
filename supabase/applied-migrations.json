@@ -1,0 +1,9 @@
+{
+  "project_ref": "cokpdqkeomuvwlcdjwpq",
+  "region": "eu-central-1",
+  "migrations": [
+    {"version": "20261026103245", "name": "explorer_portal_foundation", "source": "supabase/schema.sql"},
+    {"version": "20261026103415", "name": "explorer_access_and_indexes", "source": "supabase/access-and-indexes.sql"},
+    {"version": "20261026111400", "name": "explorer_initial_content", "source": "explorer/content.json", "operation": "Initial catalog import into Explorer 9.; selected by title, no generated IDs in the migration."}
+  ]
+}
