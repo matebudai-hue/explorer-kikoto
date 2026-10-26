@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test explorer/tests/*.mjs portal/tests/*.mjs",
-    "test:database": "node --test tests/database.test.mjs"
+    "test:database": "node --test tests/*.database.test.mjs tests/database.test.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.3.14"

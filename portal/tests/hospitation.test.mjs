@@ -1,0 +1,2 @@
+import test from'node:test';import assert from'node:assert/strict';import{presetDays,nextDay}from'../hospitation.mjs';
+test('hospitation presets use the agreed times and one place per day',()=>{assert.deepEqual(presetDays('full','2026-10-31'),[{day:'2026-10-31',starts:'08:00',ends:'16:00',capacity:1}]);assert.equal(presetDays('half','2026-10-31')[0].starts,'09:00');assert.equal(presetDays('half','2026-10-31')[0].ends,'13:00');assert.deepEqual(presetDays('two','2026-12-31').map(d=>d.day),['2026-12-31','2027-01-01']);assert.equal(nextDay('2028-02-28'),'2028-02-29');});
