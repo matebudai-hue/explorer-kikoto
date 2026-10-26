@@ -26,3 +26,4 @@ header .brand{font-size:18px;letter-spacing:0;gap:5px;line-height:1.2}header .br
 
 
 .cloud-status{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:100%;font-size:13px}.cloud-status button,.cloud-status a{font-size:13px}.cloud-status a{color:inherit}
+.case-save-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0 8px;padding:12px;border-radius:8px;background:#eef7f7}.case-save-bar [role=status]{font-size:14px;font-weight:600}.case-save-bar [data-state=saved]{color:#186344}.case-save-bar [data-state=error],.case-save-bar [data-state=conflict]{color:#9b302b}

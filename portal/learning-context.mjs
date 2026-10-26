@@ -34,8 +34,10 @@ export async function openLearningContext(){
  if(initial)localStorage.setItem(key,JSON.stringify(initial));else localStorage.removeItem(key);
  const status=document.createElement('div');status.className='cloud-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
  const label=document.createElement('span'),retry=document.createElement('button'),exportButton=document.createElement('button');retry.textContent='Mentés újra';exportButton.textContent='Tartalék letöltése';retry.hidden=true;exportButton.hidden=true;status.append(label,retry,exportButton);document.querySelector('header').append(status);
- let lastPayload=initial,timer;
+ let lastPayload=initial,timer,saveStatus='ready';
+ const notifySave=state=>{saveStatus=state;window.dispatchEvent(new CustomEvent('explorer-save-status',{detail:state}));};
  const sync=createCloudSync({initialRevision:remote?.revision||0,write:async(payload,revision)=>checked(await client.rpc('explorer_save_state',{p_cohort:cohortId,p_expected_revision:revision,p_payload:payload})),onStatus:({status:state,revision})=>{
+  notifySave(state);
   label.textContent=({pending:'Mentésre vár…',saving:'Mentés…',saved:'Minden változás elmentve a fiókodba.',error:'A központi mentés nem sikerült. Az itteni tartalék megmaradt.',conflict:'Másik eszközön újabb mentés van. Az itteni változat nem írta felül.'})[state];
   retry.hidden=state!=='error';exportButton.hidden=!['error','conflict'].includes(state);
   if(state==='saved')localStorage.removeItem(draftKey);
@@ -58,5 +60,5 @@ export async function openLearningContext(){
  window.addEventListener('beforeunload',e=>{if(sync.dirty){e.preventDefault();e.returnValue='';}});
  checked(await client.rpc('explorer_touch'));
  const profileLink=document.createElement('a');profileLink.href='../';profileLink.textContent='Vissza a portálra';status.append(profileLink);
- return{downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
+ return{getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
 }
