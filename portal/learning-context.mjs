@@ -60,5 +60,5 @@ export async function openLearningContext(){
  window.addEventListener('beforeunload',e=>{if(sync.dirty){e.preventDefault();e.returnValue='';}});
  checked(await client.rpc('explorer_touch'));
  const profileLink=document.createElement('a');profileLink.href='../';profileLink.textContent='Vissza a portálra';status.append(profileLink);
- return{getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
+ return{client,cohortId,userId:userAccess.user.id,getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
 }
