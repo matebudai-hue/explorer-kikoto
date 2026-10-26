@@ -1,5 +1,5 @@
-import {validateRoomState} from './room-engine.mjs?v=14';
-import {validateTesting} from './attempts.mjs?v=8';
+import {validateRoomState} from './room-engine.mjs?v=15';
+import {validateTesting} from './attempts.mjs?v=9';
 const record=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 export function validateState(s){
  if(!record(s)||typeof s.name!=='string'||typeof s.roomName!=='string'||!record(s.answers)||![s.earned,s.spent].every(v=>Number.isSafeInteger(v)&&v>=0)||s.spent>s.earned)throw Error('Hibás résztvevői mentés.');
