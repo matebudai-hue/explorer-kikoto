@@ -1,3 +1,4 @@
+import{downloadMaterial}from'./material-files.mjs';
 import{getClient,access,checked}from'./access.mjs';
 import{accountStorageKey,createCloudSync}from'./cloud-sync.mjs';
 
@@ -57,5 +58,5 @@ export async function openLearningContext(){
  window.addEventListener('beforeunload',e=>{if(sync.dirty){e.preventDefault();e.returnValue='';}});
  checked(await client.rpc('explorer_touch'));
  const profileLink=document.createElement('a');profileLink.href='../';profileLink.textContent='Vissza a portálra';status.append(profileLink);
- return{key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
+ return{downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
 }
