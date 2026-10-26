@@ -7,7 +7,10 @@ await copyFile(path.join(root,'index.html'),path.join(out,'index.html'));
 for(const dir of['portal','explorer']){
  await mkdir(path.join(out,dir),{recursive:true});
  for(const entry of await readdir(path.join(root,dir),{withFileTypes:true})){
-  if(entry.isFile()&&/\.(html|css|mjs|js|json)$/.test(entry.name))await copyFile(path.join(root,dir,entry.name),path.join(out,dir,entry.name));
+  // The initial catalog is already in the protected database. Never publish question
+  // banks, cases, reading materials, SQL snapshots or test fixtures as site files.
+  if(entry.isFile()&&entry.name!=='content.json'&&/\.(html|css|mjs|js|json)$/.test(entry.name))await copyFile(path.join(root,dir,entry.name),path.join(out,dir,entry.name));
  }
 }
+await copyFile(path.join(root,'.nojekyll'),path.join(out,'.nojekyll'));
 console.log('A statikus próbafelület elkészült.');

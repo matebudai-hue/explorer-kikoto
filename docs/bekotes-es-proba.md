@@ -37,3 +37,11 @@ Előkészített műveletek:
 - A hospitálás, tananyag-szerkesztés, esettanulmányok kölcsönös megosztása és teremgaléria teljes terve megvan, de ezek a működő portálkódban még nincsenek bekötve.
 - A régi böngészős eredmények kézi JSON-exporttal/importtal hozhatók át. Automatikus régiadat-átvitel még nincs.
 - Az első kör a belépés és a tartós, jogosultságokkal védett adatmegőrzés kipróbálására szolgál.
+
+## Webes közzététel előkészítve, még nincs engedélyezve
+
+- GitHub Pages a `web` ág gyökerét szolgálja majd ki. A `main` a fejlesztési forrás; nem ezt kell webhelyként közzétenni.
+- A `node scripts/build-static.mjs` készíti a csomagot. A `content.json`, az adatbázisséma, a dokumentáció és a tesztek nem kerülnek bele.
+- A `web` ág csak a belépőfelületet és a működéshez szükséges programfájlokat tartalmazza. Az aktuális tananyagokat a jóváhagyott felhasználók az adatbázisból kapják meg.
+- A Pages mentése automatikus jóváhagyási ellenőrzésen megállt. A felhasználótól a nyilvános belépőoldal és a programfájlok közzétételének külön engedélyezését kell kérni. Nem történt publikálás.
+- Ezután még szükséges a Supabase visszatérési címének beállítása, az első regisztráció, a saját adminjogosultság és a teljes használati próba.
