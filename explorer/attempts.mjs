@@ -40,13 +40,21 @@ export function migrateTests(s,catalog){
  return s;
 }
 export function getTest(s,d){return s.testing.tests[testKey(d)];}
-export function startTest(s,d,random=Math.random){const t=getTest(s,d);if(!d.open||!d.questions.length)throw Error('Ez a teszt még nem érhető el.');if(!t.draft){let items=itemsFor(d);if(d.shuffleQuestions||d.testCount)items=shuffled(items,random);if(d.testCount){if(!Number.isInteger(d.testCount)||d.testCount<1||d.testCount>items.length)throw Error('Nincs elég kérdés a napi teszthez.');items=items.slice(0,d.testCount);}if(d.shuffleAnswers)items=items.map(i=>randomizeItem(i,random));t.draft={id:uid(),startedAt:time(),items,values:{}};}return t.draft;}
+export function startTest(s,d,random=Math.random,catalog=null){
+ const t=getTest(s,d);if(!d.open||!d.questions.length)throw Error('Ez a teszt még nem érhető el.');if(t.draft)return t.draft;
+ let items=itemsFor(d);if(catalog||d.shuffleQuestions||d.testCount)items=shuffled(items,random);const count=catalog?20:(d.testCount||items.length);if(count>items.length||count<1)throw Error('Nincs elég kérdés a napi teszthez.');items=items.slice(0,count);
+ if(catalog){const dayIndex=catalog.days.findIndex(x=>x.id===d.id);const earlier=catalog.days.slice(0,Math.max(0,dayIndex)).filter(x=>x.open).flatMap(itemsFor);
+ if(catalog.days.slice(0,Math.max(0,dayIndex)).some(x=>x.open)&&earlier.length<5)throw Error('Az előző napokhoz legalább 5 kérdés szükséges az ismétléshez.');
+ const ranked=earlier.map(i=>{const a=s.answers[i.key],fraction=a?Math.max(0,Math.min(1,a.current.score/i.q.max)):0.5;const weight=1+(1-fraction)*4;return{i,rank:-Math.log(Math.max(Number.MIN_VALUE,random()))/weight};}).sort((a,b)=>a.rank-b.rank).slice(0,5).map(x=>x.i);
+ for(const i of ranked)t.credit[i.key]=Math.max(t.credit[i.key]||0,s.answers[i.key]?.best||0);items=shuffled([...items,...ranked],random);}
+ if(catalog||d.shuffleAnswers)items=items.map(i=>randomizeItem(i,random));t.draft={id:uid(),startedAt:time(),items,values:{}};return t.draft;
+}
 export function saveAnswer(draft,key,value){const item=draft?.items.find(i=>i.key===key);if(!item)throw Error('Nincs aktív feladat.');validAnswer(item.q,value,true);draft.values[key]=[...value];}
 export const isComplete=draft=>{try{return !!draft&&draft.items.length>0&&draft.items.every(i=>Object.hasOwn(draft.values,i.key)&&(validAnswer(i.q,draft.values[i.key],true)>=0));}catch{return false;}};
 export function finalize(s,target,practice=false){
  const draft=target.draft;if(!isComplete(draft))throw Error('A lezáráshoz minden feladatot tölts ki és ments el.');
  const items=resultItems(draft.items,draft.values,practice);let improvement=0;
- for(const i of items)improvement+=Math.max(0,i.score-(target.credit[i.key]||0));
+ for(const i of items)improvement+=Math.max(0,i.score-Math.max(target.credit[i.key]||0,practice?0:(s.answers[i.key]?.best||0)));
  const absorbed=practice?0:Math.min(target.legacyReserve||0,improvement),delta=improvement-absorbed;
  const attempt={id:draft.id,startedAt:draft.startedAt,at:time(),items,score:items.reduce((n,i)=>n+i.score,0),max:items.reduce((n,i)=>n+i.max,0),delta};
  for(const i of items){target.credit[i.key]=Math.max(target.credit[i.key]||0,i.score);if(!practice){const old=s.answers[i.key];s.answers[i.key]={first:old?.first??{value:canonicalAnswer(i.q,i.value),score:i.score},current:{value:canonicalAnswer(i.q,i.value),score:i.score},best:Math.max(old?.best||0,i.score),attempts:(old?.attempts||0)+1,revision:i.q.revision||'v1'};}}

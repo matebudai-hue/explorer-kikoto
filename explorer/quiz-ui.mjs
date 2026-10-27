@@ -1,6 +1,6 @@
 import {resultsHTML} from './quiz-results.mjs?v=11';
 import {instruction,describeAnswer} from './engine.mjs?v=15';
-import {getTest,startTest,startPractice,saveAnswer,isComplete,finalize,practicePool} from './attempts.mjs?v=9';
+import {getTest,startTest,startPractice,saveAnswer,isComplete,finalize,practicePool} from './attempts.mjs?v=10';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let mode='test',index=0,lastDay=null,resultSelected=-1;
 export function selectQuizMode(value,dayId){mode=value;lastDay=dayId;index=0;resultSelected=-1;}
@@ -19,7 +19,7 @@ export function mountQuiz(root,s,catalog,day,save,toast,onRoom=()=>{}){
  find('practice-mode').onclick=()=>{mode='practice';index=0;resultSelected=-1;draw()};
  const body=find('quiz-body');
  if(!target){body.innerHTML='<p class="small muted">Ehhez a naphoz még nincs nyitott teszt. A gyakorlásnál az elérhető napok kérdéseiből válogatunk.</p>';return;}
- const start=()=>{try{if(practice)startPractice(s,catalog);else startTest(s,day);index=0;resultSelected=-1;save();draw();find('quiz-title')?.focus()}catch(e){toast(e.message)}};
+ const start=()=>{try{if(practice)startPractice(s,catalog);else startTest(s,day,Math.random,catalog);index=0;resultSelected=-1;save();draw();find('quiz-title')?.focus()}catch(e){toast(e.message)}};
  if(last&&!draft){
   if(resultSelected>=last.items.length)resultSelected=-1;
   body.innerHTML=resultsHTML(last,resultSelected,{practice,hasDraft:!!draft});
@@ -28,7 +28,7 @@ export function mountQuiz(root,s,catalog,day,save,toast,onRoom=()=>{}){
  }
  if(!draft){
   const enough=practicePool(s,catalog).length>=10;
-  body.innerHTML=`<article class="card"><p class="kicker">${practice?'GYAKORLÓTESZT':'TELJES TESZTKÖR'}</p><h3>${practice?'Tíz kérdés, újabb fejlődés.':'Mutasd meg, mit értettél meg!'}</h3><p>${practice?'Tíz különböző kérdést kapsz az elérhető napok anyagából. A rendszer elsősorban a még gyakorolható kérdésekből válogat.':`Töltsd ki mind a ${day.testCount||day.questions.length} feladatot. A lezárásig bármelyik válaszodat átírhatod.`}</p><p class="small muted">Az eredményed, a megoldások és a megszerzett pontok a teljes teszt lezárása után jelennek meg.</p><div class="actions"><button class="primary" id="start-test" ${practice&&!enough?'disabled':''}>${practice?'Gyakorlóteszt indítása':'Teszt indítása'}</button></div></article>`;
+  body.innerHTML=`<article class="card"><p class="kicker">${practice?'GYAKORLÓTESZT':'TELJES TESZTKÖR'}</p><h3>${practice?'Tíz kérdés, újabb fejlődés.':'Mutasd meg, mit értettél meg!'}</h3><p>${practice?'Tíz különböző kérdést kapsz az elérhető napok anyagából. A rendszer elsősorban a még gyakorolható kérdésekből válogat.':`A tesztben ${20} kérdést kapsz a mai anyagból${catalog.days.slice(0,catalog.days.findIndex(d=>d.id===day.id)).some(d=>d.open&&d.questions.length)?' és 5 ismétlő kérdést a korábbi napokból':''}. A lezárásig bármelyik válaszodat átírhatod.`}</p><p class="small muted">Az eredményed, a megoldások és a megszerzett pontok a teljes teszt lezárása után jelennek meg.</p><div class="actions"><button class="primary" id="start-test" ${practice&&!enough?'disabled':''}>${practice?'Gyakorlóteszt indítása':'Teszt indítása'}</button></div></article>`;
   find('start-test').onclick=start;return;
  }
  const entries=draft.items;index=Math.min(index,entries.length-1);const entry=entries[index],q=entry.q;
