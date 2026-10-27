@@ -14,11 +14,9 @@ export function mountQuiz(root,s,catalog,day,save,toast,onRoom=()=>{}){
  const draw=()=>mountQuiz(root,s,catalog,day,save,toast,onRoom),find=id=>root.querySelector('#'+id);
  const regular=day.questions.length&&day.open?getTest(s,day):null,p=s.testing.practice;
  const target=mode==='practice'?p:regular,last=target?.attempts.at(-1),draft=target?.draft,practice=mode==='practice';
- root.innerHTML=`<div class="quiz-modes"><button id="course-mode" class="${!practice?'primary':''}">A nap tesztje</button><button id="practice-mode" class="${practice?'primary':''}">Gyakorlás · 10 kérdés${p.draft?' · folytatás':''}</button></div><div id="quiz-body"></div>`;
- find('course-mode').onclick=()=>{mode='test';index=0;resultSelected=-1;draw()};
- find('practice-mode').onclick=()=>{mode='practice';index=0;resultSelected=-1;draw()};
+ root.innerHTML='<div id="quiz-body"></div>';
  const body=find('quiz-body');
- if(!target){body.innerHTML='<p class="small muted">Ehhez a naphoz még nincs nyitott teszt. A gyakorlásnál az elérhető napok kérdéseiből válogatunk.</p>';return;}
+ if(!target){body.innerHTML='<p class="small muted">Ehhez a naphoz még nincs nyitott teszt.</p>';return;}
  const start=()=>{try{if(practice)startPractice(s,catalog);else startTest(s,day,Math.random,catalog);index=0;resultSelected=-1;save();draw();find('quiz-title')?.focus()}catch(e){toast(e.message)}};
  if(last&&!draft){
   if(resultSelected>=last.items.length)resultSelected=-1;
