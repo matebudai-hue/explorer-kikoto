@@ -38,7 +38,7 @@ export async function openLearningContext(){
  const notifySave=state=>{saveStatus=state;window.dispatchEvent(new CustomEvent('explorer-save-status',{detail:state}));};
  const sync=createCloudSync({initialRevision:remote?.revision||0,write:async(payload,revision)=>checked(await client.rpc('explorer_save_state',{p_cohort:cohortId,p_expected_revision:revision,p_payload:payload})),onStatus:({status:state,revision})=>{
   notifySave(state);
-  label.textContent=({pending:'Mentésre vár…',saving:'Mentés…',saved:'Minden változás elmentve a fiókodba.',error:'A központi mentés nem sikerült. Az itteni tartalék megmaradt.',conflict:'Másik eszközön újabb mentés van. Az itteni változat nem írta felül.'})[state];
+  label.textContent=({pending:'Mentésre vár…',saving:'Mentés…',saved:'✓ Mentve',error:'A központi mentés nem sikerült. Az itteni tartalék megmaradt.',conflict:'Másik eszközön újabb mentés van. Az itteni változat nem írta felül.'})[state];
   retry.hidden=state!=='error';exportButton.hidden=!['error','conflict'].includes(state);
   if(state==='saved')localStorage.removeItem(draftKey);
   else if(lastPayload)localStorage.setItem(draftKey,JSON.stringify({baseRevision:revision,payload:lastPayload}));
@@ -48,7 +48,7 @@ export async function openLearningContext(){
  exportButton.onclick=()=>download({kind:'explorer-result',state:lastPayload},'explorer-fiok-tartalek.json');
  const reload=document.createElement('button');reload.textContent='Központi mentés betöltése';reload.onclick=()=>location.reload();status.append(reload);reload.hidden=true;
  const observer=new MutationObserver(()=>{reload.hidden=!sync.blocked;});observer.observe(label,{childList:true});
- label.textContent=restoredDraft?'Az itteni el nem küldött munkát visszaállítottuk.':'A fiókodhoz kapcsolódó mentés betöltve.';
+ label.textContent=restoredDraft?'Az itteni el nem küldött munkát visszaállítottuk.':'✓ Mentve';
  function queue(payload){
   lastPayload=JSON.parse(JSON.stringify(payload));
   localStorage.setItem(draftKey,JSON.stringify({baseRevision:sync.revision,payload:lastPayload}));
