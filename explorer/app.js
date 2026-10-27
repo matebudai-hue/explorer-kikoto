@@ -5,7 +5,7 @@ import{mountRoom}from'./room-ui.mjs?v=14';
 import{migrateRoom}from'./room-engine.mjs?v=15';
 import{empty,uid,describeAnswer}from'./engine.mjs?v=15';
 import{migrateTests}from'./attempts.mjs?v=10';
-import{mountQuiz,testStats,selectQuizMode}from'./quiz-ui.mjs?v=13';
+import{mountQuiz,testStats,selectQuizMode}from'./quiz-ui.mjs?v=14';
 import{mountResults}from'./results-dashboard.mjs?v=11';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let state,persistence,storageBlocked=false;
