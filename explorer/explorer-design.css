@@ -25,3 +25,20 @@ nav button::before{background:transparent;color:#17455c;font-size:19px;width:30p
 @media(max-width:760px){.day-grid{display:flex;flex-direction:column;gap:16px}.day-content,.day-aside{width:100%}.day-materials,.day-test{padding:16px 15px 16px 64px}.day-materials:before,.day-test:before{left:14px;top:16px;width:38px;height:38px;font-size:18px}.day-aside-card{padding:18px}.day-title h1{font-size:30px}.day-heading select{font-size:16px}.day-room-preview svg{max-height:230px}nav button{white-space:nowrap}header .brand{font-size:15px}}
 
 .upcoming-visit{justify-items:start;align-items:start}
+
+/* Melegebb, otthonosabb Explorer-hangulat. */
+:root{--ice:#eaf2ef;--line:#e6e5dd;--muted:#586d74}
+body{background:#f5f5ef}
+header{background:#fffdf8;border-bottom-color:#edece3}
+.day-materials,.day-test,.day-aside-card{background:#fffefb;border-color:#e9e8df;box-shadow:0 5px 18px rgba(49,61,55,.035)}
+.day-materials .btn,.case,.day-test .card{background:#f8f8f3;border-color:#eeeee5}
+.day-heading select{background:#fffefb;border-color:#d8dfda}
+.materials-section:before{background:#d7ebe8}.cases-section:before{background:#f2ded1}.day-test:before{background:#f3e4bf}
+.wallet{background:#f5e9cc}.wallet small{color:#645f50}
+.day-room-preview{background:#f6f3e9;border-color:#eee8d9}
+.upcoming-visit{background:#f8f9f4!important;border-color:#e9eee6!important;border-radius:12px!important;justify-items:start;align-items:start}
+.upcoming-visit:hover{background:#edf4ef!important}
+.upcoming-date small{color:#587363}
+nav button.active{background:#dcebe7}
+@media(min-width:1000px){nav{background:#fffdf8!important;border-right-color:#eeece3}}
+@media(max-width:760px){.day-aside-card{padding:18px}.upcoming-visit{padding:11px 13px!important;gap:2px}.upcoming-date small{display:inline;margin:0 0 0 6px}.upcoming-date{margin-top:2px;line-height:1.45}.upcoming-visit strong{font-size:14px}.upcoming-place{font-size:13px}}
