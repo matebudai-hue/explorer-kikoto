@@ -5,10 +5,10 @@ export function nextDay(key){const d=new Date(key+'T12:00:00');d.setDate(d.getDa
 export function presetDays(kind,key){return Array.from({length:kind==='two'?2:1},(_,i)=>({day:i?nextDay(key):key,starts:kind==='half'?'09:00':'08:00',ends:kind==='half'?'13:00':'16:00',capacity:1}));}
 const today=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Budapest'}).format(new Date());
 const human=key=>new Intl.DateTimeFormat('hu-HU',{month:'long',day:'numeric',weekday:'short'}).format(new Date(key+'T12:00:00'));
-export async function mountHospitation(host,{client,cohortId,isAdmin=false,userId}){
+export async function mountHospitation(host,{client,cohortId,isAdmin=false,userId,initialVisitId=null}){
  let visits=[],month=new Date(today().slice(0,7)+'-01T12:00:00'),dialog;
  const fail=e=>{const el=dialog?.open?dialog.querySelector('[role=alert]'):host.querySelector('[role=alert]');if(el)el.textContent=e.message||String(e);};
- async function load(){visits=checked(await client.rpc('explorer_visits',{p_cohort:cohortId}));render();}
+ async function load(){visits=checked(await client.rpc('explorer_visits',{p_cohort:cohortId}));const selected=initialVisitId&&visits.find(v=>v.id===initialVisitId);if(selected){const visibleDay=selected.days.find(d=>d.day>=today())||selected.days[0];if(visibleDay)month=new Date(visibleDay.day.slice(0,7)+'-01T12:00:00');}render();if(selected){initialVisitId=null;details(selected);}}
  function close(){if(dialog){dialog.close();dialog.remove();dialog=null;}}
  function modal(content){close();dialog=document.createElement('dialog');dialog.className='visit-dialog';dialog.innerHTML=`<button class="visit-close" aria-label="Ablak bezárása">×</button>${content}<p role="alert" class="message"></p>`;document.body.append(dialog);dialog.querySelector('.visit-close').onclick=close;const currentDialog=dialog;currentDialog.addEventListener('close',()=>currentDialog.remove());dialog.showModal();}
  function render(){
