@@ -4,8 +4,8 @@ import{createPersistence,validateState as validateSavedState,exportFilename}from
 import{mountRoom}from'./room-ui.mjs?v=14';
 import{migrateRoom}from'./room-engine.mjs?v=15';
 import{empty,uid,describeAnswer}from'./engine.mjs?v=15';
-import{migrateTests}from'./attempts.mjs?v=9';
-import{mountQuiz,testStats,selectQuizMode}from'./quiz-ui.mjs?v=12';
+import{migrateTests}from'./attempts.mjs?v=10';
+import{mountQuiz,testStats,selectQuizMode}from'./quiz-ui.mjs?v=13';
 import{mountResults}from'./results-dashboard.mjs?v=11';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let state,persistence,storageBlocked=false;
@@ -66,6 +66,5 @@ $('#reports').onchange=async e=>{let invalid=0;for(const f of e.target.files){tr
 render();
 
 function renderReading(r){return `<article class="card"><p class="kicker">FELKÉSZÜLÉSI FELADAT · 15 TÉMA</p><h3>${esc(r.title)}</h3>${r.intro.map(p=>`<p class="muted">${esc(p)}</p>`).join('')}</article>${r.sections.map(s=>`<details><summary>${esc(s.title)}</summary><div>${s.paragraphs.map(p=>{const split=p.indexOf(':');return split>0&&split<35?`<p><strong>${esc(p.slice(0,split+1))}</strong> ${esc(p.slice(split+1))}</p>`:`<p>${esc(p)}</p>`}).join('')}</div></details>`).join('')}`}
-
 
 
