@@ -9,7 +9,7 @@ for(const dir of['portal','explorer']){
  for(const entry of await readdir(path.join(root,dir),{withFileTypes:true})){
   // The initial catalog is already in the protected database. Never publish question
   // banks, cases, reading materials, SQL snapshots or test fixtures as site files.
-  if(entry.isFile()&&entry.name!=='content.json'&&/\.(html|css|mjs|js|json)$/.test(entry.name))await copyFile(path.join(root,dir,entry.name),path.join(out,dir,entry.name));
+  if(entry.isFile()&&entry.name!=='content.json'&&/\.(html|css|mjs|js|json|svg)$/.test(entry.name))await copyFile(path.join(root,dir,entry.name),path.join(out,dir,entry.name));
  }
 }
 await copyFile(path.join(root,'.nojekyll'),path.join(out,'.nojekyll'));

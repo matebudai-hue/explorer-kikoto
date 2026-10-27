@@ -42,3 +42,20 @@ header{background:#fffdf8;border-bottom-color:#edece3}
 nav button.active{background:#dcebe7}
 @media(min-width:1000px){nav{background:#fffdf8!important;border-right-color:#eeece3}}
 @media(max-width:760px){.day-aside-card{padding:18px}.upcoming-visit{padding:11px 13px!important;gap:2px}.upcoming-date small{display:inline;margin:0 0 0 6px}.upcoming-date{margin-top:2px;line-height:1.45}.upcoming-visit strong{font-size:14px}.upcoming-place{font-size:13px}}
+
+/* Napfényes kikötő: tengeri kék, vitorlavászon és homok. */
+body{background:#f7f4eb}
+header{background:#fffaf1;border-bottom-color:#e9e4d7}
+.day-grid{gap:24px}
+.day-title{position:relative;background:#e5f1ee url('sailing.svg?v=1') no-repeat right bottom;background-size:auto 100%;border:1px solid #d5e7e1;border-radius:16px;padding:20px 185px 20px 22px;margin-bottom:15px;min-height:116px;overflow:hidden}
+.day-title h1{margin:0 0 8px;font-size:clamp(29px,2.8vw,40px)}.day-intro{color:#47656a;max-width:36rem;margin:0;line-height:1.45}
+.day-materials,.day-test,.day-aside-card{background:#fffdf7;border-color:#e9e4d9;box-shadow:0 5px 20px rgba(68,60,43,.045)}
+.day-materials .btn,.case,.day-test .card{background:#f9f7ef;border-color:#ede9dd}
+.day-heading select{background:#fffdf8;border-color:#ddd9cb}
+.materials-section:before{background:#cce8e4}.cases-section:before{background:#f3ddca}.day-test:before{background:#f1dfb3}
+.wallet{background:#f6e5c4}.primary,.quiz-modes .primary{background:#176c78;border-color:#176c78}.primary:hover{background:#105a65}
+.day-room-preview{background:#f5ecda;border-color:#e9dec8}
+.upcoming-visit{background:#faf8f0!important;border-color:#eee9da!important}.upcoming-visit:hover{background:#f1f4e9!important}
+nav button.active{background:#d7eae5}
+@media(min-width:1000px){nav{background:#fffaf1!important;border-right-color:#ede4d4}nav::before{content:'⛵  EXPLORER KIKÖTŐ';color:#153d52}}
+@media(max-width:760px){.day-title{min-height:110px;padding:18px 110px 18px 16px;background-size:auto 100%}.day-title h1{font-size:27px}.day-intro{font-size:14px}.day-title:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#e5f1ee 45%,transparent 100%);pointer-events:none}.day-title h1,.day-title p{position:relative}.upcoming-visit{padding:11px 13px!important}}
