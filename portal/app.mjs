@@ -1,3 +1,4 @@
+import{mountVisitReports}from'../explorer/visit-reports.mjs?v=1';
 import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs';
 import{mountHospitation}from'./hospitation.mjs';
 import{mountContentEditor}from'./content-editor.mjs';
@@ -64,11 +65,12 @@ async function admin(){
  document.body.classList.add('admin-shell');
  cohorts=checked(await client.rpc('explorer_admin_cohorts'));
  if(!cohorts.some(c=>c.id===cohortId))cohortId=cohorts[0]?.id;
- root.innerHTML=`<nav class="admin-nav" aria-label="Adminisztráció"><div class="admin-nav-title">EXPLORER<br>KIKÖTŐ</div><button data-admin-nav="overview" class="active">Áttekintés</button><button data-admin-nav="people">Résztvevők</button><button data-admin-nav="days">Képzési napok</button><button data-admin-nav="visits">Hospitálás</button><button data-admin-nav="join">Meghívás és jóváhagyás</button><button type="button" class="participant-nav" data-participant-view>Résztvevői nézet ↗</button></nav><div class="row between"><div><h1>Az évfolyam egy helyen</h1><p class="muted">Máté és Adri közös adminfelülete</p></div><button id="new-cohort">Új évfolyam</button></div><label class="field">Évfolyam<select id="cohort">${cohorts.map(c=>`<option value="${esc(c.id)}" ${cohortId===c.id?'selected':''}>${esc(c.title)}</option>`).join('')}</select></label><div id="admin-detail"></div><p role="alert" class="message"></p>`;
+ root.innerHTML=`<nav class="admin-nav" aria-label="Adminisztráció"><div class="admin-nav-title">EXPLORER<br>KIKÖTŐ</div><button data-admin-nav="overview" class="active">Áttekintés</button><button data-admin-nav="people">Résztvevők</button><button data-admin-nav="days">Képzési napok</button><button data-admin-nav="visits">Hospitálás</button><button data-admin-nav="join">Meghívás és jóváhagyás</button><button type="button" data-admin-reports>Hospitálási beszámolók</button><button type="button" class="participant-nav" data-participant-view>Résztvevői nézet ↗</button></nav><div class="row between"><div><h1>Az évfolyam egy helyen</h1><p class="muted">Máté és Adri közös adminfelülete</p></div><button id="new-cohort">Új évfolyam</button></div><label class="field">Évfolyam<select id="cohort">${cohorts.map(c=>`<option value="${esc(c.id)}" ${cohortId===c.id?'selected':''}>${esc(c.title)}</option>`).join('')}</select></label><div id="admin-detail"></div><p role="alert" class="message"></p>`;
  root.querySelector('#cohort').onchange=async e=>{cohortId=e.target.value;await showCohort();};
  root.querySelector('#new-cohort').onclick=cohortForm;
+ root.querySelector('[data-admin-reports]').onclick=()=>{if(!cohortId){alert('Előbb válassz évfolyamot.');return;}const host=root.querySelector('#admin-detail');mountVisitReports(host,{client,cohortId,userId:current.user.id,readOnly:!current.memberships.some(m=>m.cohort_id===cohortId&&m.status==='approved')});host.scrollIntoView({behavior:'smooth',block:'start'});};
  root.querySelector('[data-participant-view]').onclick=()=>{if(!cohortId){alert('Előbb válassz évfolyamot.');return;}if(!current.memberships.some(m=>m.cohort_id===cohortId&&m.status==='approved')){alert('A résztvevői nézethez ebben az évfolyamban jóváhagyott résztvevői hozzáférés is szükséges.');return;}location.href='explorer/?cohort='+encodeURIComponent(cohortId);};
- root.querySelectorAll('[data-admin-nav]').forEach(button=>button.onclick=()=>{const key=button.dataset.adminNav;root.querySelectorAll('[data-admin-nav]').forEach(b=>b.classList.toggle('active',b===button));const target=key==='overview'?root.querySelector('#admin-insights'):root.querySelector('[data-admin-section="'+key+'"]');if(target){if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}});
+ root.querySelectorAll('[data-admin-nav]').forEach(button=>button.onclick=async()=>{const key=button.dataset.adminNav;root.querySelectorAll('[data-admin-nav]').forEach(b=>b.classList.toggle('active',b===button));const findTarget=()=>key==='overview'?root.querySelector('#admin-insights'):root.querySelector('[data-admin-section="'+key+'"]');let target=findTarget();if(!target){await showCohort();target=findTarget();}if(target){if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}});
  await showCohort();
 }
 async function showCohort(){
@@ -108,3 +110,4 @@ function cohortForm(){
  container.querySelector('#create-cohort').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),b=e.target.querySelector('[type=submit]')||e.target.querySelector('button');b.disabled=true;try{cohortId=checked(await client.rpc('explorer_create_cohort',{p_title:String(f.get('title')),p_source:f.get('source')||null}));await admin();}catch(error){report(error);b.disabled=false;}};
 }
 await boot();
+
