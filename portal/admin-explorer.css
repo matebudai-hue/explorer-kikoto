@@ -83,3 +83,23 @@ body.admin-shell{--ink:#122b39;--muted:#62727a;--line:#ddcdb8;--accent:#245e60;-
 .admin-shell .participant-actions [data-points]:hover{background:#194b4e}
 .admin-shell .participant-actions [data-status-user],.admin-shell .participant-actions [data-promote],.admin-shell .participant-actions [data-add-cohort]{background:transparent;border-color:#e3d6c4}
 .admin-shell .admin-nav button.active:hover{background:#315e62}
+
+
+/* Képzési napok: közvetlen, tömör munkalista */
+.admin-shell .days-heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:0 0 14px}
+.admin-shell .days-heading h2{font-size:26px;margin:1px 0 3px}
+.admin-shell .days-heading p{margin:0}
+.admin-shell .days-kicker{font-size:10px;letter-spacing:.14em;color:#886b42;font-weight:700}
+.admin-shell .days-list{background:#fcf9f3;border:1px solid #dfcfbb;border-radius:10px;overflow:hidden}
+.admin-shell .day-admin-row{display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid #e7ddcf}
+.admin-shell .day-admin-row:last-child{border-bottom:0}
+.admin-shell .day-admin-number{font-family:Georgia,serif;font-size:19px;color:#a27e4c;min-width:30px}
+.admin-shell .day-admin-info{flex:1;min-width:0}
+.admin-shell .day-admin-info>strong{display:block;font-size:15px}
+.admin-shell .day-admin-meta{display:flex;gap:5px 12px;align-items:center;flex-wrap:wrap;margin-top:4px;color:#657577;font-size:12px}
+.admin-shell .day-state{border-radius:4px;padding:2px 7px;font-weight:650}
+.admin-shell .day-state.is-open{background:#e1ece4;color:#315e43}
+.admin-shell .day-state.is-closed{background:#f0e8db;color:#715e46}
+.admin-shell .day-admin-actions{display:flex;gap:7px;flex-wrap:wrap}
+.admin-shell .day-admin-actions button{padding:7px 10px;font-size:13px}
+@media(max-width:700px){.admin-shell .days-heading{align-items:flex-start;flex-wrap:wrap}.admin-shell .day-admin-row{flex-wrap:wrap;align-items:flex-start}.admin-shell .day-admin-actions{width:100%;padding-left:44px}}
