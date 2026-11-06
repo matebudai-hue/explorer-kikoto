@@ -1,13 +1,13 @@
-import{mountSharedRoomWorkspace}from'./shared-rooms.mjs?v=9';
+import{mountSharedRoomWorkspace}from'./shared-rooms.mjs?v=10';
 import{mountDayReflection}from'./day-reflections.mjs?v=1';
 import{mountVisitReports}from'./visit-reports.mjs?v=2';
 import{mountHospitation}from'../portal/hospitation.mjs?v=2';
 import{mountVisitPreview}from'./visit-preview.mjs?v=2';
 import{openLearningContext}from'../portal/learning-context.mjs?v=4';
 import{createPersistence,validateState as validateSavedState,exportFilename}from'./persistence.mjs?v=3';
-import{mountRoom}from'./room-ui.mjs?v=24';
-import{roomSVG}from'./room-art.mjs?v=22';
-import{migrateRoom}from'./room-engine.mjs?v=20';
+import{mountRoom}from'./room-ui.mjs?v=25';
+import{roomSVG}from'./room-art.mjs?v=23';
+import{migrateRoom}from'./room-engine.mjs?v=21';
 import{empty,uid,describeAnswer}from'./engine.mjs?v=15';
 import{migrateTests}from'./attempts.mjs?v=10';
 import{mountQuiz,testStats,selectQuizMode}from'./quiz-ui.mjs?v=15';
