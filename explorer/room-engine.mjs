@@ -31,6 +31,16 @@ export function moveItem(s,id,x,y){const item=s.items.find(i=>i.id===id);if(!ite
 export function rotateItem(s,id){const item=s.items.find(i=>i.id===id);if(!item)throw Error('Nincs kiválasztott tárgy.');const p=product(item.product);if(p?.layer==='wall')throw Error('A falra helyezett tárgyak a falhoz igazodnak.');const pos=position(s,item),r=checkPlacement(s,item,pos.x,pos.y,(item.rotation+90)%360);if(!r.ok)throw Error(r.reason);checkpoint(s);apply(item,r);}
 export function storeItem(s,id){const item=s.items.find(i=>i.id===id);if(!item)return;checkpoint(s);if(item.parentId){const pos=position(s,item);item.x=pos.x;item.y=pos.y;item.parentId=null;}item.stored=true;for(const child of s.items.filter(i=>i.parentId===id))child.stored=true;}
 export function restoreItem(s,id){const item=s.items.find(i=>i.id===id);if(!item)throw Error('Ismeretlen tárgy.');const r=findSpace(s,item);if(!r)throw Error('Most nincs szabad hely. Rendezd át a termet, vagy tegyél valamit a raktárba.');checkpoint(s);apply(item,r);for(const child of s.items.filter(i=>i.parentId===id&&i.stored)){const target=checkPlacement(s,child,item.x+child.x,item.y+child.y);if(target.ok)apply(child,target);}return item;}
+export function placeOnContainer(s,itemId,hostId){
+ const item=s.items.find(i=>i.id===itemId),host=s.items.find(i=>i.id===hostId);
+ if(!item||!host||!visible(s,host)||!product(host.product)?.surface||product(item.product)?.layer!=='tabletop')throw Error('Ez a tárgy nem helyezhető erre a tárolóra.');
+ const z=size(host),q=size(item);
+ for(let dy=-z.h/2+q.h/2;dy<=z.h/2-q.h/2+.001;dy+=.5)for(let dx=-z.w/2+q.w/2;dx<=z.w/2-q.w/2+.001;dx+=.5){
+  const x=round(host.x+dx),y=round(host.y+dy),r=checkPlacement(s,item,x,y);
+  if(r.ok&&r.parentId===host.id){checkpoint(s);apply(item,r);return item;}
+ }
+ throw Error('A tárolón most nincs elég hely.');
+}
 export function setTone(s,id,tone){if(!validTone(tone))throw Error('Ismeretlen szín.');const item=s.items.find(i=>i.id===id);if(!item)return;checkpoint(s);item.tone=tone;}
 export function setRoom(s,patch){const next={...s.roomSettings,...patch};for(const [key,allowed]of Object.entries({theme:themes,wall:walls,floor:floors,view:views}))if(!allowed[next[key]])throw Error('Ismeretlen terem-beállítás.');next.motto=String(next.motto).slice(0,100);checkpoint(s);s.roomSettings=next;}
 export function applyTheme(s,id){const theme=themes[id];if(!theme)throw Error('Ismeretlen stílus.');setRoom(s,{theme:id,wall:{ice:'ice',workshop:'slate',living:'sand',minimal:'white'}[id],floor:theme.floor});}
