@@ -58,7 +58,6 @@ const icons={
  'tea-table':()=>R(4,6,92,88,wood,6)+R(10,12,80,76,light,4)+C(30,35,13,tone)+C(60,52,14,'#8caa8b')+R(65,19,14,20,ink,3),
  'coat-wall':()=>R(4,18,92,64,wood,3)+[18,36,54,72].map(x=>C(x,36,5,ink)+L(x,41,x,64,tone,6)).join(''),
  'projector-screen':()=>R(3,7,94,57,ink,2)+R(8,12,84,47,white,1)+L(25,76,75,76,ink,3)+R(34,78,32,16,tone,3)+C(59,86,4,light),
- 'patio-corner':()=>R(3,3,94,94,'#c7af8b',3)+C(48,50,23,wood)+C(18,25,12,tone)+C(80,75,12,tone)+C(82,17,11,'#4b7c62'),
  'picture-cards':()=>R(12,14,68,68,wood,2)+R(19,7,68,68,light,2)+`<path d="M23 63l18-27 12 14 15-24 13 37z" fill="${tone}"/>`+C(66,24,6,'#d6a344'),
  'emotion-cards':()=>R(10,12,80,76,wood,6)+C(50,50,30,'#f0cd50')+C(39,43,3,ink)+C(61,43,3,ink)+`<path d="M37 60q13 13 26 0" stroke="${ink}" stroke-width="4" fill="none"/>`,
  'conversation-cards':()=>R(10,12,80,76,tone,6)+R(18,20,64,50,light,6)+`<path d="M33 68l-5 13 20-13" fill="${light}"/>`+L(28,36,70,36,ink,3)+L(28,49,58,49,ink,3),
