@@ -1,0 +1,28 @@
+// Az új tárgyak előkészített katalógusa. A boltba még nincs bekötve.
+export const newRoomProducts = [
+  {id:'open-shelf',name:'Nyitott tárolópolc',category:'comfort',price:65,placement:'furniture',container:true},
+  {id:'supply-cabinet',name:'Tréneri eszközszekrény',category:'comfort',price:75,placement:'furniture',container:true},
+  {id:'screen-divider',name:'Gurulós paraván',category:'comfort',price:45,placement:'furniture'},
+  {id:'sofa',name:'Kanapé',category:'seat',price:85,placement:'furniture'},
+  {id:'pouf',name:'Puff',category:'seat',price:25,placement:'furniture'},
+  {id:'hanging-chair',name:'Függőfotel',category:'seat',price:70,placement:'furniture'},
+  {id:'tea-table',name:'Teázóasztal',category:'surface',price:45,placement:'furniture',surface:true},
+  {id:'coat-wall',name:'Mobil fogasfal',category:'comfort',price:40,placement:'furniture'},
+  {id:'projector',name:'Projektor és vetítővászon',category:'tools',price:80,placement:'furniture'},
+  {id:'patio-corner',name:'Kisteraszos pihenősarok',category:'comfort',price:120,placement:'outdoor'},
+  {id:'picture-cards',name:'Képkártyapakli',category:'tools',price:15,placement:'small'},
+  {id:'emotion-cards',name:'Érzelemkártyák',category:'tools',price:15,placement:'small'},
+  {id:'conversation-cards',name:'Beszélgetőkártyák',category:'tools',price:15,placement:'small'},
+  {id:'building-blocks',name:'Építőkockás doboz',category:'tools',price:20,placement:'small'},
+  {id:'colored-tokens',name:'Színes korongok készlete',category:'tools',price:15,placement:'small'},
+  {id:'dice-set',name:'Dobókockakészlet',category:'play',price:10,placement:'small'},
+  {id:'talking-stick',name:'Beszélőbot',category:'tools',price:10,placement:'small'},
+  {id:'talking-ball',name:'Beszélőlabda',category:'tools',price:15,placement:'small'},
+  {id:'sticky-notes',name:'Post-it- és cetlikészlet',category:'tools',price:10,placement:'small'},
+  {id:'trainer-case',name:'Nyitott tréneri bőrönd',category:'tools',price:45,placement:'furniture',container:true},
+  {id:'own-book',name:'Saját könyv',category:'personal',price:20,placement:'small'},
+  {id:'certificate',name:'Keretezett oklevél',category:'personal',price:20,placement:'small'},
+  {id:'trophy',name:'Serleg vagy díj',category:'personal',price:30,placement:'small'},
+  {id:'photo-frame',name:'Fényképkeret',category:'personal',price:20,placement:'small'},
+  {id:'compass-globe',name:'Iránytű vagy földgömb',category:'personal',price:25,placement:'small'}
+];
