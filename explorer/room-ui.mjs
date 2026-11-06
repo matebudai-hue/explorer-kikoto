@@ -1,7 +1,7 @@
 import{shopLevel,productLevel,upgradeLevel,itemAvailable,upgradeAvailable}from'./shop-unlocks.mjs?v=2';
 import{products,shopProducts,product,categories,tones,themes,walls,floors,views,toneColor}from'./room-catalog.mjs?v=20';
 import{migrateRoom,buy,undoPurchase,upgrade,moveItem,rotateItem,storeItem,restoreItem,setTone,setRoom,applyTheme,undoRoom,canUndo,position,visible,checkPlacement,placeOnContainer,setItemLabel}from'./room-engine.mjs?v=21';
-import{art,roomSVG,esc}from'./room-art.mjs?v=23';
+import{art,roomSVG,esc}from'./room-art.mjs?v=24';
 const layerName={floor:'Padlóra helyezhető',furniture:'Szabadon elhelyezhető',wall:'A felső falhoz igazodik',tabletop:'Asztalra, kocsira vagy kávépultra való'};
 const shopGroups=[
  {id:'furniture',name:'Bútorok',has:p=>['seat','surface'].includes(p.category)||['bookshelf','open-shelf','supply-cabinet','screen-divider','coat-wall'].includes(p.id)},
