@@ -119,3 +119,24 @@
  .admin-settings-grid{grid-template-columns:minmax(0,1fr)}
  .admin-settings-card:nth-child(n){grid-column:auto;grid-row:auto}
 }
+
+
+/* Rövid felső beállítások, alatta egységes résztvevői lista */
+@media(min-width:801px){
+ .admin-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto}
+ .admin-settings-card:nth-child(1){grid-column:1;grid-row:1}
+ .admin-settings-card:nth-child(3){grid-column:2;grid-row:1}
+ .admin-settings-card:nth-child(2){grid-column:1 / -1;grid-row:2}
+}
+.participant-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:9px 0}
+.participant-name{min-width:150px}.participant-name strong,.participant-status{display:block}
+.participant-status{font-size:12px;color:var(--muted)}
+.participant-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.participant-actions button{font-size:12px;padding:6px 9px}
+.participant-actions button:disabled{cursor:not-allowed}
+.participant-points-dialog{border:1px solid var(--line);border-radius:12px;padding:20px;width:min(540px,94vw);max-height:90vh;overflow:auto;color:var(--ink)}
+.participant-points-dialog::backdrop{background:#102e4399}
+.participant-points-dialog>[data-close-points]{float:right}
+.participant-points-dialog [data-points-host]>.panel{padding:0;border:0;box-shadow:none;margin:0}
+.participant-points-dialog [data-points-host] h2{display:none}
+@media(max-width:800px){.participant-row{align-items:flex-start;flex-direction:column}.participant-actions{justify-content:flex-start}}
