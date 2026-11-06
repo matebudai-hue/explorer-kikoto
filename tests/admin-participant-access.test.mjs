@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const source=fs.readFileSync(new URL('../portal/learning-context.mjs',import.meta.url),'utf8').replace(/^import[^\n]*\n/gm,'');
+let calls=[],currentAccess;
+const local=new Map();globalThis.localStorage={getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v),removeItem:k=>local.delete(k)};
+const element=()=>({append(){},setAttribute(){},textContent:'',hidden:false});globalThis.document={querySelector:()=>element(),createElement:()=>element(),addEventListener(){}};
+globalThis.window={addEventListener(){},dispatchEvent(){}};globalThis.CustomEvent=class{};globalThis.MutationObserver=class{observe(){}};globalThis.location={href:'https://example.test/explorer/?cohort=alumni',replace(){}};
+const client={from(name){return {select(){return this},eq(){return this},async single(){return {data:{id:'alumni',title:'Alumni',shop_open_all:false}}},async maybeSingle(){return {data:null}}}},async rpc(name){calls.push(name);if(name==='explorer_catalog')return {data:{days:[{id:'d1',open:true},{id:'d2',open:false}]}};return {data:null}}};
+globalThis.__adminTest={getClient:async()=>client,access:async()=>currentAccess,checked:r=>{if(r.error)throw r.error;return r.data},downloadMaterial(){},accountStorageKey:(u,c)=>u+c,createCloudSync:()=>({revision:0,blocked:false,dirty:false,enqueue(){},async flush(){}})};
+const prefix='const {getClient,access,checked,downloadMaterial,accountStorageKey,createCloudSync}=globalThis.__adminTest;\n';
+const mod=await import('data:text/javascript;base64,'+Buffer.from(prefix+source).toString('base64'));
+currentAccess={isAdmin:true,user:{id:'admin'},profile:{display_name:'Admin'},memberships:[]};
+const admin=await mod.openLearningContext();assert.equal(admin.isAdmin,true);assert.equal(admin.fullyOpenShop,true);assert(admin.catalog.days.every(d=>d.open));assert(calls.includes('explorer_admin_ensure_participant_access'));
+calls=[];local.clear();currentAccess={isAdmin:false,user:{id:'user'},profile:{display_name:'User'},memberships:[{cohort_id:'alumni',status:'approved'}]};
+const participant=await mod.openLearningContext();assert.equal(participant.isAdmin,false);assert.equal(participant.fullyOpenShop,false);assert.equal(participant.catalog.days[1].open,false);assert(!calls.includes('explorer_admin_ensure_participant_access'));
+calls=[];local.clear();let redirected=false;globalThis.location.replace=()=>{redirected=true};currentAccess={isAdmin:false,user:{id:'other'},profile:{display_name:'Other'},memberships:[]};await assert.rejects(()=>mod.openLearningContext(),/jóváhagyott tagság/);assert(redirected);assert(!calls.includes('explorer_admin_ensure_participant_access'));
+calls=[];local.clear();currentAccess={isAdmin:true,user:{id:'admin'},profile:{display_name:'Admin'},memberships:[{cohort_id:'alumni',status:'approved'}]};const alreadyAdmin=await mod.openLearningContext();assert(alreadyAdmin.fullyOpenShop);assert(!calls.includes('explorer_admin_ensure_participant_access'));
+console.log('Admin és résztvevő hozzáférése: rendben');

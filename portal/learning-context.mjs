@@ -9,13 +9,14 @@ export async function openLearningContext(){
  const userAccess=await access(client);
  if(!userAccess){location.replace('../');throw Error('A folytatáshoz lépj be a portálon.');}
  const cohortId=new URL(location.href).searchParams.get('cohort')||userAccess.memberships.find(m=>m.status==='approved')?.cohort_id;
- if(!userAccess.memberships.some(m=>m.cohort_id===cohortId&&m.status==='approved')){location.replace('../');throw Error('A képzéshez jóváhagyott tagság szükséges.');}
+ if(!userAccess.memberships.some(m=>m.cohort_id===cohortId&&m.status==='approved')){if(userAccess.isAdmin){checked(await client.rpc('explorer_admin_ensure_participant_access',{p_cohort:cohortId}));}else{location.replace('../');throw Error('A képzéshez jóváhagyott tagság szükséges.');}}
  const [cohortResult,stateResult]=await Promise.all([
   client.from('explorer_cohorts').select('id,title,shop_open_all').eq('id',cohortId).single(),
   client.from('explorer_learning_states').select('payload,revision').eq('user_id',userAccess.user.id).eq('cohort_id',cohortId).maybeSingle()
  ]);
  const cohort=checked(cohortResult),remote=checked(stateResult);cohort.catalog=checked(await client.rpc('explorer_catalog',{p_cohort:cohortId}));
  if(!cohort.catalog?.days?.length)throw Error('Az évfolyam tananyagai még nincsenek feltöltve.');
+ if(userAccess.isAdmin)cohort.catalog={...cohort.catalog,days:cohort.catalog.days.map(day=>({...day,open:true}))};
  const key=accountStorageKey(userAccess.user.id,cohortId),draftKey=key+':unsent';
  let restoredDraft=false,initial=remote?.payload||null;
  const rawDraft=localStorage.getItem(draftKey);
@@ -60,5 +61,6 @@ export async function openLearningContext(){
  window.addEventListener('beforeunload',e=>{if(sync.dirty){e.preventDefault();e.returnValue='';}});
  checked(await client.rpc('explorer_touch'));
  const profileLink=document.createElement('a');profileLink.href='../';profileLink.textContent='Vissza a portálra';status.append(profileLink);
- return{client,cohortId,fullyOpenShop:cohort.shop_open_all===true,userId:userAccess.user.id,getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
+ if(userAccess.isAdmin){const adminNote=document.createElement('span');adminNote.textContent='Adminisztrátori nézet · minden nap és bolti tárgy nyitva';status.append(adminNote);}
+ return{client,cohortId,fullyOpenShop:userAccess.isAdmin||cohort.shop_open_all===true,isAdmin:userAccess.isAdmin,userId:userAccess.user.id,getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
 }
