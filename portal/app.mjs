@@ -1,4 +1,4 @@
-import{mountParticipantManagement}from'./participant-management.mjs?v=1';
+import{mountParticipantManagement}from'./participant-management.mjs?v=2';
 import{mountMissingReports}from'./missing-reports.mjs?v=1';
 import{mountAdminPoints}from'./admin-points.mjs?v=1';
 import{mountVisitReports}from'../explorer/visit-reports.mjs?v=1';
@@ -96,7 +96,7 @@ async function showCohort(){
  const settings=document.createElement('section');settings.dataset.adminSection='settings';settings.innerHTML='<h2>Beállítások és résztvevők</h2><div class="admin-settings-grid"></div>';container.append(settings);
  const grid=settings.querySelector('.admin-settings-grid');
  for(const name of ['join','people','rooms']){const original=container.querySelector('[data-admin-section="'+name+'"]'),section=document.createElement('section'),heading=document.createElement('h3');section.className='admin-settings-card';heading.textContent=original.querySelector(':scope > summary').textContent;section.append(heading);while(original.children.length>1)section.append(original.children[1]);grid.append(section);original.remove();}
- mountParticipantManagement(container.querySelector('#participant-manager'),{client,cohortId:cohort.id,members,currentUserId:current.user.id,onChanged:showCohort});
+ mountParticipantManagement(container.querySelector('#participant-manager'),{client,cohortId:cohort.id,members,currentUserId:current.user.id,onChanged:showCohort,cohorts});
  const roomSharing=container.querySelector('#rooms-sharing');roomSharing.onchange=async()=>{const enabled=roomSharing.checked,status=container.querySelector('#rooms-sharing-status');roomSharing.disabled=true;status.textContent='Mentés…';try{checked(await client.rpc('explorer_set_room_sharing',{p_cohort:cohort.id,p_enabled:enabled}));cohort.rooms_shared=enabled;status.textContent=enabled?'A megosztás be van kapcsolva.':'A megosztás ki van kapcsolva.';}catch(error){roomSharing.checked=!enabled;status.textContent='A beállítást nem sikerült menteni. Próbáld újra.';}finally{roomSharing.disabled=false;}};
  mountAdminInsights(container.querySelector('#admin-insights'),{members,states,catalog:cohort.catalog,events:ar.error?[]:ar.data,eventsError:!!ar.error,onPerson:person,onRefresh:showCohort});
  await mountHospitation(container.querySelector('#visit-calendar'),{client,cohortId,isAdmin:true,userId:current.user.id});
@@ -130,6 +130,7 @@ function cohortForm(){
  container.querySelector('#create-cohort').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),b=e.target.querySelector('[type=submit]')||e.target.querySelector('button');b.disabled=true;try{cohortId=checked(await client.rpc('explorer_create_cohort',{p_title:String(f.get('title')),p_source:f.get('source')||null}));await admin();}catch(error){report(error);b.disabled=false;}};
 }
 await boot();
+
 
 
 
