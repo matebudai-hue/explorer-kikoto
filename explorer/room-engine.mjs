@@ -1,4 +1,4 @@
-import{products,product,tones,themes,walls,floors,views,defaultSettings,validTone}from'./room-catalog.mjs?v=17';
+import{products,product,tones,themes,walls,floors,views,defaultSettings,validTone}from'./room-catalog.mjs?v=18';
 export{products,product,tones,themes,walls,floors,views};
 export const uid=()=>globalThis.crypto?.randomUUID?.()??Array.from(globalThis.crypto.getRandomValues(new Uint32Array(4)),n=>n.toString(16)).join('-');
 export const ROOM={w:24,h:18};
@@ -12,6 +12,16 @@ export function position(s,item){const parent=item.parentId&&s.items.find(i=>i.i
 export function visible(s,item){if(item.stored)return false;const parent=item.parentId&&s.items.find(i=>i.id===item.parentId);return !item.parentId||!!parent&&!parent.stored;}
 const overlap=(a,ap,b,bp)=>Math.abs(ap.x-bp.x)<(size(a).w+size(b).w)/2-.05&&Math.abs(ap.y-bp.y)<(size(a).h+size(b).h)/2-.05;
 export function checkPlacement(s,item,x,y,rotation=item.rotation){if(![x,y].every(Number.isFinite)||![0,90,180,270].includes(rotation))return{ok:false,reason:'Érvénytelen elhelyezés.'};const p=product(item.product);if(!p)return{ok:false,reason:'Ez a tárgy egy újabb változatból származik.'};const candidate={...item,rotation},sz=size(candidate);x=round(x);y=p.layer==='wall'?.65:round(y);let parentId=null;
+ // Illesszük össze az egymás mellé húzott asztalokat, de csak közeli hely esetén.
+ if(['modular','standing','table','tea-table','side'].includes(p.id)){
+  let bestX=null,bestY=null,distX=.36,distY=.36;
+  for(const other of s.items){if(other.id===item.id||!visible(s,other)||!['modular','standing','table','tea-table','side'].includes(other.product))continue;const z=size(other),pos=position(s,other);
+   if(Math.abs(y-pos.y)<(sz.h+z.h)/2-.05)for(const edge of [pos.x-(sz.w+z.w)/2,pos.x+(sz.w+z.w)/2])if(Math.abs(x-edge)<distX){distX=Math.abs(x-edge);bestX=edge;}
+   if(Math.abs(x-pos.x)<(sz.w+z.w)/2-.05)for(const edge of [pos.y-(sz.h+z.h)/2,pos.y+(sz.h+z.h)/2])if(Math.abs(y-edge)<distY){distY=Math.abs(y-edge);bestY=edge;}
+  }
+  if(bestX!==null)x=bestX;if(bestY!==null)y=bestY;
+ }
+
  if(p.layer==='wall'){if(x-sz.w/2<.35||x+sz.w/2>23.65)return{ok:false,reason:'A fal szélén túlra kerülne.'};}
  else if(p.layer==='floor'){if(x<.35||x>23.65||y<1.625||y>17.65)return{ok:false,reason:'A szőnyeget a terem padlójára helyezheted.'};}
  else if(p.layer==='tabletop'){const hosts=s.items.filter(i=>i.id!==item.id&&visible(s,i)&&product(i.product)?.surface);const host=hosts.find(i=>{const z=size(i);return Math.abs(x-i.x)+sz.w/2<=z.w/2+.01&&Math.abs(y-i.y)+sz.h/2<=z.h/2+.01;});if(!host)return{ok:false,reason:'Ezt asztalra, kocsira vagy kávépultra helyezheted.'};parentId=host.id;}
