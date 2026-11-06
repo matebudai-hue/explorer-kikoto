@@ -7,3 +7,5 @@
 
 /* A teljes terem áttekinthető méretben, a rendezőnézet mérete változatlan. */
 @media (min-width:761px){.room-workspace:not(.room-fullscreen) .room-stage{width:min(100%,750px,80vh);margin-inline:auto}}
+
+.container-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:1rem}.container-dialog-head h2{margin:0}.container-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}.container-items>div{display:flex;flex-direction:column;gap:6px;padding:10px;background:#f7f3eb;border:1px solid #e5d8c4;border-radius:10px}.container-items svg{display:block;width:64px;height:64px}.container-items button{margin-top:auto}#container-dialog{width:min(92vw,720px);max-height:85vh;overflow:auto;border:1px solid #d9c7ab;border-radius:16px;background:#fffcf6;color:#102e3e;padding:20px}#container-dialog::backdrop{background:#102e3e99}

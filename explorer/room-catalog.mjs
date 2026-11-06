@@ -56,9 +56,56 @@ const data=[
 ['hanging-plant','Fali futónövény','plants',25,0,1.6,1,'wall','hanging',['Fali kaspó','Futónövény','Zöld falrészlet'],[20,40]],
 ['wall-whiteboard','Falra szerelt whiteboard','tools',40,0,4,1,'wall','wallboard',['Írótábla','Mágneses tábla','Nagy ötletfal'],[35,60]],
 ['wall-clock','Falióra','personal',20,0,1.2,1,'wall','clock',['Klasszikus','Letisztult','Díszes'],[20,35]],
-['decor-sculpture','Dekorszobor','personal',25,0,1.2,1.2,'furniture','sculpture',['Absztrakt forma','Kompozíció','Galériadarab'],[25,40]]
+['decor-sculpture','Dekorszobor','personal',25,0,1.2,1.2,'furniture','sculpture',['Absztrakt forma','Kompozíció','Galériadarab'],[25,40]],
+['open-shelf', 'Nyitott tárolópolc', 'comfort', 65, 0, 4, 2, 'furniture', 'bookshelf', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['supply-cabinet', 'Tréneri eszközszekrény', 'comfort', 75, 0, 4, 2, 'furniture', 'bookshelf', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['screen-divider', 'Gurulós paraván', 'comfort', 45, 0, 3, 1.3, 'furniture', 'whiteboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['sofa', 'Kanapé', 'seat', 85, 0, 3.2, 2, 'furniture', 'bench', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['pouf', 'Puff', 'seat', 25, 0, 1.5, 1.5, 'furniture', 'cushion', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['hanging-chair', 'Függőfotel', 'seat', 70, 0, 2, 2, 'furniture', 'armchair', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['tea-table', 'Teázóasztal', 'surface', 45, 0, 3, 2, 'furniture', 'table', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['coat-wall', 'Mobil fogasfal', 'comfort', 40, 0, 3, 1.5, 'furniture', 'coat', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['projector-screen', 'Projektor és vetítővászon', 'tools', 80, 0, 3, 1.5, 'furniture', 'whiteboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['picture-cards', 'Képkártyapakli', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'picture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['emotion-cards', 'Érzelemkártyák', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['conversation-cards', 'Beszélgetőkártyák', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['building-blocks', 'Építőkockás doboz', 'tools', 20, 0, 0.6, 0.6, 'tabletop', 'chess', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['colored-tokens', 'Színes korongok készlete', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'ball', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['dice-set', 'Dobókockakészlet', 'play', 10, 0, 0.5, 0.5, 'tabletop', 'chess', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['talking-stick', 'Beszélőbot', 'tools', 10, 0, 0.5, 0.5, 'tabletop', 'markers', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['talking-ball', 'Beszélőlabda', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'ball', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['sticky-notes', 'Post-it- és cetlikészlet', 'tools', 10, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['trainer-case', 'Nyitott tréneri bőrönd', 'tools', 45, 0, 3, 2, 'furniture', 'cart', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['own-book', 'Saját könyv', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'bookshelf', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['certificate', 'Keretezett oklevél', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'picture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['trophy', 'Serleg vagy díj', 'personal', 30, 0, 0.5, 0.5, 'tabletop', 'sculpture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['photo-frame', 'Fényképkeret', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'picture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+,
+['compass-globe', 'Iránytű vagy földgömb', 'personal', 25, 0, 0.5, 0.5, 'tabletop', 'clock', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
 ];
-export const products=data.map(([id,name,category,price,max,w,h,layer,art,levels,upgrades])=>({id,name,category,price,max:null,w,h,layer,art,levels,upgrades,surface:['table','modular','standing','side','cart','coffee'].includes(id)}));
+export const products=data.map(([id,name,category,price,max,w,h,layer,art,levels,upgrades])=>({id,name,category,price,max:null,w,h,layer,art,levels,upgrades,surface:['table','modular','standing','side','cart','coffee','open-shelf','supply-cabinet','tea-table','trainer-case'].includes(id)}));
 export const product=id=>products.find(p=>p.id===id);
 export const defaultSettings=()=>({theme:'ice',wall:'ice',floor:'oak',view:'water',motto:'Itt lehet újrapróbálni.'});
 
