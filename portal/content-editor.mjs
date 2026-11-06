@@ -18,7 +18,7 @@ export function mountContentEditor(host,{client,cohort,userId,onSaved}){
  const status=(msg,error=false)=>{const el=host.querySelector('[role=status]');if(el){el.textContent=msg;el.classList.toggle('message',error);}};
  const saveCatalog=async next=>{checked(await client.rpc('explorer_publish_catalog',{p_cohort:cohort.id,p_expected:cohort.catalog,p_catalog:next}));await onSaved();};
  function list(){
- host.innerHTML=`<section class="panel"><div class="row between"><div><h2>Képzési napok és tananyagok</h2><p class="small muted">A megnyitott napok később is olvashatók és gyakorolhatók.</p></div><button id="add-day">+ Új képzési nap</button></div>${days.map(d=>`<div class="event row between"><div><strong>${esc(d.title)}</strong><div class="small muted">${d.open?'Megnyitva':'Még nem elérhető'} · ${d.questions?.length||0} tesztkérdés · ${d.materials?.length||0} tananyag · ${d.cases?.length||0} esettanulmány</div></div><div class="row"><button data-edit="${esc(d.id)}">Szerkesztés</button>${d.open?'':`<button class="primary" data-open="${esc(d.id)}">Megnyitom a résztvevőknek</button>`}</div></div>`).join('')||'<p>Még nincs képzési nap.</p>'}<p role="status" aria-live="polite"></p></section>`;
+ host.innerHTML=`<div class="days-heading"><div><p class="days-kicker">EXPLORER KIKÖTŐ · TANANYAGOK</p><h2>Képzési napok</h2><p class="small muted">Itt tudod feltölteni és szerkeszteni a napok anyagait.</p></div><button class="primary" id="add-day">+ Új képzési nap</button></div><div class="days-list">${days.map((d,i)=>`<div class="event day-admin-row"><div class="day-admin-number" aria-hidden="true">${String(i+1).padStart(2,'0')}</div><div class="day-admin-info"><strong>${esc(d.title)}</strong><div class="day-admin-meta"><span class="day-state ${d.open?'is-open':'is-closed'}">${d.open?'Megnyitva':'Zárt'}</span><span>${d.materials?.length||0} tananyag</span><span>${d.cases?.length||0} esettanulmány</span><span>${d.questions?.length||0} tesztkérdés</span></div></div><div class="day-admin-actions"><button data-edit="${esc(d.id)}">Szerkesztés</button>${d.open?'':`<button class="primary" data-open="${esc(d.id)}">Nap megnyitása</button>`}</div></div>`).join('')||'<p>Még nincs képzési nap.</p>'}</div><p role="status" aria-live="polite"></p>`;
  host.querySelector('#add-day').onclick=()=>edit({id:'day-'+crypto.randomUUID(),title:'',subtitle:'',open:false,materials:[],questions:[]},true);
  host.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>edit(days.find(d=>d.id===b.dataset.edit)));
  host.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{
@@ -79,4 +79,5 @@ export function mountContentEditor(host,{client,cohort,userId,onSaved}){
  }
  list();
 }
+
 
