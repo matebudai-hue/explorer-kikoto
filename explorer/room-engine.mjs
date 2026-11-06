@@ -3,7 +3,7 @@ export{products,product,tones,themes,walls,floors,views};
 export const uid=()=>globalThis.crypto?.randomUUID?.()??Array.from(globalThis.crypto.getRandomValues(new Uint32Array(4)),n=>n.toString(16)).join('-');
 export const ROOM={w:24,h:18};
 const histories=new WeakMap(),round=n=>Math.round(n*2)/2,clone=v=>JSON.parse(JSON.stringify(v));
-function checkpoint(s){const h=histories.get(s)||[];h.push({items:s.items.map(({id,x,y,rotation,stored,parentId,tone})=>({id,x,y,rotation,stored,parentId,tone})),settings:clone(s.roomSettings),name:s.roomName});histories.set(s,h.slice(-25));}
+function checkpoint(s){const h=histories.get(s)||[];h.push({items:s.items.map(({id,x,y,rotation,stored,parentId,tone,label})=>({id,x,y,rotation,stored,parentId,tone,label})),settings:clone(s.roomSettings),name:s.roomName});histories.set(s,h.slice(-25));}
 export const canUndo=s=>(histories.get(s)?.length||0)>0;
 export function undoRoom(s){const h=histories.get(s);if(!h?.length)return false;const prev=h.pop();for(const item of s.items){const old=prev.items.find(i=>i.id===item.id);if(old)Object.assign(item,old);}s.roomSettings=prev.settings;s.roomName=prev.name;return true;}
 const resetHistory=s=>histories.delete(s);
@@ -41,6 +41,7 @@ export function placeOnContainer(s,itemId,hostId){
  }
  throw Error('A tárolón most nincs elég hely.');
 }
+export function setItemLabel(s,id,label){const item=s.items.find(i=>i.id===id);if(!item||item.product!=='own-book')throw Error('Nem található a könyv.');checkpoint(s);item.label=String(label).trim().slice(0,60);}
 export function setTone(s,id,tone){if(!validTone(tone))throw Error('Ismeretlen szín.');const item=s.items.find(i=>i.id===id);if(!item)return;checkpoint(s);item.tone=tone;}
 export function setRoom(s,patch){const next={...s.roomSettings,...patch};for(const [key,allowed]of Object.entries({theme:themes,wall:walls,floor:floors,view:views}))if(!allowed[next[key]])throw Error('Ismeretlen terem-beállítás.');next.motto=String(next.motto).slice(0,100);checkpoint(s);s.roomSettings=next;}
 export function applyTheme(s,id){const theme=themes[id];if(!theme)throw Error('Ismeretlen stílus.');setRoom(s,{theme:id,wall:{ice:'ice',workshop:'slate',living:'sand',minimal:'white'}[id],floor:theme.floor});}
