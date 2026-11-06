@@ -64,3 +64,24 @@
  .admin-shell .ai-scoreline{display:inline-flex}
 }
 
+/* Áttekintés: státusz és napi munka egy képernyőn */
+.overview-status{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13px}
+.overview-status span{white-space:nowrap}.overview-status b{font-size:17px;color:#153c50}
+.overview-status button{padding:5px 9px;font-size:12px}
+.overview-status button:first-of-type{margin-left:auto}
+.overview-columns{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(250px,1fr);gap:10px;align-items:start}
+.overview-columns>.panel{min-width:0;margin:10px 0;padding:12px 14px}
+.overview-columns h2{font-size:18px;margin:0 0 4px}
+.overview-columns p.small{margin:0 0 8px}
+.admin-shell .ai-name+.small{margin:2px 0 0}
+.admin-shell .ai-name{color:#126a80;text-decoration:underline}
+.admin-shell .ai-participants td:first-child{min-width:135px}
+.overview-feed .ai-feed{max-height:450px}
+.overview-feed .ai-feed-item{padding:7px 0}
+#ai-chart{width:min(560px,94vw);border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--ink)}
+#ai-chart::backdrop{background:#102e4399}
+#ai-chart h2{font-size:19px;margin:0}
+[data-admin-section=settings]>h2{font-size:20px;margin:10px 0}
+@media(max-width:850px){.overview-columns{grid-template-columns:1fr}.overview-status button:first-of-type{margin-left:0}}
+
+
