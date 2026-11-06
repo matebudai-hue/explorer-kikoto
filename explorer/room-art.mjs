@@ -48,6 +48,33 @@ case'wallboard':g=R(1,1,98,98,tier?ink:tone,4)+R(6,7,88,81,white,2)+L(16,28,72,2
 case'clock':g=C(50,50,46,tone)+C(50,50,38,white)+L(50,50,50,22,ink,4)+L(50,50,71,62,ink,4);for(let i=0;i<12;i++){const a=i*Math.PI/6;g+=C(50+Math.sin(a)*31,50+Math.cos(a)*31,tier?2:1.5,ink);}break;
 case'sculpture':g=C(50,60,35,wood)+R(22,76,56,15,ink,3)+`<path d="M27 68Q10 5 51 11Q92 16 68 66Q36 95 33 42" stroke="${tone}" stroke-width="${10+tier*2}" fill="none"/>`;break;
 default:g=R(5,5,90,90,tone);}
+const icons={
+ 'open-shelf':()=>R(4,4,92,92,wood,3)+R(10,10,80,80,'#f5ecda',2)+L(10,36,90,36,ink,3)+L(10,64,90,64,ink,3)+R(16,15,18,15,tone,2)+R(41,41,22,16,'#d6a344',2),
+ 'supply-cabinet':()=>R(3,4,94,92,wood,3)+R(8,9,39,82,tone,2)+R(53,9,39,82,tone,2)+C(42,50,3,light)+C(58,50,3,light),
+ 'screen-divider':()=>R(4,10,92,70,wood,5)+R(9,15,82,60,light,2)+L(35,15,35,75,tone,3)+L(65,15,65,75,tone,3)+C(16,88,7,ink)+C(84,88,7,ink),
+ 'sofa':()=>R(3,14,94,72,wood,14)+R(8,20,84,58,tone,10)+R(13,25,35,45,'#ffffff33',5)+R(52,25,35,45,'#ffffff33',5),
+ 'pouf':()=>C(50,50,43,tone)+C(50,50,33,'#ffffff25')+L(22,22,78,78,light,2),
+ 'hanging-chair':()=>C(50,50,45,wood)+C(50,50,36,tone)+C(50,50,27,light)+L(50,4,50,18,ink,3),
+ 'tea-table':()=>R(4,6,92,88,wood,6)+R(10,12,80,76,light,4)+C(30,35,13,tone)+C(60,52,14,'#8caa8b')+R(65,19,14,20,ink,3),
+ 'coat-wall':()=>R(4,18,92,64,wood,3)+[18,36,54,72].map(x=>C(x,36,5,ink)+L(x,41,x,64,tone,6)).join(''),
+ 'projector-screen':()=>R(3,7,94,57,ink,2)+R(8,12,84,47,white,1)+L(25,76,75,76,ink,3)+R(34,78,32,16,tone,3)+C(59,86,4,light),
+ 'patio-corner':()=>R(3,3,94,94,'#c7af8b',3)+C(48,50,23,wood)+C(18,25,12,tone)+C(80,75,12,tone)+C(82,17,11,'#4b7c62'),
+ 'picture-cards':()=>R(12,14,68,68,wood,2)+R(19,7,68,68,light,2)+`<path d="M23 63l18-27 12 14 15-24 13 37z" fill="${tone}"/>`+C(66,24,6,'#d6a344'),
+ 'emotion-cards':()=>R(10,12,80,76,wood,6)+C(50,50,30,'#f0cd50')+C(39,43,3,ink)+C(61,43,3,ink)+`<path d="M37 60q13 13 26 0" stroke="${ink}" stroke-width="4" fill="none"/>`,
+ 'conversation-cards':()=>R(10,12,80,76,tone,6)+R(18,20,64,50,light,6)+`<path d="M33 68l-5 13 20-13" fill="${light}"/>`+L(28,36,70,36,ink,3)+L(28,49,58,49,ink,3),
+ 'building-blocks':()=>R(4,4,92,92,wood,5)+R(13,15,32,32,tone,3)+R(52,15,32,32,'#d6a344',3)+R(13,54,32,30,'#8caa8b',3)+R(52,54,32,30,'#bd7560',3),
+ 'colored-tokens':()=>R(7,8,86,84,light,7)+C(30,30,13,tone)+C(68,30,13,'#d6a344')+C(30,68,13,'#bd7560')+C(68,68,13,'#8caa8b'),
+ 'dice-set':()=>R(10,12,52,52,white,7,`stroke="${ink}" stroke-width="3"`)+C(24,26,4,ink)+C(48,50,4,ink)+R(43,40,45,45,tone,6)+C(56,53,4,white)+C(75,72,4,white)+C(65,63,4,white),
+ 'talking-stick':()=>R(8,37,84,26,wood,12)+R(15,39,15,22,tone,5)+R(38,39,8,22,ink,3)+R(54,39,8,22,light,3),
+ 'talking-ball':()=>C(50,50,42,tone)+C(50,50,29,light)+`<path d="M31 48q19-20 38 0-19 20-38 0" fill="${tone}"/>`+C(50,48,5,ink),
+ 'sticky-notes':()=>R(10,10,75,75,'#f0cd50',2)+R(19,18,68,68,'#e8a3bd',2)+R(26,26,60,60,'#a4d8c2',2)+L(35,43,70,43,ink,2),
+ 'trainer-case':()=>R(5,20,90,68,ink,7)+R(11,26,78,56,wood,3)+L(34,20,34,11,ink,5)+L(34,11,66,11,ink,5)+L(66,11,66,20,ink,5)+R(18,32,20,33,tone,2)+R(47,35,28,25,light,2),
+ 'own-book':()=>R(15,8,70,84,tone,4)+R(23,12,5,76,wood,1)+L(34,31,73,31,light,4)+L(34,44,68,44,light,3),
+ 'certificate':()=>R(9,7,82,86,wood,3)+R(15,13,70,74,light,1)+L(26,33,74,33,ink,3)+L(26,45,68,45,ink,2)+C(67,69,9,tone),
+ 'trophy':()=>R(32,82,36,10,wood,2)+L(50,55,50,82,ink,5)+`<path d="M21 14h58v20q-4 27-29 29T21 34z" fill="#d6a344" stroke="${ink}" stroke-width="3"/>`+L(21,22,10,22,ink,4)+L(79,22,90,22,ink,4),
+ 'photo-frame':()=>R(5,7,90,86,wood,3)+R(12,14,76,72,'#c3e0e2',2)+C(50,37,13,tone)+`<path d="M22 82q3-29 28-29t28 29z" fill="${tone}"/>`,
+ 'compass-globe':()=>C(50,45,37,'#9dd0d4',`stroke="${ink}" stroke-width="3"`)+`<path d="M33 19l18 3 7 13-13 6-4 18-15-9-7-15zM62 43l17 8-7 15-14-3z" fill="#6fa37d"/>`+L(50,82,50,94,ink,5)+L(30,94,70,94,ink,5)
+ };if(icons[p.id])g=icons[p.id]();
 return `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">${g}</svg>`;}
 export function roomSVG(s,{selected=null,camera={x:0,y:0,w:960,h:720},ghost=null,pixelWidth=640}={}){const settings=s.roomSettings,theme=themes[settings.theme],wall=walls[settings.wall].value,floor=floors[settings.floor].value;const scale=pixelWidth/camera.w;let items=s.items.filter(i=>visible(s,i)&&product(i.product)).sort((a,b)=>({floor:0,furniture:1,wall:2,tabletop:3}[product(a.product).layer]-{floor:0,furniture:1,wall:2,tabletop:3}[product(b.product).layer]));
  const draw=(item,isGhost=false)=>{const p=product(item.product),pos=isGhost?{x:ghost.x,y:ghost.y}:position(s,item),tone=toneColor(item.tone,theme.accent),w=p.w*40,h=p.h*40,hitW=Math.max(w,44/scale),hitH=Math.max(h,44/scale);return `<g ${isGhost?'class="placement-ghost"':`data-room-item="${esc(item.id)}" tabindex="0" role="button" aria-label="${esc(p.name)}, ${esc(p.levels[item.tier])}"`} transform="translate(${pos.x*40} ${pos.y*40}) rotate(${item.rotation})" ${isGhost?'opacity=".65" pointer-events="none"':''}><title>${esc(p.name)} · ${esc(p.levels[item.tier])}</title>${!isGhost?R(-hitW/2,-hitH/2,hitW,hitH,'transparent',0,'class="item-hit"'):''}<svg x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" overflow="visible">${art(p,tone,item.tier,settings)}</svg>${selected===item.id&&!isGhost?R(-w/2-6,-h/2-6,w+12,h+12,'none',5,'stroke="#102e3e" stroke-width="4" stroke-dasharray="9 5" pointer-events="none"'):''}${isGhost?R(-w/2-4,-h/2-4,w+8,h+8,'none',4,`stroke="${ghost.ok?'#087f60':'#c0473c'}" stroke-width="5"`):''}</g>`;};
