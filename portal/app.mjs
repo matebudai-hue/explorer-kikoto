@@ -75,7 +75,7 @@ async function admin(){
  root.querySelector('#new-cohort').onclick=cohortForm;
  root.querySelector('#open-days').onclick=()=>activateSection('days');root.querySelector('#open-visits').onclick=()=>activateSection('visits');root.querySelector('#open-settings').onclick=()=>activateSection('settings');
  const menu=root.querySelector('#admin-menu-toggle');menu.onclick=()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));root.querySelector('#admin-navigation').classList.toggle('is-open',open);};
- root.querySelector('[data-participant-view]').onclick=()=>{if(!cohortId){alert('Előbb válassz évfolyamot.');return;}if(!current.memberships.some(m=>m.cohort_id===cohortId&&m.status==='approved')){alert('A résztvevői nézethez ebben az évfolyamban jóváhagyott résztvevői hozzáférés is szükséges.');return;}location.href='explorer/?cohort='+encodeURIComponent(cohortId);};
+ root.querySelector('[data-participant-view]').onclick=()=>{if(!cohortId){alert('Előbb válassz évfolyamot.');return;}location.href='explorer/?cohort='+encodeURIComponent(cohortId);};
  root.querySelectorAll('[data-admin-nav]').forEach(button=>button.onclick=()=>activateSection(button.dataset.adminNav));
  await showCohort();
 }

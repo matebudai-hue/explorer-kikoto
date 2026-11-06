@@ -1,9 +1,9 @@
-import{mountSharedRoomWorkspace}from'./shared-rooms.mjs?v=4';
+import{mountSharedRoomWorkspace}from'./shared-rooms.mjs?v=5';
 import{mountDayReflection}from'./day-reflections.mjs?v=1';
 import{mountVisitReports}from'./visit-reports.mjs?v=2';
 import{mountHospitation}from'../portal/hospitation.mjs?v=2';
 import{mountVisitPreview}from'./visit-preview.mjs?v=2';
-import{openLearningContext}from'../portal/learning-context.mjs?v=3';
+import{openLearningContext}from'../portal/learning-context.mjs?v=4';
 import{createPersistence,validateState as validateSavedState,exportFilename}from'./persistence.mjs?v=3';
 import{mountRoom}from'./room-ui.mjs?v=18';
 import{roomSVG}from'./room-art.mjs?v=17';
@@ -61,7 +61,7 @@ function updateCaseSaveStatus(status){
 window.addEventListener('explorer-save-status',e=>updateCaseSaveStatus(e.detail));
 function visitReports(){mountVisitReports($('#view'),{client:cloud.client,cohortId:cloud.cohortId,userId:cloud.userId});}
 function hospitation(){const initialVisitId=pendingVisitId;pendingVisitId=null;mountHospitation($('#view'),{client:cloud.client,cohortId:cloud.cohortId,userId:cloud.userId,initialVisitId});}
-async function room(){const epoch=renderEpoch,view=$('#view');view.innerHTML='<p role=\"status\">A terem betöltése…</p>';try{const result=await cloud.client.rpc('explorer_catalog',{p_cohort:cloud.cohortId});if(result.error)throw result.error;if(result.data?.days)catalog=result.data;}catch{toast('Az új kínálatot most nem sikerült frissíteni. A korábban betöltött állapotot látod.');}if(epoch!==renderEpoch||tab!=='room')return;disposeRoom=mountSharedRoomWorkspace(view,{state,save,toast,client:cloud.client,cohortId:cloud.cohortId,userId:cloud.userId,mountRoom,shopOptions:{catalog,fullyOpen:cloud.fullyOpenShop}});}
+async function room(){const epoch=renderEpoch,view=$('#view');view.innerHTML='<p role=\"status\">A terem betöltése…</p>';try{const result=await cloud.client.rpc('explorer_catalog',{p_cohort:cloud.cohortId});if(result.error)throw result.error;if(result.data?.days)catalog=cloud.isAdmin?{...result.data,days:result.data.days.map(day=>({...day,open:true}))}:result.data;}catch{toast('Az új kínálatot most nem sikerült frissíteni. A korábban betöltött állapotot látod.');}if(epoch!==renderEpoch||tab!=='room')return;disposeRoom=mountSharedRoomWorkspace(view,{state,save,toast,client:cloud.client,cohortId:cloud.cohortId,userId:cloud.userId,mountRoom,isAdmin:cloud.isAdmin,shopOptions:{catalog,fullyOpen:cloud.fullyOpenShop}});}
 function reportTable(s){return `${testStats(s,catalog)}${Object.entries(s.caseNotes||{}).map(([key,notes])=>{const [dayId,caseId]=key.split('/'),c=catalog.days.find(d=>d.id===dayId)?.cases?.find(c=>c.id===caseId);return c?`<details><summary>Esettanulmány · ${esc(c.title)}</summary><div>${catalog.casePrompts.map((prompt,j)=>`<p><strong>${esc(prompt)}</strong></p><p class="case-text">${esc(notes[j]||'Még nincs válasz.')}</p>`).join('')}</div></details>`:''}).join('')}${catalog.days.map(d=>(d.questions.length?`<details><summary>${esc(d.title)} · feladatonkénti eredmények</summary><div>${questionTable(s,d,d.questions)}</div></details>`:'')+(d.questionArchives||[]).map(archive=>`<details><summary>${esc(d.title)} · ${esc(archive.title)}</summary><div>${questionTable(s,d,archive.questions)}</div></details>`).join('')).join('')}`}
 function questionTable(s,d,qs){if(!qs.length)return '';return `<div class="tablewrap"><table><thead><tr><th>Feladat</th><th>Elsőre</th><th>Most</th><th>Legjobb</th><th>Próbák</th></tr></thead><tbody>${qs.map((q,i)=>{const a=s.answers[d.id+'/'+q.id];return `<tr><td>${esc(d.title)} / ${i+1}.<br>${esc(q.title)}${a?`<div class="muted small">Első válasz:<br>${describeAnswer(q,a.first.value).map(esc).join('<br>')}<br>Most:<br>${describeAnswer(q,a.current.value).map(esc).join('<br>')}</div>`:''}</td><td>${a?a.first.score:'—'}</td><td>${a?a.current.score:'—'}</td><td>${a?a.best:'—'}</td><td>${a?a.attempts:'—'}</td></tr>`}).join('')}</tbody></table></div>`}
 
