@@ -90,8 +90,8 @@ body.admin-shell{--ink:#122b39;--muted:#62727a;--line:#ddcdb8;--accent:#245e60;-
 .admin-shell .days-heading h2{font-size:26px;margin:1px 0 3px}
 .admin-shell .days-heading p{margin:0}
 .admin-shell .days-kicker{font-size:10px;letter-spacing:.14em;color:#886b42;font-weight:700}
-.admin-shell .days-list{background:#fcf9f3;border:1px solid #dfcfbb;border-radius:10px;overflow:hidden}
-.admin-shell .day-admin-row{display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid #e7ddcf}
+.admin-shell .days-list{background:transparent;border:0;border-radius:0;overflow:visible}
+.admin-shell .day-admin-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #e7ddcf}
 .admin-shell .day-admin-row:last-child{border-bottom:0}
 .admin-shell .day-admin-number{font-family:Georgia,serif;font-size:19px;color:#a27e4c;min-width:30px}
 .admin-shell .day-admin-info{flex:1;min-width:0}
