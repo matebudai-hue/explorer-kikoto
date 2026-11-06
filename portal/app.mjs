@@ -2,7 +2,7 @@ import{mountAdminPoints}from'./admin-points.mjs?v=1';
 import{mountVisitReports}from'../explorer/visit-reports.mjs?v=1';
 import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs';
 import{mountHospitation}from'./hospitation.mjs';
-import{mountContentEditor}from'./content-editor.mjs';
+import{mountContentEditor}from'./content-editor.mjs?v=2';
 import{getClient,access,checked}from'./access.mjs';
 import{validateState}from'../explorer/persistence.mjs';
 import{migrateRoom}from'../explorer/room-engine.mjs';
@@ -112,4 +112,5 @@ function cohortForm(){
  container.querySelector('#create-cohort').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),b=e.target.querySelector('[type=submit]')||e.target.querySelector('button');b.disabled=true;try{cohortId=checked(await client.rpc('explorer_create_cohort',{p_title:String(f.get('title')),p_source:f.get('source')||null}));await admin();}catch(error){report(error);b.disabled=false;}};
 }
 await boot();
+
 
