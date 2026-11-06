@@ -2,7 +2,7 @@ import{mountParticipantManagement}from'./participant-management.mjs?v=2';
 import{mountMissingReports}from'./missing-reports.mjs?v=1';
 import{mountAdminPoints}from'./admin-points.mjs?v=1';
 import{mountVisitReports}from'../explorer/visit-reports.mjs?v=1';
-import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs?v=3';
+import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs?v=4';
 import{mountHospitation}from'./hospitation.mjs';
 import{mountContentEditor}from'./content-editor.mjs?v=2';
 import{getClient,access,checked}from'./access.mjs';
@@ -68,7 +68,9 @@ async function admin(){
  document.body.classList.add('admin-shell');
  cohorts=checked(await client.rpc('explorer_admin_cohorts'));
  if(!cohorts.some(c=>c.id===cohortId))cohortId=cohorts[0]?.id;
- root.innerHTML=`<button type="button" id="admin-menu-toggle" aria-expanded="false" aria-controls="admin-navigation">Menü ☰</button><nav id="admin-navigation" class="admin-nav" aria-label="Adminisztráció"><div class="admin-nav-title">EXPLORER<br>KIKÖTŐ</div><button data-admin-nav="overview">Áttekintés</button><button data-admin-nav="days">Képzési napok</button><button data-admin-nav="visits">Hospitálási naptár</button><button data-admin-nav="reports">Hiányzó beszámolók</button><button data-admin-nav="settings">Beállítások és résztvevők</button><button type="button" class="participant-nav" data-participant-view>Résztvevői nézet ↗</button></nav><div class="admin-toolbar"><label>Évfolyam <select id="cohort" aria-label="Évfolyam">${cohorts.map(c=>`<option value="${esc(c.id)}" ${cohortId===c.id?'selected':''}>${esc(c.title)}</option>`).join('')}</select></label><button type="button" id="open-days">Képzési napok</button><button type="button" id="open-visits">Hospitálási naptár</button><button type="button" id="open-settings">Beállítások</button><details class="cohort-tools"><summary>Évfolyamkezelés</summary><button id="new-cohort" type="button">Új évfolyam</button></details></div><div id="admin-detail"></div><p role="alert" class="message"></p>`;
+ root.innerHTML=`<button type="button" id="admin-menu-toggle" aria-expanded="false" aria-controls="admin-navigation">Menü ☰</button><nav id="admin-navigation" class="admin-nav" aria-label="Adminisztráció"><div class="admin-nav-title"><svg class="admin-compass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="24" cy="24" r="16"/><path d="M24 2L27 21 46 24 27 27 24 46 21 27 2 24 21 21Z"/><path d="M12 12L36 36M36 12L12 36" opacity=".6"/></svg>EXPLORER<br>KIKÖTŐ<span class="admin-nav-caption">TRÉNERKÉPZÉSI PORTÁL</span></div><button data-admin-nav="overview">Áttekintés</button><button data-admin-nav="days">Képzési napok</button><button data-admin-nav="visits">Hospitálási naptár</button><button data-admin-nav="reports">Hiányzó beszámolók</button><button data-admin-nav="settings">Beállítások és résztvevők</button><button type="button" class="participant-nav" data-participant-view>Résztvevői nézet ↗</button></nav><div class="admin-toolbar"><label>Évfolyam <select id="cohort" aria-label="Évfolyam">${cohorts.map(c=>`<option value="${esc(c.id)}" ${cohortId===c.id?'selected':''}>${esc(c.title)}</option>`).join('')}</select></label><button type="button" id="open-days">Képzési napok</button><button type="button" id="open-visits">Hospitálási naptár</button><button type="button" id="open-settings">Beállítások</button><details class="cohort-tools"><summary>Évfolyamkezelés</summary><button id="new-cohort" type="button">Új évfolyam</button></details></div><div id="admin-detail"></div><p role="alert" class="message"></p>`;
+ const iconPaths={overview:'<path d="M3 11l9-8 9 8v9h-6v-6H9v6H3z"/>',days:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6M17 2v6M3 10h18"/>',visits:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6M17 2v6M3 10h18M7 14h3M14 14h3M7 18h3"/>',reports:'<path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/>',settings:'<circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0112 0v2zM17 8a3 3 0 010 6M19 16a4 4 0 012 4"/>',participant:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'};
+ root.querySelectorAll('[data-admin-nav], [data-participant-view]').forEach(button=>{const key=button.hasAttribute('data-participant-view')?'participant':button.dataset.adminNav;button.insertAdjacentHTML('afterbegin',`<svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[key]||''}</svg>`);});
  root.querySelector('#cohort').onchange=async e=>{cohortId=e.target.value;await showCohort();};
  root.querySelector('#new-cohort').onclick=cohortForm;
  root.querySelector('#open-days').onclick=()=>activateSection('days');root.querySelector('#open-visits').onclick=()=>activateSection('visits');root.querySelector('#open-settings').onclick=()=>activateSection('settings');
@@ -130,6 +132,7 @@ function cohortForm(){
  container.querySelector('#create-cohort').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),b=e.target.querySelector('[type=submit]')||e.target.querySelector('button');b.disabled=true;try{cohortId=checked(await client.rpc('explorer_create_cohort',{p_title:String(f.get('title')),p_source:f.get('source')||null}));await admin();}catch(error){report(error);b.disabled=false;}};
 }
 await boot();
+
 
 
 
