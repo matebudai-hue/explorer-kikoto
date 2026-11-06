@@ -65,3 +65,18 @@ nav [data-tab=visitReports]::before{content:'▤'}
 
 .day-content .day-reflection{order:3;padding:22px;margin:6px 0}.day-content .day-test{order:4}.reflection-answer{padding:10px 0;border-bottom:1px solid #e9e4d9}.reflection-answer p{margin:6px 0;overflow-wrap:anywhere}.day-reflection [role=status]{display:inline-block;margin:0 10px;font-size:13px}.day-reflection [data-reflection-refresh]{margin-top:8px}
 
+
+.shared-room-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.shared-room-tabs button[aria-pressed=true]{background:#183e50;color:white}
+.shared-room-tabs button[hidden]{display:none}
+.shared-room-header{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+.shared-room-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;margin-top:18px}
+.shared-room-card{background:#fffdf8;border:1px solid #d8e5e4;border-radius:14px;padding:14px;min-width:0}
+.shared-room-card h3{margin:6px 0 4px}.shared-room-card p{margin:4px 0 10px}
+.shared-room-preview{background:#f3eee5;border-radius:9px;overflow:hidden;margin:12px 0}
+.shared-room-preview img{display:block;width:100%;height:auto}
+.shared-room-detail{background:#fffdf8;border:1px solid #d8e5e4;border-radius:14px;padding:16px}
+.shared-room-detail .shared-room-preview{max-height:72vh;overflow:auto}
+.shared-room-detail .shared-room-preview.zoomed img{min-width:850px}
+.shared-room-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.shared-room-empty{color:#657c85;font-size:.9em}
