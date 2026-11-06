@@ -1,7 +1,7 @@
 import{shopLevel,productLevel,itemAvailable,upgradeAvailable}from'./shop-unlocks.mjs?v=1';
 import{products,product,categories,tones,themes,walls,floors,views,toneColor}from'./room-catalog.mjs?v=18';
 import{migrateRoom,buy,upgrade,moveItem,rotateItem,storeItem,restoreItem,setTone,setRoom,applyTheme,undoRoom,canUndo,position,visible,checkPlacement,placeOnContainer,setItemLabel}from'./room-engine.mjs?v=18';
-import{art,roomSVG,esc}from'./room-art.mjs?v=19';
+import{art,roomSVG,esc}from'./room-art.mjs?v=20';
 const layerName={floor:'Padlóra helyezhető',furniture:'Szabadon elhelyezhető',wall:'A felső falhoz igazodik',tabletop:'Asztalra, kocsira vagy kávépultra való'};
 export function mountRoom(root,s,save,toast,options={}){let level=shopLevel(options.catalog,options.fullyOpen),available=products.filter(p=>itemAvailable(p.id,level));migrateRoom(s);save();let selected=null,category='all',shopTab='shop',search='',full=false,mode='select',ghost=null,camera={x:0,y:0,w:960,h:720},pointers=new Map(),down=null,pinch=null,wasPinch=false,disposed=false,containerOpen=false;const $=id=>root.querySelector('#'+id),funds=()=>s.earned-s.spent,item=()=>s.items.find(i=>i.id===selected),attempt=fn=>{try{fn();save();render()}catch(e){render();toast(e.message)}};
  function focusItem(i){const p=position(s,i);camera.x=Math.max(0,Math.min(960-camera.w,p.x*40-camera.w/2));camera.y=Math.max(0,Math.min(720-camera.h,p.y*40-camera.h/2));}
