@@ -9,37 +9,37 @@ export const walls={ice:{name:'Jégkék',value:'#c4e0e3'},sand:{name:'Homok',val
 export const floors={oak:{name:'Világos tölgy',value:'#dbc5a2'},walnut:{name:'Dió',value:'#a98569'},light:{name:'Világos padló',value:'#ece8dd'},concrete:{name:'Beton',value:'#cdd2d1'}};
 export const views={water:'Vízpart',garden:'Kert',forest:'Erdő',city:'Város'};
 const data=[
-['chair','Tréningszék','seat',15,12,1.4,1.4,'furniture','chair',['Egyszerű','Párnázott','Prémium kárpit'],[20,35]],
+['chair','Tréningszék','seat',15,12,1.4,1.4,'furniture','chair',['Vászonszék', 'Párnázott tréningszék', 'Támlás, kényelmes szék'],[20,35]],
 ['armchair','Karosszék','seat',45,4,2,2,'furniture','armchair',['Kényelmes','Puha kárpit','Lounge'],[35,60]],
 ['cushion','Ülőpárna','seat',15,8,1.4,1.4,'furniture','cushion',['Pamut','Vastag párna','Szövött huzat'],[15,25]],
-['beanbag','Babzsák','seat',35,4,2,2,'furniture','beanbag',['Klasszikus','Nagy babzsák','Prémium huzat'],[25,45]],
+['beanbag','Babzsák','seat',35,4,2,2,'furniture','beanbag',['Klasszikus babzsák', 'Nagy, süppedős babzsák', 'Mintás huzatos babzsák'],[25,45]],
 ['bench','Pad','seat',40,3,3.2,1.3,'furniture','bench',['Fa','Párnázott','Támlás'],[30,50]],
 ['stool','Gurulós tréneri szék','seat',30,2,1.4,1.4,'furniture','stool',['Gurulós','Párnázott','Ergonomikus'],[25,45]],
-['table','Kerek asztal','surface',30,4,3.2,3.2,'furniture','roundtable',['Klasszikus','Fa asztallap','Prémium felület'],[30,50]],
-['modular','Összetolható asztal','surface',40,6,3.5,2,'furniture','table',['Alap','Mobil','Prémium'],[30,55]],
-['standing','Állóasztal','surface',45,3,2.6,1.6,'furniture','standing',['Magas asztal','Állítható','Prémium'],[35,60]],
-['side','Lerakóasztal','surface',20,4,1.8,1.8,'furniture','side',['Kis asztal','Tárolóval','Prémium'],[20,35]],
+['table','Kerek asztal','surface',30,4,3.2,3.2,'furniture','roundtable',['Egyszerű kerek asztal', 'Faasztal', 'Betétes, díszes faasztal'],[30,50]],
+['modular','Összetolható asztal','surface',40,6,3.5,2,'furniture','table',['Egyszerű asztal', 'Gurulós asztal', 'Rendszerezett workshopasztal'],[30,55]],
+['standing','Állóasztal','surface',45,3,2.6,1.6,'furniture','standing',['Magas asztal', 'Állítható asztal', 'Fa- és fémvázas állóasztal'],[35,60]],
+['side','Lerakóasztal','surface',20,4,1.8,1.8,'furniture','side',['Kis asztal', 'Polcos lerakó', 'Lerakó könyvvel és lámpával'],[20,35]],
 ['flipchart','Flipchart','tools',25,3,2,1.7,'furniture','flipchart',['Állványos','Gurulós','Kétoldalas mágneses'],[25,45]],
 ['whiteboard','Mobil írótábla','tools',45,3,3,1.4,'furniture','whiteboard',['Írható','Mágneses','Kétoldalas'],[30,55]],
 ['pinboard','Parafatábla','tools',35,2,3.4,1,'wall','pinboard',['Parafa','Kártyakészlettel','Teljes ötletfal'],[30,50]],
 ['cart','Eszközöskocsi','tools',35,2,2,1.6,'furniture','cart',['Kis kocsi','Kétpolcos','Felszerelt'],[25,45]],
 ['timer','Időmérő','tools',15,2,1,0.8,'tabletop','timer',['Analóg','Színes időjelző','Digitális'],[15,30]],
-['markers','Filckészlet','tools',10,3,1,0.7,'tabletop','markers',['Alapkészlet','Színes készlet','Teljes trénerkészlet'],[15,25]],
+['markers','Filckészlet','tools',10,3,1,0.7,'tabletop','markers',['Három filc', 'Színes filckészlet', 'Rendezett tréneri filckészlet'],[15,25]],
 ['coffee','Kávésarok','comfort',70,1,3,2,'furniture','coffee',['Termosz és tálca','Kávépult','Kávéállomás'],[60,110]],
-['water','Vízadagoló','comfort',35,1,1.5,1.7,'furniture','water',['Víztartály','Hűtött víz','Prémium adagoló'],[30,50]],
-['ac','Klíma','comfort',40,1,3,0.9,'wall','ac',['Alap','Csendes','Prémium'],[40,70]],
+['water','Vízadagoló','comfort',35,1,1.5,1.7,'furniture','water',['Víztartály', 'Hűtött vízadagoló', 'Vízállomás poharakkal'],[30,50]],
+['ac','Klíma','comfort',40,1,3,0.9,'wall','ac',['Faliklíma', 'Csendes klíma', 'Kijelzős, modern klíma'],[40,70]],
 ['coat','Kabátállvány','comfort',25,2,1.5,1.5,'furniture','coat',['Fa','Állítható','Öltözősarok'],[20,40]],
 ['acoustic','Akusztikai panel','comfort',40,3,2.8,1,'wall','acoustic',['Filc','Mintázott','Fa lamellás'],[35,60]],
 ['plant','Zöld sarok','plants',15,6,1.5,1.5,'furniture','plant',['Kis növény','Dús növény','Nagy dézsa'],[20,35]],
 ['rug','Puha szőnyeg','textiles',35,2,5,3.5,'floor','rug',['Sima','Mintás','Szövött'],[30,50]],
-['rug-large','Nagy szőnyeg · 4 × 4 m','textiles',90,0,8,8,'floor','rug',['Puha','Mintás','Prémium szövött'],[45,70]],
+['rug-large','Nagy szőnyeg · 4 × 4 m','textiles',90,0,8,8,'floor','rug',['Puha szőnyeg', 'Geometrikus mintás', 'Szövött, rojtos szőnyeg'],[45,70]],
 ['lamp','Állólámpa','comfort',25,3,1.3,1.3,'furniture','lamp',['Olvasólámpa','Meleg fény','Hangulatfény'],[25,40]],
 ['curtain','Függöny','textiles',30,2,3,1,'wall','curtain',['Könnyű','Sötétítő','Réteges'],[25,45]],
 ['picture','Falikép','personal',20,3,2.4,1,'wall','picture',['Nyomat','Keretezett','Galériakép'],[20,40]],
 ['bookshelf','Könyvespolc','comfort',40,2,3,1.2,'furniture','bookshelf',['Kis polc','Könyvespolc','Szakmai könyvtár'],[40,70]],
 ['window','Panorámaablak','comfort',40,2,4,1,'wall','window',['Ablak','Nagy ablak','Panoráma'],[60,100]],
 ['terrace','Teraszajtó','comfort',180,1,4.5,1,'wall','terrace',['Kijárat','Franciaajtó','Panorámaterasz'],[90,160]],
-['fireplace','Kandalló','comfort',120,1,3,1.5,'furniture','fireplace',['Kandalló','Kőburkolat','Prémium kandalló'],[65,110]],
+['fireplace','Kandalló','comfort',120,1,3,1.5,'furniture','fireplace',['Egyszerű kandalló', 'Kőburkolatos kandalló', 'Kandalló fával és otthonos fénnyel'],[65,110]],
 ['sign','Saját trénertábla','personal',25,1,3,1,'wall','sign',['Felirat','Keretezett','Világító tábla'],[25,45]],
 ['mug','Saját bögre','personal',10,2,0.8,0.8,'tabletop','mug',['Kerámia','Saját jel','Kézműves'],[15,25]],
 ['ship','Jégtörő hajómodell','personal',30,1,1.5,0.8,'tabletop','ship',['Hajómodell','Részletes modell','Gyűjtői darab'],[30,50]],
@@ -57,53 +57,53 @@ const data=[
 ['wall-whiteboard','Falra szerelt whiteboard','tools',40,0,4,1,'wall','wallboard',['Írótábla','Mágneses tábla','Nagy ötletfal'],[35,60]],
 ['wall-clock','Falióra','personal',20,0,1.2,1,'wall','clock',['Klasszikus','Letisztult','Díszes'],[20,35]],
 ['decor-sculpture','Dekorszobor','personal',25,0,1.2,1.2,'furniture','sculpture',['Absztrakt forma','Kompozíció','Galériadarab'],[25,40]],
-['open-shelf', 'Nyitott tárolópolc', 'comfort', 65, 0, 4, 2, 'furniture', 'bookshelf', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['open-shelf', 'Nyitott tárolópolc', 'comfort', 65, 0, 4, 2, 'furniture', 'bookshelf', ['Egyszerű fapolc', 'Színes hátfalas polc', 'Megvilágított műhelypolc'], [15, 25]]
 ,
-['supply-cabinet', 'Tréneri eszközszekrény', 'comfort', 75, 0, 4, 2, 'furniture', 'bookshelf', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['supply-cabinet', 'Tréneri eszközszekrény', 'comfort', 75, 0, 4, 2, 'furniture', 'bookshelf', ['Kétajtós szekrény', 'Címkézett rekeszek', 'Rendszerezett trénerközpont'], [15, 25]]
 ,
-['screen-divider', 'Gurulós paraván', 'comfort', 45, 0, 3, 1.3, 'furniture', 'whiteboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['screen-divider', 'Gurulós paraván', 'comfort', 45, 0, 3, 1.3, 'furniture', 'whiteboard', ['Egyszínű térelválasztó', 'Mintás vászonparaván', 'Kétoldalas ötletfal'], [15, 25]]
 ,
-['sofa', 'Kanapé', 'seat', 85, 0, 3.2, 2, 'furniture', 'bench', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['sofa', 'Kanapé', 'seat', 85, 0, 3.2, 2, 'furniture', 'bench', ['Kétszemélyes kanapé', 'Párnákkal és pléddel', 'Beszélgetősarok díszpárnákkal'], [15, 25]]
 ,
-['pouf', 'Puff', 'seat', 25, 0, 1.5, 1.5, 'furniture', 'cushion', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['pouf', 'Puff', 'seat', 25, 0, 1.5, 1.5, 'furniture', 'cushion', ['Kerek puff', 'Steppelt puff', 'Mintás, lábas puff'], [15, 25]]
 ,
-['hanging-chair', 'Függőfotel', 'seat', 70, 0, 2, 2, 'furniture', 'armchair', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['hanging-chair', 'Függőfotel', 'seat', 70, 0, 2, 2, 'furniture', 'armchair', ['Vászonfüggőfotel', 'Párnás fészekfotel', 'Lombos, párnás pihenőfészek'], [15, 25]]
 ,
-['tea-table', 'Teázóasztal', 'surface', 45, 0, 3, 2, 'furniture', 'table', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['tea-table', 'Teázóasztal', 'surface', 45, 0, 3, 2, 'furniture', 'table', ['Kis teásasztal', 'Teáskanna és csészék', 'Délutáni teasarok süteménnyel'], [15, 25]]
 ,
-['coat-wall', 'Mobil fogasfal', 'comfort', 40, 0, 3, 1.5, 'furniture', 'coat', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['coat-wall', 'Mobil fogasfal', 'comfort', 40, 0, 3, 1.5, 'furniture', 'coat', ['Kampós fogasfal', 'Kabátokkal és táskával', 'Rendezett vendégfogadó fogas'], [15, 25]]
 ,
-['projector-screen', 'Projektor és vetítővászon', 'tools', 80, 0, 3, 1.5, 'furniture', 'whiteboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['projector-screen', 'Projektor és vetítővászon', 'tools', 80, 0, 3, 1.5, 'furniture', 'whiteboard', ['Vetítővászon és projektor', 'Vászon tréningábrával', 'Kivetített csoportmunka'], [15, 25]]
 ,
-['picture-cards', 'Képkártyapakli', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'picture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['picture-cards', 'Képkártyapakli', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'picture', ['Képkártyák dobozban', 'Szétterített képkártyák', 'Témák szerint rendezett képkártyák'], [15, 25]]
 ,
-['emotion-cards', 'Érzelemkártyák', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['emotion-cards', 'Érzelemkártyák', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Egyszerű arckártyák', 'Színes érzelemkészlet', 'Teljes érzelemtérkép-készlet'], [15, 25]]
 ,
-['conversation-cards', 'Beszélgetőkártyák', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['conversation-cards', 'Beszélgetőkártyák', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Kérdéskártyák', 'Színes témakörök', 'Dobozos beszélgetésindító készlet'], [15, 25]]
 ,
-['building-blocks', 'Építőkockás doboz', 'tools', 20, 0, 0.6, 0.6, 'tabletop', 'chess', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['building-blocks', 'Építőkockás doboz', 'tools', 20, 0, 0.6, 0.6, 'tabletop', 'chess', ['Maréknyi kocka', 'Színes építőkészlet', 'Felépített közös alkotás'], [15, 25]]
 ,
-['colored-tokens', 'Színes korongok készlete', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'ball', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['colored-tokens', 'Színes korongok készlete', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'ball', ['Néhány korong', 'Többszínű készlet', 'Mintába rendezett játékkészlet'], [15, 25]]
 ,
-['dice-set', 'Dobókockakészlet', 'play', 10, 0, 0.5, 0.5, 'tabletop', 'chess', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['dice-set', 'Dobókockakészlet', 'play', 10, 0, 0.5, 0.5, 'tabletop', 'chess', ['Két dobókocka', 'Színes kockakészlet', 'Dobókockák vászonzsákkal'], [15, 25]]
 ,
-['talking-stick', 'Beszélőbot', 'tools', 10, 0, 0.5, 0.5, 'tabletop', 'markers', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['talking-stick', 'Beszélőbot', 'tools', 10, 0, 0.5, 0.5, 'tabletop', 'markers', ['Egyszerű fabot', 'Színes szalagokkal', 'Faragott, egyedi beszélőbot'], [15, 25]]
 ,
-['talking-ball', 'Beszélőlabda', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'ball', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['talking-ball', 'Beszélőlabda', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'ball', ['Egyszínű labda', 'Színes mintás labda', 'Vidám, arcos beszélőlabda'], [15, 25]]
 ,
-['sticky-notes', 'Post-it- és cetlikészlet', 'tools', 10, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['sticky-notes', 'Post-it- és cetlikészlet', 'tools', 10, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Egy tömb cetli', 'Többszínű cetlikészlet', 'Rendszerezett cetli- és jelölőkészlet'], [15, 25]]
 ,
-['trainer-case', 'Nyitott tréneri bőrönd', 'tools', 45, 0, 3, 2, 'furniture', 'cart', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['trainer-case', 'Nyitott tréneri bőrönd', 'tools', 45, 0, 3, 2, 'furniture', 'cart', ['Nyitott bőrönd', 'Bőrönd rendezett eszközökkel', 'Utazó tréneri műhely'], [15, 25]]
 ,
-['own-book', 'Saját könyv', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'bookshelf', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['own-book', 'Saját könyv', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'bookshelf', ['Kézirat spirálozva', 'Megjelent, puhakötésű könyv', 'Díszkiadás dedikált példánnyal'], [15, 25]]
 ,
-['certificate', 'Keretezett oklevél', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'picture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['certificate', 'Keretezett oklevél', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'picture', ['Oklevél egyszerű keretben', 'Paszpartus oklevél', 'Oklevél pecséttel és díszkeretben'], [15, 25]]
 ,
-['trophy', 'Serleg vagy díj', 'personal', 30, 0, 0.5, 0.5, 'tabletop', 'sculpture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['trophy', 'Serleg vagy díj', 'personal', 30, 0, 0.5, 0.5, 'tabletop', 'sculpture', ['Kis serleg', 'Gravírozott díj', 'Dísztalpas, aranyszínű trófea'], [15, 25]]
 ,
-['photo-frame', 'Fényképkeret', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'picture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['photo-frame', 'Fényképkeret', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'picture', ['Egyszerű keret', 'Képes, színes keret', 'Képes keret személyes díszekkel'], [15, 25]]
 ,
-['compass-globe', 'Iránytű vagy földgömb', 'personal', 25, 0, 0.5, 0.5, 'tabletop', 'clock', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
+['compass-globe', 'Iránytű vagy földgömb', 'personal', 25, 0, 0.5, 0.5, 'tabletop', 'clock', ['Asztali iránytű', 'Földgömb faállványon', 'Rézszínű, térképes utazóasztalka'], [15, 25]]
 ];
 export const products=data.map(([id,name,category,price,max,w,h,layer,art,levels,upgrades])=>({id,name,category,price,max:null,w,h,layer,art,levels,upgrades,surface:['table','modular','standing','side','cart','coffee','open-shelf','supply-cabinet','tea-table','trainer-case'].includes(id)}));
 export const product=id=>products.find(p=>p.id===id);
