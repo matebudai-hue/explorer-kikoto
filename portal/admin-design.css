@@ -85,3 +85,14 @@
 @media(max-width:850px){.overview-columns{grid-template-columns:1fr}.overview-status button:first-of-type{margin-left:0}}
 
 
+
+
+/* Teljes szélességű naptár és áttekinthető beállítások */
+.admin-shell .visit-admin{max-width:none;width:100%}
+.admin-settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:12px;align-items:start}
+.admin-settings-card{background:white;border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
+.admin-settings-card h3{margin:0 0 10px;font-size:17px}
+.admin-settings-card>.panel{padding:0;margin:0;border:0;box-shadow:none}
+.admin-settings-card .panel+.panel{margin-top:12px}
+.admin-settings-card .admin-points-section>.panel{padding:0;margin:0;border:0;box-shadow:none}
+.admin-settings-card .event button{font-size:12px;padding:6px 8px}
