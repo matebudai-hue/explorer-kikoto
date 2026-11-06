@@ -1,3 +1,4 @@
+import{mountSharedRoomWorkspace}from'./shared-rooms.mjs?v=1';
 import{mountDayReflection}from'./day-reflections.mjs?v=1';
 import{mountVisitReports}from'./visit-reports.mjs?v=1';
 import{mountHospitation}from'../portal/hospitation.mjs?v=2';
@@ -60,7 +61,7 @@ function updateCaseSaveStatus(status){
 window.addEventListener('explorer-save-status',e=>updateCaseSaveStatus(e.detail));
 function visitReports(){mountVisitReports($('#view'),{client:cloud.client,cohortId:cloud.cohortId,userId:cloud.userId});}
 function hospitation(){const initialVisitId=pendingVisitId;pendingVisitId=null;mountHospitation($('#view'),{client:cloud.client,cohortId:cloud.cohortId,userId:cloud.userId,initialVisitId});}
-function room(){disposeRoom=mountRoom($('#view'),state,save,toast);}
+function room(){disposeRoom=mountSharedRoomWorkspace($('#view'),{state,save,toast,client:cloud.client,cohortId:cloud.cohortId,userId:cloud.userId,mountRoom});}
 function reportTable(s){return `${testStats(s,catalog)}${Object.entries(s.caseNotes||{}).map(([key,notes])=>{const [dayId,caseId]=key.split('/'),c=catalog.days.find(d=>d.id===dayId)?.cases?.find(c=>c.id===caseId);return c?`<details><summary>Esettanulmány · ${esc(c.title)}</summary><div>${catalog.casePrompts.map((prompt,j)=>`<p><strong>${esc(prompt)}</strong></p><p class="case-text">${esc(notes[j]||'Még nincs válasz.')}</p>`).join('')}</div></details>`:''}).join('')}${catalog.days.map(d=>(d.questions.length?`<details><summary>${esc(d.title)} · feladatonkénti eredmények</summary><div>${questionTable(s,d,d.questions)}</div></details>`:'')+(d.questionArchives||[]).map(archive=>`<details><summary>${esc(d.title)} · ${esc(archive.title)}</summary><div>${questionTable(s,d,archive.questions)}</div></details>`).join('')).join('')}`}
 function questionTable(s,d,qs){if(!qs.length)return '';return `<div class="tablewrap"><table><thead><tr><th>Feladat</th><th>Elsőre</th><th>Most</th><th>Legjobb</th><th>Próbák</th></tr></thead><tbody>${qs.map((q,i)=>{const a=s.answers[d.id+'/'+q.id];return `<tr><td>${esc(d.title)} / ${i+1}.<br>${esc(q.title)}${a?`<div class="muted small">Első válasz:<br>${describeAnswer(q,a.first.value).map(esc).join('<br>')}<br>Most:<br>${describeAnswer(q,a.current.value).map(esc).join('<br>')}</div>`:''}</td><td>${a?a.first.score:'—'}</td><td>${a?a.current.score:'—'}</td><td>${a?a.best:'—'}</td><td>${a?a.attempts:'—'}</td></tr>`}).join('')}</tbody></table></div>`}
 
@@ -75,6 +76,7 @@ $('#reports').onchange=async e=>{let invalid=0;for(const f of e.target.files){tr
 render();
 
 function renderReading(r){return `<article class="card"><p class="kicker">FELKÉSZÜLÉSI FELADAT · 15 TÉMA</p><h3>${esc(r.title)}</h3>${r.intro.map(p=>`<p class="muted">${esc(p)}</p>`).join('')}</article>${r.sections.map(s=>`<details><summary>${esc(s.title)}</summary><div>${s.paragraphs.map(p=>{const split=p.indexOf(':');return split>0&&split<35?`<p><strong>${esc(p.slice(0,split+1))}</strong> ${esc(p.slice(split+1))}</p>`:`<p>${esc(p)}</p>`}).join('')}</div></details>`).join('')}`}
+
 
 
 
