@@ -1,0 +1,7 @@
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export async function mountMissingReports(host,{client,cohortId}){
+ host.innerHTML='<section class="panel missing-reports"><h2>Hiányzó hospitálási beszámolók</h2><p>A már elmúlt alkalmak visszaigazolt jelentkezéseit mutatjuk, amelyekhez az adott résztvevő még nem kapcsolt beszámolót. A lista nem igazolja a tényleges részvételt.</p><div data-missing role="status">Betöltés…</div><p class="small muted">A szabadon megadott, alkalomhoz nem kapcsolt beszámolók alapján a rendszer nem tudja automatikusan megállapítani a teljesítést.</p><button type="button" data-refresh>Lista frissítése</button></section>';
+ const out=host.querySelector('[data-missing]');
+ async function load(){out.textContent='Betöltés…';try{const {data,error}=await client.rpc('explorer_missing_visit_reports',{p_cohort:cohortId});if(error)throw error;if(!host.isConnected)return;out.innerHTML=(data||[]).length?'<div class="tablewrap"><table><thead><tr><th>Dátum</th><th>Program</th><th>Helyszín</th><th>Jelentkező</th></tr></thead><tbody>'+data.map(r=>`<tr><td>${esc(r.visit_date)}</td><td>${esc(r.program)}</td><td>${esc(r.place)}</td><td>${esc(r.display_name)}</td></tr>`).join('')+'</tbody></table></div>':'<p>Jelenleg nincs ilyen hiányzó beszámoló.</p>';}catch{out.textContent='A lista nem tölthető be. Próbáld újra.';}}
+ host.querySelector('[data-refresh]').onclick=load;await load();
+}

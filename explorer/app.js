@@ -1,6 +1,6 @@
 import{mountSharedRoomWorkspace}from'./shared-rooms.mjs?v=1';
 import{mountDayReflection}from'./day-reflections.mjs?v=1';
-import{mountVisitReports}from'./visit-reports.mjs?v=1';
+import{mountVisitReports}from'./visit-reports.mjs?v=2';
 import{mountHospitation}from'../portal/hospitation.mjs?v=2';
 import{mountVisitPreview}from'./visit-preview.mjs?v=2';
 import{openLearningContext}from'../portal/learning-context.mjs?v=2';
@@ -76,6 +76,7 @@ $('#reports').onchange=async e=>{let invalid=0;for(const f of e.target.files){tr
 render();
 
 function renderReading(r){return `<article class="card"><p class="kicker">FELKÉSZÜLÉSI FELADAT · 15 TÉMA</p><h3>${esc(r.title)}</h3>${r.intro.map(p=>`<p class="muted">${esc(p)}</p>`).join('')}</article>${r.sections.map(s=>`<details><summary>${esc(s.title)}</summary><div>${s.paragraphs.map(p=>{const split=p.indexOf(':');return split>0&&split<35?`<p><strong>${esc(p.slice(0,split+1))}</strong> ${esc(p.slice(split+1))}</p>`:`<p>${esc(p)}</p>`}).join('')}</div></details>`).join('')}`}
+
 
 
 
