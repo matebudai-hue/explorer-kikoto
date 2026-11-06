@@ -1,0 +1,75 @@
+/* Explorer Kikötő · adminisztráció */
+body.admin-shell{--ink:#122b39;--muted:#62727a;--line:#ddcdb8;--accent:#245e60;--sea:#1c5659;--sand:#e9ddca;--cream:#f8f4ec;min-height:100vh;background:#f6f0e6;color:var(--ink)}
+.admin-shell header{background:#fbf8f2;border-color:#b18b51;border-bottom:1px solid #e5d9ca}
+.admin-shell header .brand{font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:700;letter-spacing:.01em}
+.admin-shell h1,.admin-shell h2,.admin-shell h3{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.015em;color:#122b39}
+.admin-shell .panel,.admin-shell .admin-settings-card{background:#fcf9f3;border:1px solid #dfcfbb;box-shadow:none;border-radius:10px}
+.admin-shell button,.admin-shell .button{border-color:#d6c6ae;background:#fcf9f3;color:#193943;border-radius:7px}
+.admin-shell button:hover,.admin-shell .button:hover{background:#f1e9db;filter:none}
+.admin-shell button.primary,.admin-shell .button.primary{background:#245e60;border-color:#245e60;color:#fff}
+.admin-shell button.primary:hover{background:#194b4e}
+.admin-shell input,.admin-shell select,.admin-shell textarea{background:#fffcf7;border-color:#cdbda7;color:#18333c}
+.admin-shell .admin-toolbar{gap:8px 10px;margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #d5b990}
+.admin-shell .admin-toolbar label{font-family:Georgia,'Times New Roman',serif;font-size:15px}
+.admin-shell .admin-toolbar select{font-family:system-ui,sans-serif;font-size:13px;font-weight:600}
+.admin-shell #open-days{background:#245e60;color:#fff;border-color:#245e60}
+.admin-shell .admin-nav{background:#10293a}
+.admin-shell .admin-nav-title{font-family:Georgia,'Times New Roman',serif;text-align:center;letter-spacing:.18em;line-height:1.25;font-size:18px;color:#fff9ef;padding:4px 4px 22px}
+.admin-compass{display:block;width:44px;height:44px;margin:0 auto 12px;color:#c89e5e}
+.admin-nav-caption{display:block;font-family:system-ui,sans-serif;font-size:9px;font-weight:500;letter-spacing:.16em;color:#d9c9ac;margin-top:8px}
+.admin-shell .admin-nav button{display:flex;align-items:center;gap:11px;font-size:14px;background:transparent;color:#eee9dd}
+.admin-shell .admin-nav button.active{background:#315e62;color:white}
+.admin-shell .admin-nav button:hover{background:#274b54;color:white}
+.admin-nav-icon{width:18px;height:18px;flex:0 0 18px;color:#e0bd82}
+.admin-shell .admin-nav .participant-nav{border-color:#8e9c92;background:transparent}
+.admin-shell .overview-status{background:#fbf7ef;border-color:#dfcfbb;padding:10px 14px;gap:8px 0}
+.admin-shell .overview-status span{padding:0 16px;border-right:1px solid #d7c0a0;font-size:13px}
+.admin-shell .overview-status span:first-child{padding-left:0}
+.admin-shell .overview-status b{font-family:Georgia,'Times New Roman',serif;font-size:21px;color:#142f3a}
+.admin-shell .overview-status button{margin-left:8px;padding:6px 9px}
+.admin-shell .overview-status button:first-of-type{margin-left:auto}
+.admin-shell .overview-columns{gap:12px;grid-template-columns:minmax(0,1.85fr) minmax(260px,1fr)}
+.admin-shell .overview-columns>.panel{padding:0;overflow:hidden}
+.admin-shell .overview-columns h2{font-size:24px;padding:16px 17px 0;margin:0}
+.admin-shell .overview-columns p.small{padding:3px 17px 8px;margin:0}
+.admin-shell .ai-participants table{font-size:13px}
+.admin-shell .ai-participants thead{background:#f0e8da}
+.admin-shell .ai-participants th{font-weight:650;color:#3d555a}
+.admin-shell .ai-participants td,.admin-shell .ai-participants th{padding:10px 12px;border-color:#e7ddcf}
+.admin-shell .ai-participants td:first-child{min-width:155px}
+.admin-shell .ai-name{color:#193b47;text-decoration:none;font-weight:700}
+.admin-shell .ai-name:hover{text-decoration:underline;background:transparent}
+.admin-shell .overview-avatar{display:inline-grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:#eee1cc;color:#765c37;font-family:Georgia,'Times New Roman',serif;font-size:12px;font-weight:700;text-decoration:none}
+.admin-shell .ai-name+.small{font-size:11px;color:#6d7777}
+.admin-shell .ai-delta{display:inline-block;font-size:11px;font-weight:700;padding:3px 7px;border-radius:4px;background:#e5ece1;color:#326343}
+.admin-shell .ai-delta.down{background:#f3e4df;color:#954a3d}
+.admin-shell .ai-delta.neutral{background:transparent;color:#697779;padding-left:0}
+.admin-shell .overview-feed{background:#fbf7ef}
+.admin-shell .overview-feed .ai-feed{padding:7px 17px 12px}
+.admin-shell .overview-feed .ai-feed-item{gap:10px;padding:10px 0;border-color:#e7ddcf}
+.admin-shell .overview-feed .ai-feed-dot{background:#b68b4d;height:9px;width:9px}
+.admin-shell .overview-feed .ai-feed-item strong{color:#173843}
+.admin-shell .overview-feed .ai-feed-item p{color:#425960}
+.admin-shell .overview-feed .ai-feed-item small{color:#78817e}
+.admin-shell .ai-management{background:#fbf7ef;border-color:#dfcfbb}
+.admin-shell .ai-management[open]{background:#faf6ee}
+.admin-shell .ai-management>summary{color:#193b43}
+.admin-shell .admin-settings-card{background:#fbf7ef}
+.admin-shell .participant-status{color:#687c78}
+.admin-shell .visit-calendar .visit-cell{background:#fbf8f1;border-color:#dfd3c0}
+.admin-shell .visit-calendar .visit-chip{background:#e0edeb;border-color:#c0dad2;color:#194c51}
+.admin-shell .visit-calendar .visit-cell.is-today{border-color:#2e7272}
+.admin-shell .visit-dialog,.admin-shell .participant-points-dialog,.admin-shell #ai-chart{background:#fcf8f0;border-color:#d6c4ab}
+.admin-shell footer{color:#7b8079}
+@media(min-width:1000px){
+ .admin-shell .admin-nav{width:238px;padding:22px 14px;gap:5px}
+ body.admin-shell header{padding-left:270px}
+ body.admin-shell main{padding-left:262px;padding-right:24px}
+ .admin-shell .admin-nav .participant-nav{margin-top:auto}
+}
+@media(max-width:999px){
+ .admin-shell .admin-nav-title{display:none}
+ .admin-shell .admin-nav{background:#10293a}
+}
+@media(max-width:850px){.admin-shell .overview-columns{grid-template-columns:1fr}.admin-shell .overview-status span{padding:0 10px}.admin-shell .overview-status button:first-of-type{margin-left:0}}
+@media(max-width:600px){.admin-shell .overview-status{gap:8px}.admin-shell .overview-status span{border:0;padding:2px 6px}.admin-shell .overview-status b{font-size:18px}.admin-shell .overview-columns h2{font-size:21px}.admin-shell .ai-participants td{padding:4px 12px}}
