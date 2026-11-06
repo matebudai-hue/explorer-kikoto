@@ -73,3 +73,13 @@ body.admin-shell{--ink:#122b39;--muted:#62727a;--line:#ddcdb8;--accent:#245e60;-
 }
 @media(max-width:850px){.admin-shell .overview-columns{grid-template-columns:1fr}.admin-shell .overview-status span{padding:0 10px}.admin-shell .overview-status button:first-of-type{margin-left:0}}
 @media(max-width:600px){.admin-shell .overview-status{gap:8px}.admin-shell .overview-status span{border:0;padding:2px 6px}.admin-shell .overview-status b{font-size:18px}.admin-shell .overview-columns h2{font-size:21px}.admin-shell .ai-participants td{padding:4px 12px}}
+
+
+/* Apró olvashatósági és műveleti finomítások */
+.admin-shell .ai-name+.small{margin-left:40px;font-size:12px;color:#53666a}
+.admin-shell .participant-status{font-size:13px;color:#526a6a}
+.admin-shell .overview-feed .ai-feed-item small{font-size:12px;color:#596d6d}
+.admin-shell .participant-actions [data-points]{color:#fff;background:#245e60;border-color:#245e60}
+.admin-shell .participant-actions [data-points]:hover{background:#194b4e}
+.admin-shell .participant-actions [data-status-user],.admin-shell .participant-actions [data-promote],.admin-shell .participant-actions [data-add-cohort]{background:transparent;border-color:#e3d6c4}
+.admin-shell .admin-nav button.active:hover{background:#315e62}
