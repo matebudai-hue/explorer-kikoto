@@ -62,3 +62,6 @@ nav button.active{background:#d7eae5}
 
 
 nav [data-tab=visitReports]::before{content:'▤'}
+
+.day-content .day-reflection{order:3;padding:22px;margin:6px 0}.day-content .day-test{order:4}.reflection-answer{padding:10px 0;border-bottom:1px solid #e9e4d9}.reflection-answer p{margin:6px 0;overflow-wrap:anywhere}.day-reflection [role=status]{display:inline-block;margin:0 10px;font-size:13px}.day-reflection [data-reflection-refresh]{margin-top:8px}
+
