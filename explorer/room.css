@@ -4,3 +4,6 @@
 
 .shop-category-heading{grid-column:1/-1;font-size:16px;margin:10px 0 0;display:flex;align-items:center;justify-content:space-between;gap:8px}.shop-category-heading small{font-size:11px;font-weight:400;color:var(--muted);white-space:nowrap}
 
+
+/* A teljes terem áttekinthető méretben, a rendezőnézet mérete változatlan. */
+@media (min-width:761px){.room-workspace:not(.room-fullscreen) .room-stage{width:min(100%,750px,80vh);margin-inline:auto}}
