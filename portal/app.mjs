@@ -2,7 +2,7 @@ import{mountParticipantManagement}from'./participant-management.mjs?v=2';
 import{mountMissingReports}from'./missing-reports.mjs?v=1';
 import{mountAdminPoints}from'./admin-points.mjs?v=1';
 import{mountVisitReports}from'../explorer/visit-reports.mjs?v=1';
-import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs?v=4';
+import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs?v=5';
 import{mountHospitation}from'./hospitation.mjs';
 import{mountContentEditor}from'./content-editor.mjs?v=2';
 import{getClient,access,checked}from'./access.mjs';
@@ -92,7 +92,7 @@ async function activateSection(key){
 async function showCohort(){
  const container=root.querySelector('#admin-detail');if(!cohortId){container.innerHTML='<p>Hozd létre az első évfolyamot.</p>';return;}
  const cohort=cohorts.find(c=>c.id===cohortId);
- const [mr,sr,ar]=await Promise.all([client.from('explorer_memberships').select('*,explorer_profiles(display_name,last_seen_at)').eq('cohort_id',cohortId).order('created_at'),client.from('explorer_learning_states').select('*').eq('cohort_id',cohortId),client.from('explorer_activity').select('*').eq('cohort_id',cohortId).in('kind',['learning','room','points_grant']).order('created_at',{ascending:false}).limit(500)]);
+ const [mr,sr,ar,vr,adminResult]=await Promise.all([client.from('explorer_memberships').select('*,explorer_profiles(display_name,last_seen_at)').eq('cohort_id',cohortId).order('created_at'),client.from('explorer_learning_states').select('*').eq('cohort_id',cohortId),client.from('explorer_activity').select('*').eq('cohort_id',cohortId).in('kind',['learning','room','points_grant']).order('created_at',{ascending:false}).limit(500),client.rpc('explorer_admin_visit_activity',{p_cohort:cohortId}),client.rpc('explorer_admin_members',{p_cohort:cohortId})]);
  const members=checked(mr),states=checked(sr),pending=members.filter(m=>m.status==='pending'),approved=members.filter(m=>m.status==='approved');
  container.innerHTML=`<div id="admin-insights"></div><details class="ai-management" data-admin-section="join"><summary>Meghívás és jóváhagyás${pending.length?` · ${pending.length} jóváhagyásra vár`:``}</summary><section class="panel"><h2>Jelentkezési link</h2><div class="row"><input id="invitation" readonly aria-label="Évfolyam jelentkezési linkje" value="${esc(new URL('?invite='+cohort.invite_code,location.href).href)}"><button id="copy-invite">Másolás</button></div></section>${pending.length?`<section class="panel"><h2>Jóváhagyásra vár · ${pending.length}</h2>${pending.map(m=>`<div class="event row between"><span>${esc(m.explorer_profiles.display_name)}</span><button data-approve="${esc(m.user_id)}" class="primary">Jóváhagyom</button></div>`).join('')}</section>`:''}</details><details class="ai-management" data-admin-section="people"><summary>Résztvevők kezelése</summary><div id="participant-manager"></div></details><details class="ai-management" data-admin-section="reports"><summary>Hiányzó beszámolók</summary><div data-reports-host></div></details><details class="ai-management" data-admin-section="rooms"><summary>Tréningtermek megosztása</summary><section class="panel"><h2>Évfolyamtársak tréningtermei</h2><label><input type="checkbox" id="rooms-sharing" ${cohort.rooms_shared?'checked':''}> A résztvevők láthatják egymás tréningtermét</label><p id="rooms-sharing-status" role="status" aria-live="polite">${cohort.rooms_shared?'A megosztás be van kapcsolva.':'A megosztás ki van kapcsolva.'}</p></section></details><details class="ai-management" data-admin-section="visits"><summary>Hospitálási naptár kezelése</summary><div id="visit-calendar"></div></details><details class="ai-management" data-admin-section="days"><summary>Képzési napok és tananyagok kezelése</summary><div id="content-editor"></div></details>`;
  const settings=document.createElement('section');settings.dataset.adminSection='settings';settings.innerHTML='<h2>Beállítások és résztvevők</h2><div class="admin-settings-grid"></div>';container.append(settings);
@@ -100,7 +100,7 @@ async function showCohort(){
  for(const name of ['join','people','rooms']){const original=container.querySelector('[data-admin-section="'+name+'"]'),section=document.createElement('section'),heading=document.createElement('h3');section.className='admin-settings-card';heading.textContent=original.querySelector(':scope > summary').textContent;section.append(heading);while(original.children.length>1)section.append(original.children[1]);grid.append(section);original.remove();}
  mountParticipantManagement(container.querySelector('#participant-manager'),{client,cohortId:cohort.id,members,currentUserId:current.user.id,onChanged:showCohort,cohorts});
  const roomSharing=container.querySelector('#rooms-sharing');roomSharing.onchange=async()=>{const enabled=roomSharing.checked,status=container.querySelector('#rooms-sharing-status');roomSharing.disabled=true;status.textContent='Mentés…';try{checked(await client.rpc('explorer_set_room_sharing',{p_cohort:cohort.id,p_enabled:enabled}));cohort.rooms_shared=enabled;status.textContent=enabled?'A megosztás be van kapcsolva.':'A megosztás ki van kapcsolva.';}catch(error){roomSharing.checked=!enabled;status.textContent='A beállítást nem sikerült menteni. Próbáld újra.';}finally{roomSharing.disabled=false;}};
- mountAdminInsights(container.querySelector('#admin-insights'),{members,states,catalog:cohort.catalog,events:ar.error?[]:ar.data,eventsError:!!ar.error,onPerson:person,onRefresh:showCohort});
+ mountAdminInsights(container.querySelector('#admin-insights'),{members,states,catalog:cohort.catalog,events:[...(ar.error?[]:ar.data||[]),...(vr.error?[]:vr.data||[])],eventsError:!!ar.error||!!vr.error,adminIds:adminResult.error?null:(adminResult.data||[]).filter(x=>x.is_admin).map(x=>x.user_id),onPerson:person,onRefresh:showCohort});
  await mountHospitation(container.querySelector('#visit-calendar'),{client,cohortId,isAdmin:true,userId:current.user.id});
  mountContentEditor(container.querySelector('#content-editor'),{client,cohort,userId:current.profile.id,onSaved:async()=>{await admin();}});
  container.querySelector('#copy-invite').onclick=async e=>{try{await navigator.clipboard.writeText(container.querySelector('#invitation').value);e.target.textContent='Másolva';}catch{container.querySelector('#invitation').select();}};
@@ -132,6 +132,7 @@ function cohortForm(){
  container.querySelector('#create-cohort').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),b=e.target.querySelector('[type=submit]')||e.target.querySelector('button');b.disabled=true;try{cohortId=checked(await client.rpc('explorer_create_cohort',{p_title:String(f.get('title')),p_source:f.get('source')||null}));await admin();}catch(error){report(error);b.disabled=false;}};
 }
 await boot();
+
 
 
 
