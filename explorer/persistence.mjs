@@ -1,4 +1,4 @@
-import {validateRoomState} from './room-engine.mjs?v=16';
+import {validateRoomState} from './room-engine.mjs?v=17';
 import {validateTesting} from './attempts.mjs?v=10';
 const record=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 export function validateState(s){

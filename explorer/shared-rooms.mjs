@@ -1,5 +1,5 @@
-import{migrateRoom}from'./room-engine.mjs?v=16';
-import{roomSVG,esc}from'./room-art.mjs?v=16';
+import{migrateRoom}from'./room-engine.mjs?v=17';
+import{roomSVG,esc}from'./room-art.mjs?v=17';
 
 export function mountSharedRoomWorkspace(root,{state,save,toast,client,cohortId,userId,mountRoom}){
  let disposed=false,roomDispose=()=>{},timer=null,mode='own',rooms=[];

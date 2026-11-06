@@ -1,5 +1,5 @@
-import{product,themes,walls,floors,toneColor}from'./room-catalog.mjs?v=16';
-import{position,visible}from'./room-engine.mjs?v=16';
+import{product,themes,walls,floors,toneColor}from'./room-catalog.mjs?v=17';
+import{position,visible}from'./room-engine.mjs?v=17';
 export const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const R=(x,y,w,h,fill,rx=5,extra='')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${fill}" ${extra}/>`;
 const C=(x,y,r,fill,extra='')=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" ${extra}/>`;
@@ -74,6 +74,48 @@ const icons={
  'photo-frame':()=>R(5,7,90,86,wood,3)+R(12,14,76,72,'#c3e0e2',2)+C(50,37,13,tone)+`<path d="M22 82q3-29 28-29t28 29z" fill="${tone}"/>`,
  'compass-globe':()=>C(50,45,37,'#9dd0d4',`stroke="${ink}" stroke-width="3"`)+`<path d="M33 19l18 3 7 13-13 6-4 18-15-9-7-15zM62 43l17 8-7 15-14-3z" fill="#6fa37d"/>`+L(50,82,50,94,ink,5)+L(30,94,70,94,ink,5)
  };if(icons[p.id])g=icons[p.id]();
+ if(p.id==='compass-globe'&&tier===0)g=C(50,50,43,wood,`stroke="${ink}" stroke-width="3"`)+C(50,50,34,light)+`<path d="M50 18l10 24-10 39-10-39z" fill="${tone}"/>`+C(50,50,4,ink);
+
+// A fejlesztési szintek jól látható, tárgyspecifikus részletei.
+const details={
+ 'open-shelf':[()=>R(12,11,76,18,tone,2),()=>L(13,8,87,8,'#f4d986',6)+C(17,9,4,'#fff4bc')+C(82,9,4,'#fff4bc')],
+ 'supply-cabinet':[()=>R(17,19,22,10,light,1)+R(61,19,22,10,light,1),()=>R(17,46,22,30,'#d6a344',2)+R(61,46,22,30,'#9fbca6',2)],
+ 'screen-divider':[()=>L(14,29,86,67,tone,4)+L(14,48,64,75,tone,4),()=>R(17,20,23,20,'#f0cd50',2)+R(54,42,24,19,'#a4d8c2',2)],
+ 'sofa':[()=>R(15,25,22,21,light,6)+R(63,25,22,21,light,6)+R(37,60,28,12,'#bd7560',3),()=>R(18,50,20,18,'#e8a3bd',5)+R(61,50,20,18,'#d6a344',5)+C(50,35,5,light)],
+ 'pouf':[()=>L(26,36,74,36,light,2)+L(26,54,74,54,light,2)+L(35,24,35,76,light,2)+L(65,24,65,76,light,2),()=>C(20,84,5,wood)+C(80,84,5,wood)+C(35,35,3,'#d6a344')+C(65,65,3,'#d6a344')],
+ 'hanging-chair':[()=>C(40,51,12,light)+C(60,51,12,light),()=>C(14,18,9,'#78a481')+C(86,18,9,'#4b7c62')+C(20,35,7,'#8caa8b')],
+ 'tea-table':[()=>C(25,29,9,'#6f5038')+C(65,51,9,'#6f5038')+R(65,17,13,18,tone,4),()=>R(32,67,34,14,light,3)+C(40,74,4,'#bd7560')+C(52,74,4,'#d6a344')],
+ 'coat-wall':[()=>R(22,39,14,29,'#355b78',4)+R(56,40,14,25,'#bd7560',4),()=>R(73,49,16,22,'#d6a344',3)+L(75,49,80,42,ink,2)+L(80,42,86,49,ink,2)],
+ 'projector-screen':[()=>L(19,48,34,30,tone,3)+L(34,30,48,39,tone,3)+L(48,39,70,20,tone,3),()=>R(15,17,15,10,'#f0cd50',1)+R(65,42,15,10,'#a4d8c2',1)+C(54,29,4,'#bd7560')],
+ 'picture-cards':[()=>R(8,65,25,23,'#d6a344',2)+R(68,65,23,23,'#a4d8c2',2),()=>R(12,67,20,6,ink,1)+R(69,67,20,6,ink,1)],
+ 'emotion-cards':[()=>C(20,75,11,'#bd7560')+C(80,75,11,'#8caa8b'),()=>C(20,25,10,'#8ebee3')+C(80,25,10,'#e8a3bd')],
+ 'conversation-cards':[()=>R(8,72,25,15,'#d6a344',3)+R(66,72,25,15,'#8caa8b',3),()=>R(7,8,86,6,wood,2)+C(18,11,2,light)+C(82,11,2,light)],
+ 'building-blocks':[()=>C(28,30,5,light)+C(68,30,5,light)+C(28,68,5,light),()=>R(37,35,26,42,tone,2)+R(31,28,38,8,'#d6a344',2)],
+ 'colored-tokens':[()=>C(48,19,8,'#e8a3bd')+C(50,79,8,'#8ebee3'),()=>C(50,50,10,'#d6a344')+L(30,30,70,70,ink,1)+L(70,30,30,70,ink,1)],
+ 'dice-set':[()=>C(50,80,4,'#d6a344')+C(84,46,4,'#bd7560'),()=>R(62,70,28,20,wood,8)+L(65,76,87,76,ink,2)],
+ 'talking-stick':[()=>L(37,60,24,88,'#bd7560',5)+L(55,60,70,88,'#8ebee3',5),()=>L(20,47,80,47,light,2)+C(48,50,4,'#d6a344')],
+ 'talking-ball':[()=>C(28,30,8,'#d6a344')+C(74,67,8,'#bd7560'),()=>C(39,43,4,ink)+C(61,43,4,ink)+`<path d="M37 61q13 11 26 0" fill="none" stroke="${ink}" stroke-width="4"/>`],
+ 'sticky-notes':[()=>R(7,67,23,23,'#e8a3bd',1)+R(70,8,22,22,'#8ebee3',1),()=>R(4,4,92,6,wood,1)+R(5,91,90,5,wood,1)],
+ 'trainer-case':[()=>R(14,34,12,31,'#d6a344',2)+R(32,34,12,31,tone,2)+R(56,34,23,18,light,2),()=>C(70,69,8,'#bd7560')+R(49,58,12,20,'#8caa8b',2)],
+ 'own-book':[()=>R(12,8,6,84,wood,1)+L(34,60,75,60,light,2),()=>R(13,7,74,5,'#d6a344',1)+R(13,88,74,5,'#d6a344',1)+L(36,72,68,67,light,2)],
+ 'certificate':[()=>R(12,10,76,80,'none',2,'stroke="#f5e9c6" stroke-width="5"'),()=>C(69,68,11,'#d6a344')+C(69,68,6,'#bd7560')],
+ 'trophy':[()=>R(33,80,34,12,wood,1)+R(39,83,22,5,light,1),()=>R(26,89,48,7,ink,2)+C(50,33,7,light)],
+ 'photo-frame':[()=>R(8,9,84,82,'none',2,`stroke="${tone}" stroke-width="5"`),()=>C(18,77,5,'#e8a3bd')+C(80,20,5,'#d6a344')+C(78,78,4,'#8caa8b')],
+ 'compass-globe':[()=>L(50,80,50,94,wood,6)+L(27,94,73,94,wood,6),()=>C(15,78,11,'#d6a344')+L(15,70,15,86,ink,2)+L(7,78,23,78,ink,2)],
+ 'chair':[()=>R(25,31,50,38,tone,8),()=>R(19,10,62,17,wood,6)+L(28,59,72,59,light,2)],
+ 'beanbag':[()=>C(50,52,27,'#ffffff20'),()=>L(25,30,75,70,light,3)+L(25,70,75,30,light,3)],
+ 'table':[()=>C(50,50,28,'#d6b58b'),()=>C(50,50,30,'none',`stroke="${light}" stroke-width="3"`)+C(50,50,6,tone)],
+ 'modular':[()=>C(12,90,6,ink)+C(88,90,6,ink),()=>R(14,17,24,16,light,2)+R(62,17,22,16,'#d6a344',2)],
+ 'standing':[()=>R(44,38,12,25,ink,2),()=>L(9,14,91,14,ink,5)+L(9,86,91,86,ink,5)],
+ 'side':[()=>L(18,72,82,72,ink,5),()=>R(18,27,24,30,tone,2)+C(70,37,13,'#f7d98c')],
+ 'markers':[()=>R(15,13,8,70,'#bd7560',2)+R(28,13,8,70,'#d6a344',2)+R(41,13,8,70,'#8caa8b',2),()=>R(5,7,90,6,ink,2)+R(5,87,90,6,ink,2)],
+ 'water':[()=>C(50,30,15,'#d5f1ef')+L(31,48,69,48,'#8ebee3',3),()=>R(17,72,15,16,light,2)+R(68,72,15,16,light,2)],
+ 'ac':[()=>C(80,25,5,'#8caa8b'),()=>R(15,16,43,18,ink,3)+L(21,25,50,25,'#a4d8c2',3)],
+ 'rug-large':[()=>L(20,20,80,80,light,3)+L(80,20,20,80,light,3),()=>L(5,6,5,94,wood,3)+L(95,6,95,94,wood,3)+L(10,8,10,92,light,2)],
+ 'fireplace':[()=>R(6,6,88,88,'none',2,`stroke="${wood}" stroke-width="8"`),()=>L(12,88,35,88,wood,6)+L(65,88,88,88,wood,6)+C(50,55,8,'#ffe8a5')]
+};
+if(tier>0&&details[p.id])g+=details[p.id][0]();
+if(tier>1&&details[p.id])g+=details[p.id][1]();
 return `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">${g}</svg>`;}
 export function roomSVG(s,{selected=null,camera={x:0,y:0,w:960,h:720},ghost=null,pixelWidth=640}={}){const settings=s.roomSettings,theme=themes[settings.theme],wall=walls[settings.wall].value,floor=floors[settings.floor].value;const scale=pixelWidth/camera.w;let items=s.items.filter(i=>visible(s,i)&&product(i.product)).sort((a,b)=>({floor:0,furniture:1,wall:2,tabletop:3}[product(a.product).layer]-{floor:0,furniture:1,wall:2,tabletop:3}[product(b.product).layer]));
  const draw=(item,isGhost=false)=>{const p=product(item.product),pos=isGhost?{x:ghost.x,y:ghost.y}:position(s,item),tone=toneColor(item.tone,theme.accent),w=p.w*40,h=p.h*40,hitW=Math.max(w,44/scale),hitH=Math.max(h,44/scale);return `<g ${isGhost?'class="placement-ghost"':`data-room-item="${esc(item.id)}" tabindex="0" role="button" aria-label="${esc(p.name)}, ${esc(p.levels[item.tier])}"`} transform="translate(${pos.x*40} ${pos.y*40}) rotate(${item.rotation})" ${isGhost?'opacity=".65" pointer-events="none"':''}><title>${esc(p.name)} · ${esc(p.levels[item.tier])}</title>${!isGhost?R(-hitW/2,-hitH/2,hitW,hitH,'transparent',0,'class="item-hit"'):''}<svg x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" overflow="visible">${art(p,tone,item.tier,settings)}${item.product==='own-book'&&item.label?`<title>${esc(item.label)}</title>`:''}</svg>${selected===item.id&&!isGhost?R(-w/2-6,-h/2-6,w+12,h+12,'none',5,'stroke="#102e3e" stroke-width="4" stroke-dasharray="9 5" pointer-events="none"'):''}${isGhost?R(-w/2-4,-h/2-4,w+8,h+8,'none',4,`stroke="${ghost.ok?'#087f60':'#c0473c'}" stroke-width="5"`):''}</g>`;};
