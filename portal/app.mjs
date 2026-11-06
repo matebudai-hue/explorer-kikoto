@@ -2,7 +2,7 @@ import{mountParticipantManagement}from'./participant-management.mjs?v=2';
 import{mountMissingReports}from'./missing-reports.mjs?v=1';
 import{mountAdminPoints}from'./admin-points.mjs?v=1';
 import{mountVisitReports}from'../explorer/visit-reports.mjs?v=1';
-import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs?v=5';
+import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs?v=6';
 import{mountHospitation}from'./hospitation.mjs';
 import{mountContentEditor}from'./content-editor.mjs?v=3';
 import{getClient,access,checked}from'./access.mjs';
