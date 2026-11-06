@@ -11,7 +11,7 @@ export async function openLearningContext(){
  const cohortId=new URL(location.href).searchParams.get('cohort')||userAccess.memberships.find(m=>m.status==='approved')?.cohort_id;
  if(!userAccess.memberships.some(m=>m.cohort_id===cohortId&&m.status==='approved')){location.replace('../');throw Error('A képzéshez jóváhagyott tagság szükséges.');}
  const [cohortResult,stateResult]=await Promise.all([
-  client.from('explorer_cohorts').select('id,title').eq('id',cohortId).single(),
+  client.from('explorer_cohorts').select('id,title,shop_open_all').eq('id',cohortId).single(),
   client.from('explorer_learning_states').select('payload,revision').eq('user_id',userAccess.user.id).eq('cohort_id',cohortId).maybeSingle()
  ]);
  const cohort=checked(cohortResult),remote=checked(stateResult);cohort.catalog=checked(await client.rpc('explorer_catalog',{p_cohort:cohortId}));
@@ -60,5 +60,5 @@ export async function openLearningContext(){
  window.addEventListener('beforeunload',e=>{if(sync.dirty){e.preventDefault();e.returnValue='';}});
  checked(await client.rpc('explorer_touch'));
  const profileLink=document.createElement('a');profileLink.href='../';profileLink.textContent='Vissza a portálra';status.append(profileLink);
- return{client,cohortId,userId:userAccess.user.id,getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
+ return{client,cohortId,fullyOpenShop:cohort.shop_open_all===true,userId:userAccess.user.id,getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
 }

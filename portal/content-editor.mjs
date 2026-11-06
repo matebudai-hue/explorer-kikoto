@@ -23,7 +23,7 @@ export function mountContentEditor(host,{client,cohort,userId,onSaved}){
  host.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>edit(days.find(d=>d.id===b.dataset.edit)));
  host.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{
   const day=days.find(d=>d.id===b.dataset.open);
-  const row=b.closest('.event');row.innerHTML=`<div><strong>${esc(day.title)}</strong><p>Mostantól az évfolyam minden jóváhagyott résztvevője elérheti ezt a napot és az anyagait.</p><div class="row"><button class="primary" id="confirm-open">Igen, megnyitom</button><button id="cancel-open">Mégse</button></div></div>`;
+  const row=b.closest('.event');row.innerHTML=`<div><strong>${esc(day.title)}</strong><p>Mostantól az évfolyam minden jóváhagyott résztvevője elérheti ezt a napot és az anyagait. A bolt kínálata is a megnyitott napokhoz igazodik.</p><div class="row"><button class="primary" id="confirm-open">Igen, megnyitom</button><button id="cancel-open">Mégse</button></div></div>`;
   row.querySelector('#cancel-open').onclick=list;
   row.querySelector('#confirm-open').onclick=async e=>{e.target.disabled=true;try{const next=structuredClone(cohort.catalog);next.days.find(d=>d.id===day.id).open=true;await saveCatalog(next);}catch(error){status(error.message,true);e.target.disabled=false;}};
  });

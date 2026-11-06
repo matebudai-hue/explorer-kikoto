@@ -1,11 +1,11 @@
 import{migrateRoom}from'./room-engine.mjs?v=17';
 import{roomSVG,esc}from'./room-art.mjs?v=17';
 
-export function mountSharedRoomWorkspace(root,{state,save,toast,client,cohortId,userId,mountRoom}){
+export function mountSharedRoomWorkspace(root,{state,save,toast,client,cohortId,userId,mountRoom,shopOptions}){
  let disposed=false,roomDispose=()=>{},timer=null,mode='own',rooms=[];
  root.innerHTML='<div class="shared-room-tabs" aria-label="Tréningtermek"><button type="button" data-own aria-pressed="true">Saját termem és bolt</button><button type="button" data-peers aria-pressed="false" hidden>Évfolyamtársaim termei</button></div><div data-room-view></div>';
  const own=root.querySelector('[data-own]'),peers=root.querySelector('[data-peers]'),view=root.querySelector('[data-room-view]');
- function ownRoom(){if(disposed)return;mode='own';own.setAttribute('aria-pressed','true');peers.setAttribute('aria-pressed','false');roomDispose();roomDispose=mountRoom(view,state,save,toast);}
+ function ownRoom(){if(disposed)return;mode='own';own.setAttribute('aria-pressed','true');peers.setAttribute('aria-pressed','false');roomDispose();roomDispose=mountRoom(view,state,save,toast,shopOptions);}
  function preview(room){try{const copy=migrateRoom({items:structuredClone(room?.items||[]),roomSettings:room?.roomSettings||{},roomName:room?.roomName,roomVersion:room?.roomVersion,spent:0});return {name:copy.roomName,motto:copy.roomSettings.motto,image:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(roomSVG(copy)),empty:!copy.items.some(i=>!i.stored)};}catch{return null;}}
  function drawList(){if(disposed)return;view.innerHTML='<section class="shared-room-gallery"><div class="shared-room-header"><div><p class="kicker">EGYÜTT A KIKÖTŐBEN</p><h2>Évfolyamtársaim termei</h2><p>Nézz körül a többiek tréningtermeiben. A termeket a tulajdonosaik rendezhetik át.</p></div><button type="button" data-refresh>Termek frissítése</button></div><div class="shared-room-grid"></div></section>';const grid=view.querySelector('.shared-room-grid');
   const others=rooms.filter(r=>r.user_id!==userId);if(!others.length)grid.innerHTML='<p>Még nincs másik résztvevő az évfolyamon.</p>';
@@ -16,6 +16,7 @@ export function mountSharedRoomWorkspace(root,{state,save,toast,client,cohortId,
  async function loadRooms(){if(disposed)return;view.innerHTML='<p role="status">Termek betöltése…</p>';try{const {data,error}=await client.rpc('explorer_shared_rooms',{p_cohort:cohortId});if(error)throw error;if(disposed||mode!=='peers')return;rooms=data||[];drawList();}catch{if(!disposed&&mode==='peers')view.innerHTML='<p role="alert">A termek most nem érhetők el. Lehet, hogy a megosztást kikapcsolták.</p><button type="button" data-retry>Újrapróbálom</button>';view.querySelector('[data-retry]')?.addEventListener('click',loadRooms);checkSharing();}}
  function peerRooms(){if(disposed)return;roomDispose();roomDispose=()=>{};mode='peers';own.setAttribute('aria-pressed','false');peers.setAttribute('aria-pressed','true');loadRooms();}
  async function checkSharing(){try{const {data,error}=await client.from('explorer_cohorts').select('rooms_shared').eq('id',cohortId).single();if(disposed)return;if(error)throw error;const enabled=data?.rooms_shared===true;peers.hidden=!enabled;if(!enabled&&mode==='peers'){rooms=[];ownRoom();toast('A tréningtermek megosztása kikapcsolt.');}}catch{/* A következő ellenőrzéskor újrapróbáljuk. */}}
- own.onclick=ownRoom;peers.onclick=peerRooms;ownRoom();checkSharing();timer=setInterval(checkSharing,20000);
+ async function checkCatalog(){if(disposed||!shopOptions)return;try{const {data,error}=await client.rpc('explorer_catalog',{p_cohort:cohortId});if(error||disposed||!data?.days)return;shopOptions.catalog=data;if(mode==='own')roomDispose.updateShop?.(data);}catch{/* Megőrizzük a legutóbbi elérhető kínálatot. */}}
+ own.onclick=ownRoom;peers.onclick=peerRooms;ownRoom();checkSharing();timer=setInterval(()=>{checkSharing();checkCatalog();},20000);
  return()=>{disposed=true;clearInterval(timer);roomDispose();};
 }
