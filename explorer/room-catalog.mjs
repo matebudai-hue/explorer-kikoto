@@ -75,8 +75,6 @@ const data=[
 ,
 ['projector-screen', 'Projektor és vetítővászon', 'tools', 80, 0, 3, 1.5, 'furniture', 'whiteboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
 ,
-['patio-corner', 'Teraszos pihenősarok', 'comfort', 120, 0, 4, 3, 'furniture', 'table', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
-,
 ['picture-cards', 'Képkártyapakli', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'picture', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
 ,
 ['emotion-cards', 'Érzelemkártyák', 'tools', 15, 0, 0.5, 0.5, 'tabletop', 'pinboard', ['Alap', 'Egyedi', 'Prémium'], [15, 25]]
