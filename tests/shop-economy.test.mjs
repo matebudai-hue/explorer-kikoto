@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {products,shopProducts,product} from '../explorer/room-catalog.mjs';
+import {releaseGroups,productLevel,itemAvailable,upgradeLevel,upgradeAvailable,shopLevel} from '../explorer/shop-unlocks.mjs';
+import {migrateRoom,validateRoomState,upgrade} from '../explorer/room-engine.mjs';
+const ids=releaseGroups.flat();assert.equal(ids.length,72);assert.equal(new Set(ids).size,72);assert.deepEqual([...ids].sort(),products.map(p=>p.id).sort());assert.equal(shopProducts.length,71);assert(!shopProducts.some(p=>p.id==='terrace'));assert(product('terrace'));
+assert.equal(product('own-book').price,200);assert.deepEqual(product('own-book').upgrades,[80,120]);assert.equal(productLevel('own-book'),4);assert(!itemAvailable('own-book',3));assert(itemAvailable('own-book',4));
+for(const id of ['chair','mug'])for(const tier of [0,1,2])assert(upgradeAvailable(id,tier,1),id);assert(!upgradeAvailable('modular',1,1));assert(upgradeAvailable('modular',1,2));
+for(const p of products)for(let t=0;t<3;t++)for(let level=1;level<=6;level++)assert.equal(upgradeAvailable(p.id,t,level),level>=upgradeLevel(p.id,t));
+assert.equal(shopLevel({days:[]},true),6);const s=migrateRoom({roomVersion:2,items:[{id:'old-door',product:'terrace',tier:0,tone:'theme',x:10,y:.65,rotation:0,stored:false,parentId:null}],earned:1000,spent:0});assert(validateRoomState(s));upgrade(s,'old-door');assert.equal(s.items[0].product,'terrace');assert.equal(s.items[0].tier,1);
+console.log('71 bolti tárgy, megőrzött teraszajtó, könyv ára és hat nyitási szint: rendben');

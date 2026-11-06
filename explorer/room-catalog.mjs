@@ -95,7 +95,7 @@ const data=[
 ,
 ['trainer-case', 'Nyitott tréneri bőrönd', 'tools', 45, 0, 3, 2, 'furniture', 'cart', ['Nyitott bőrönd', 'Bőrönd rendezett eszközökkel', 'Utazó tréneri műhely'], [15, 25]]
 ,
-['own-book', 'Saját könyv', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'bookshelf', ['Kézirat spirálozva', 'Megjelent, puhakötésű könyv', 'Díszkiadás dedikált példánnyal'], [15, 25]]
+['own-book', 'Saját könyv', 'personal', 200, 0, 0.5, 0.5, 'tabletop', 'bookshelf', ['Kézirat spirálozva', 'Megjelent, puhakötésű könyv', 'Díszkiadás dedikált példánnyal'], [80, 120]]
 ,
 ['certificate', 'Keretezett oklevél', 'personal', 20, 0, 0.5, 0.5, 'tabletop', 'picture', ['Oklevél egyszerű keretben', 'Paszpartus oklevél', 'Oklevél pecséttel és díszkeretben'], [15, 25]]
 ,
@@ -106,6 +106,8 @@ const data=[
 ['compass-globe', 'Iránytű vagy földgömb', 'personal', 25, 0, 0.5, 0.5, 'tabletop', 'clock', ['Asztali iránytű', 'Földgömb faállványon', 'Rézszínű, térképes utazóasztalka'], [15, 25]]
 ];
 export const products=data.map(([id,name,category,price,max,w,h,layer,art,levels,upgrades])=>({id,name,category,price,max:null,w,h,layer,art,levels,upgrades,surface:['table','modular','standing','side','cart','coffee','open-shelf','supply-cabinet','tea-table','trainer-case'].includes(id)}));
+// A már megvásárolt teraszajtó megmarad, újként nem szerepel a kínálatban.
+export const shopProducts=products.filter(p=>p.id!=='terrace');
 export const product=id=>products.find(p=>p.id===id);
 export const defaultSettings=()=>({theme:'ice',wall:'ice',floor:'oak',view:'water',motto:'Itt lehet újrapróbálni.'});
 
