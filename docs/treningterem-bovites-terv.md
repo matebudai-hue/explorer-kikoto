@@ -43,3 +43,6 @@
 - Megosztott terem, polctartalom, jogosultságok és admin megjelenítés.
 - Asztali és mobil megjelenítés, érintés, billentyűzet és szövegek.
 - A helyreállítási pont megerősítése közvetlenül a kiadás előtt.
+
+## Meglévő tárgyak a tárolókban
+A már megvásárolt időmérő, filckészlet, bögre, jégtörő hajómodell, sakk-készlet és asztali virágváza is elhelyezhető legyen az új tárolók megfelelő rekeszeiben. A meglévő tárgy azonosítója, színe, fejlesztési szintje és vásárlási naplója maradjon meg; az áthelyezés ingyenes, ne keletkezzen új példány. A nagyobb játékok és plüssök elhelyezhetősége a rekesz méretétől függjön. Ugyanez érvényes a régebbi mentésekben lévő darabokra is. Külön ellenőrzendő a kivétel, a polc áthelyezése, a raktározás, a visszavonás, a mentés és a megosztott nézet.
