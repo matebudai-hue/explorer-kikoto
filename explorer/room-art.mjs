@@ -1,5 +1,5 @@
-import{product,themes,walls,floors,toneColor}from'./room-catalog.mjs?v=18';
-import{position,visible}from'./room-engine.mjs?v=18';
+import{product,themes,walls,floors,toneColor,footprint}from'./room-catalog.mjs?v=19';
+import{position,visible}from'./room-engine.mjs?v=19';
 export const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const R=(x,y,w,h,fill,rx=5,extra='')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${fill}" ${extra}/>`;
 const C=(x,y,r,fill,extra='')=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" ${extra}/>`;
@@ -17,6 +17,53 @@ if(p.id==='fireplace'){
 }
 if(p.id==='modular'){
  return `<svg viewBox="0 0 175 100" aria-hidden="true" focusable="false">${R(2,4,171,92,wood,5,'stroke="#725842" stroke-width="3"')}${R(8,11,159,77,tier===2?tone:tone+'55',3)}${tier>0?C(11,90,4,ink)+C(164,90,4,ink):''}${tier>1?R(20,20,30,13,light,2)+R(130,20,24,13,'#d6a344',2):''}</svg>`;
+}
+// Széles bútorok: külön rajz, valódi alak, a részletek nem nyúlnak meg.
+const wide=new Set(['bench','sofa','standing','cart','coffee','open-shelf','supply-cabinet','tea-table','trainer-case','coat-wall','screen-divider','projector-screen','rug','rug-large']);
+if(wide.has(p.id)){
+ const W=100*p.w/p.h,H=100,mid=W/2;let g='';
+ const box=(fill=wood)=>R(3,5,W-6,90,fill,8,`stroke="#725842" stroke-width="3"`);
+ if(p.id==='rug'||p.id==='rug-large'){
+  g=R(2,2,W-4,96,tone,4,'stroke="#ffffff80" stroke-width="3"')+R(9,10,W-18,80,'none',2,'stroke="#ffffff90" stroke-width="2"');
+  if(tier>0)for(let x=24;x<W-10;x+=35)g+=`<path d="M${x} 20l12 30-12 30-12-30z" fill="#ffffff35"/>`;
+  if(tier>1)g+=L(10,16,W-10,16,light,3)+L(10,84,W-10,84,light,3);
+ }else if(p.id==='bench'||p.id==='sofa'){
+  g=box()+R(10,18,W-20,64,tone,10)+R(14,22,W-28,48,'#ffffff22',7);
+  if(p.id==='sofa')g+=L(mid,25,mid,77,'#ffffff77',3);
+  if(tier>0)g+=R(18,28,22,20,light,5)+R(W-40,28,22,20,light,5);
+  if(tier>1)g+=R(mid-16,53,32,15,'#bd7560',4)+C(mid,35,6,'#e8a3bd');
+ }else if(p.id==='open-shelf'||p.id==='supply-cabinet'){
+  g=box()+R(9,11,W-18,78,p.id==='open-shelf'?'#f5ecda':tone,3)+L(mid,12,mid,88,ink,3);
+  if(p.id==='open-shelf')g+=L(10,50,W-10,50,ink,3)+R(20,18,18,23,tone,2)+R(mid+12,58,23,20,'#d6a344',2);
+  else g+=C(mid-8,50,3,light)+C(mid+8,50,3,light);
+  if(tier>0)g+=R(19,17,25,10,light,2)+R(W-44,17,25,10,light,2);
+  if(tier>1)g+=L(13,8,W-13,8,'#f4d986',6)+R(mid-12,59,24,18,'#e8a3bd',2);
+ }else if(p.id==='trainer-case'){
+  g=R(4,17,W-8,77,ink,8)+R(11,24,W-22,63,wood,4)+L(mid-18,17,mid-18,7,ink,5)+L(mid-18,7,mid+18,7,ink,5)+L(mid+18,7,mid+18,17,ink,5)+R(20,32,22,40,tone,3)+R(W-55,33,30,23,light,2);
+  if(tier>0)g+=R(48,31,10,38,'#d6a344',2)+R(62,31,10,38,'#bd7560',2)+R(76,31,10,38,'#8caa8b',2);
+  if(tier>1)g+=C(W-33,72,9,'#d6a344')+R(mid-10,70,22,10,'#8ebee3',2);
+ }else if(p.id==='standing'||p.id==='tea-table'){
+  g=box()+R(10,13,W-20,74,tier===2?tone:'#dce8db',4);
+  if(p.id==='tea-table')g+=C(mid-25,40,13,'#6f5038')+C(mid+25,50,13,'#6f5038');
+  if(tier>0)g+=C(12,88,5,ink)+C(W-12,88,5,ink);
+  if(tier>1)g+=p.id==='tea-table'?R(mid-18,65,36,13,light,3)+C(mid,72,4,'#bd7560'):L(12,15,W-12,15,light,5);
+ }else if(p.id==='cart'||p.id==='coffee'){
+  g=box(p.id==='coffee'?wood:ink)+R(10,13,W-20,74,p.id==='coffee'?'#f0e7d9':wood,4);
+  if(p.id==='cart')g+=C(14,92,7,ink)+C(W-14,92,7,ink)+L(12,52,W-12,52,ink,3);
+  else g+=R(18,23,38,47,ink,5)+C(37,45,10,tone)+C(W-30,63,12,tone);
+  if(tier>0)g+=R(mid-12,20,24,17,'#e7c876',2)+C(W-22,30,8,light);
+  if(tier>1)g+=R(20,61,16,15,'#8ebee3',2)+R(W-42,65,18,13,'#bd7560',2);
+ }else if(p.id==='coat-wall'){
+  g=box()+[.2,.4,.6,.8].map(f=>C(W*f,32,5,ink)+L(W*f,37,W*f,70,tone,6)).join('');
+  if(tier>0)g+=R(W*.2-8,42,16,32,'#355b78',4)+R(W*.6-8,42,16,27,'#bd7560',4);
+  if(tier>1)g+=R(W*.8-7,56,18,20,'#d6a344',3);
+ }else{
+  g=box(ink)+R(8,10,W-16,60,light,2)+L(12,76,W-12,76,ink,4);
+  if(p.id==='projector-screen')g+=R(mid-18,80,36,14,tone,3)+C(mid+10,87,3,light);else g+=L(W/3,10,W/3,70,wood,3)+L(W*2/3,10,W*2/3,70,wood,3);
+  if(tier>0)g+=L(18,50,mid,27,tone,4)+L(mid,27,W-20,50,tone,4);
+  if(tier>1)g+=R(18,17,20,14,'#f0cd50',2)+R(W-38,48,20,14,'#a4d8c2',2);
+ }
+ return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true" focusable="false">${g}</svg>`;
 }
 let g='';switch(p.art){
 case'chair':g=R(13,14,74,70,wood,12)+R(19,25,62,48,tier?tone:'#f0e3cd',10)+R(15,8,70,tier?23:15,tone,8)+L(18,85,18,93)+L(82,85,82,93);if(tier===2)g+=L(25,52,75,52,'#ffffff70',2);break;
@@ -92,6 +139,16 @@ const icons={
 
 // A fejlesztési szintek jól látható, tárgyspecifikus részletei.
 const details={
+ 'stool':[()=>C(50,50,20,'#ffffff22'),()=>C(50,50,24,'none','stroke="#f7f4e9" stroke-width="5"')+C(50,50,6,'#d6a344')],
+ 'timer':[()=>`<path d="M50 12A38 38 0 0 1 87 50H50Z" fill="#e8a3bd88"/>`,()=>C(82,18,7,'#d6a344')],
+ 'acoustic':[()=>L(10,20,90,80,'#ffffff77',5)+L(10,48,60,90,'#ffffff77',4),()=>L(8,12,92,12,'#f4d986',4)],
+ 'lamp':[()=>C(50,50,36,'none','stroke="#f7dc95" stroke-width="6"'),()=>L(18,18,10,10,'#d6a344',4)+L(82,18,90,10,'#d6a344',4)+L(50,5,50,14,'#d6a344',4)],
+ 'curtain':[()=>L(14,16,86,16,light,5)+L(14,84,86,84,light,5),()=>L(10,49,90,49,'#d6a344',5)],
+ 'mug':[()=>C(48,50,8,light),()=>C(48,50,20,'none','stroke="#f7f4e9" stroke-width="4"')+C(48,50,7,'#e8a3bd')],
+ 'plush-bear':[()=>R(20,78,60,12,'#d6a344',5)+R(56,80,12,17,'#d6a344',4),()=>C(25,23,7,light)+C(75,23,7,light)+C(50,65,4,'#bd7560')],
+ 'plush-fox':[()=>L(20,17,30,33,light,5)+L(80,17,70,33,light,5),()=>C(25,24,8,'#f7d98c')+C(75,24,8,'#f7d98c')],
+ 'plush-octopus':[()=>C(20,75,6,'#ffffff80')+C(80,75,6,'#ffffff80'),()=>C(37,43,7,light)+C(63,43,7,light)+C(37,43,3,ink)+C(63,43,3,ink)],
+ 'wall-clock':[()=>C(50,50,34,'none','stroke="#d6a344" stroke-width="4"'),()=>C(50,50,5,'#d6a344')+R(44,6,12,7,wood,2)],
  'open-shelf':[()=>R(12,11,76,18,tone,2),()=>L(13,8,87,8,'#f4d986',6)+C(17,9,4,'#fff4bc')+C(82,9,4,'#fff4bc')],
  'supply-cabinet':[()=>R(17,19,22,10,light,1)+R(61,19,22,10,light,1),()=>R(17,46,22,30,'#d6a344',2)+R(61,46,22,30,'#9fbca6',2)],
  'screen-divider':[()=>L(14,29,86,67,tone,4)+L(14,48,64,75,tone,4),()=>R(17,20,23,20,'#f0cd50',2)+R(54,42,24,19,'#a4d8c2',2)],
@@ -132,7 +189,7 @@ if(tier>0&&details[p.id])g+=details[p.id][0]();
 if(tier>1&&details[p.id])g+=details[p.id][1]();
 return `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">${g}</svg>`;}
 export function roomSVG(s,{selected=null,camera={x:0,y:0,w:960,h:720},ghost=null,pixelWidth=640}={}){const settings=s.roomSettings,theme=themes[settings.theme],wall=walls[settings.wall].value,floor=floors[settings.floor].value;const scale=pixelWidth/camera.w;let items=s.items.filter(i=>visible(s,i)&&product(i.product)).sort((a,b)=>({floor:0,furniture:1,wall:2,tabletop:3}[product(a.product).layer]-{floor:0,furniture:1,wall:2,tabletop:3}[product(b.product).layer]));
- const draw=(item,isGhost=false)=>{const p=product(item.product),pos=isGhost?{x:ghost.x,y:ghost.y}:position(s,item),tone=toneColor(item.tone,theme.accent),w=p.w*40,h=p.h*40,fw=['bookshelf','fireplace','modular'].includes(p.id)?w:Math.min(w,h),fh=['bookshelf','fireplace','modular'].includes(p.id)?h:Math.min(w,h),hitW=Math.max(fw,44/scale),hitH=Math.max(fh,44/scale);return `<g ${isGhost?'class="placement-ghost"':`data-room-item="${esc(item.id)}" tabindex="0" role="button" aria-label="${esc(p.name)}, ${esc(p.levels[item.tier])}"`} transform="translate(${pos.x*40} ${pos.y*40}) rotate(${item.rotation})" ${isGhost?'opacity=".65" pointer-events="none"':item.parentId?'pointer-events="none"':''}><title>${esc(p.name)} · ${esc(p.levels[item.tier])}</title>${!isGhost?R(-hitW/2,-hitH/2,hitW,hitH,'transparent',0,'class="item-hit"'):''}<svg x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" overflow="visible">${art(p,tone,item.tier,settings)}${item.product==='own-book'&&item.label?`<title>${esc(item.label)}</title>`:''}</svg>${selected===item.id&&!isGhost?R(-fw/2-6,-fh/2-6,fw+12,fh+12,'none',5,'stroke="#102e3e" stroke-width="4" stroke-dasharray="9 5" pointer-events="none"'):''}${isGhost?R(-w/2-4,-h/2-4,w+8,h+8,'none',4,`stroke="${ghost.ok?'#087f60':'#c0473c'}" stroke-width="5"`):''}</g>`;};
+ const draw=(item,isGhost=false)=>{const p=product(item.product),pos=isGhost?{x:ghost.x,y:ghost.y}:position(s,item),tone=toneColor(item.tone,theme.accent),w=p.w*40,h=p.h*40,box=footprint(p),fw=box.w*40,fh=box.h*40,hitW=Math.max(fw,44/scale),hitH=Math.max(fh,44/scale);return `<g ${isGhost?'class="placement-ghost"':`data-room-item="${esc(item.id)}" tabindex="0" role="button" aria-label="${esc(p.name)}, ${esc(p.levels[item.tier])}"`} transform="translate(${pos.x*40} ${pos.y*40}) rotate(${item.rotation})" ${isGhost?'opacity=".65" pointer-events="none"':item.parentId?'pointer-events="none"':''}><title>${esc(p.name)} · ${esc(p.levels[item.tier])}</title>${!isGhost?R(-hitW/2,-hitH/2,hitW,hitH,'transparent',0,'class="item-hit"'):''}<svg x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" overflow="visible">${art(p,tone,item.tier,settings)}${item.product==='own-book'&&item.label?`<title>${esc(item.label)}</title>`:''}</svg>${selected===item.id&&!isGhost?R(-fw/2-6,-fh/2-6,fw+12,fh+12,'none',5,'stroke="#102e3e" stroke-width="4" stroke-dasharray="9 5" pointer-events="none"'):''}${isGhost?R(-fw/2-4,-fh/2-4,fw+8,fh+8,'none',4,`stroke="${ghost.ok?'#087f60':'#c0473c'}" stroke-width="5"`):''}</g>`;};
  return `<svg class="room-scene" id="room-scene" viewBox="${camera.x} ${camera.y} ${camera.w} ${camera.h}" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="${esc(s.roomName)} – felülnézet"><defs><clipPath id="room-floor-clip"><rect x="14" y="65" width="932" height="641"/></clipPath><pattern id="floorboards" width="80" height="120" patternUnits="userSpaceOnUse"><rect width="80" height="120" fill="${floor}"/><path d="M0 0h80v120M0 60h40M40 120V0" fill="none" stroke="#102e3e" stroke-opacity=".09" stroke-width="2"/></pattern></defs><rect width="960" height="720" fill="${wall}"/><rect x="14" y="65" width="932" height="641" rx="2" fill="url(#floorboards)"/><path d="M14 65h932v641H14z" fill="none" stroke="#102e3e" stroke-opacity=".15" stroke-width="6"/><text x="30" y="690" fill="#102e3e" opacity=".35" font-family="system-ui" font-size="11" letter-spacing="2">${esc(s.roomName.toUpperCase().slice(0,60))}</text>${items.map(i=>product(i.product).layer==='floor'?'<g clip-path="url(#room-floor-clip)">'+draw(i)+'</g>':draw(i)).join('')}${ghost?(product(ghost.item.product).layer==='floor'?'<g clip-path="url(#room-floor-clip)">'+draw({...ghost.item,id:'preview'},true)+'</g>':draw({...ghost.item,id:'preview'},true)):''}</svg>`;
 }
 

@@ -109,3 +109,7 @@ export const products=data.map(([id,name,category,price,max,w,h,layer,art,levels
 export const product=id=>products.find(p=>p.id===id);
 export const defaultSettings=()=>({theme:'ice',wall:'ice',floor:'oak',view:'water',motto:'Itt lehet újrapróbálni.'});
 
+
+// A széles tárgyak külön, arányos rajzot kapnak; a többi rajza négyzetes.
+export const fullFootprintIds=new Set(['bookshelf','fireplace','modular','bench','sofa','standing','cart','coffee','open-shelf','supply-cabinet','tea-table','trainer-case','coat-wall','screen-divider','projector-screen','rug','rug-large']);
+export function footprint(p){if(!p)return {w:1,h:1}; if(fullFootprintIds.has(p.id))return {w:p.w,h:p.h};const side=Math.min(p.w,p.h);return {w:side,h:side};}
