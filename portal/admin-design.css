@@ -2,3 +2,65 @@
 
 .admin-nav .participant-nav{border:1px solid #a7cad1;margin-top:8px;color:#15546a;background:#ecf6f4;font-weight:700}
 @media(min-width:1000px){.admin-nav .participant-nav{margin-top:18px;border:1px solid #83b4be;color:#fff;background:#195467}.admin-nav .participant-nav:hover{background:#257286}}
+
+/* Kompakt admin munkafelület */
+.admin-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.admin-toolbar label{font-size:13px;font-weight:650;display:flex;align-items:center;gap:8px}
+.admin-toolbar select{min-width:160px;padding:7px 9px}
+.admin-toolbar button{padding:7px 11px;font-size:13px}
+.cohort-tools{margin-left:auto;position:relative;font-size:13px}
+.cohort-tools summary{padding:7px;cursor:pointer}
+.cohort-tools[open] button{display:block;margin-top:4px}
+.admin-nav button{white-space:normal;line-height:1.25}
+.admin-shell header{padding-top:10px;padding-bottom:10px}
+.admin-shell header .brand{font-size:17px}
+.admin-shell header .brand small{display:none}
+.admin-shell #logout{padding:6px 10px}
+.admin-shell .ai-overview{padding:14px 16px;margin:0 0 10px}
+.admin-shell .ai-overview h2{font-size:20px;margin:0}
+.admin-shell .ai-overview button{padding:6px 10px;font-size:13px}
+.admin-shell .ai-kpis{gap:8px;margin-top:12px}
+.admin-shell .ai-kpis>div{padding:9px 12px;border-radius:8px}
+.admin-shell .ai-kpis strong{font-size:25px;margin:1px 0}
+.admin-shell .ai-controls{gap:8px;padding:10px 12px;margin:10px 0}
+.admin-shell .ai-controls input,.admin-shell .ai-controls select{padding:6px 8px}
+.admin-shell .ai-participants{padding:14px;margin:10px 0}
+.admin-shell .ai-participants h2{font-size:19px;margin:0 0 8px}
+.admin-shell .ai-participants th,.admin-shell .ai-participants td{padding:7px 8px}
+.admin-shell .ai-avatar{width:28px;height:28px;border-radius:8px}
+.admin-shell .ai-name+.small{margin:2px 0 0 38px}
+.admin-shell .ai-meter{margin:4px 0}
+.admin-shell .ai-draft{margin-top:3px}
+.admin-shell .ai-bottom{gap:10px}
+.admin-shell .ai-bottom .panel{padding:14px}
+.admin-shell .ai-management{margin:8px 0;padding:8px 14px}
+.admin-points-section{margin-top:16px;border-top:1px solid var(--line);padding-top:8px}
+#admin-menu-toggle{display:none}
+@media(min-width:1000px){
+ body.admin-shell main{padding:18px 24px 48px 250px}
+ .admin-nav{overflow-x:hidden;gap:3px}
+ .admin-nav-title{padding-bottom:18px}
+ .admin-nav button{padding:9px 12px;font-size:14px}
+}
+@media(max-width:999px){
+ #admin-menu-toggle{display:inline-block;padding:7px 12px;margin-bottom:8px}
+ .admin-nav{display:none;flex-direction:column;gap:3px;overflow:visible;padding:8px;background:#102e43;border-radius:10px}
+ .admin-nav.is-open{display:flex}
+ .admin-nav button{color:#fff;background:transparent;border:0;text-align:left;padding:10px}
+ .admin-nav button.active{color:#fff;background:#1e6d80}
+ .cohort-tools{margin-left:0}
+}
+@media(max-width:600px){
+ .admin-shell .ai-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .admin-shell .ai-controls{grid-template-columns:1fr 1fr}
+ .admin-shell .ai-participants table,.admin-shell .ai-participants tbody,.admin-shell .ai-participants tr,.admin-shell .ai-participants td{display:block;width:100%}
+ .admin-shell .ai-participants thead{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}
+ .admin-shell .ai-participants tr{padding:8px 0;border-bottom:1px solid var(--line)}
+ .admin-shell .ai-participants td{border:0;padding:3px 0}
+ .admin-shell .ai-participants td:nth-child(2):before{content:'Haladás: ';color:var(--muted)}
+ .admin-shell .ai-participants td:nth-child(3):before{content:'Első → legutóbbi: ';color:var(--muted)}
+ .admin-shell .ai-participants td:nth-child(4):before{content:'Fejlődés: ';color:var(--muted)}
+ .admin-shell .ai-participants td:nth-child(5):before{content:'Pontok: ';color:var(--muted)}
+ .admin-shell .ai-scoreline{display:inline-flex}
+}
+
