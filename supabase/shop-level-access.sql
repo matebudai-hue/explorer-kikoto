@@ -1,0 +1,2 @@
+alter table public.explorer_cohorts add column if not exists shop_open_all boolean not null default false; do $$ begin if (select count(*) from public.explorer_cohorts where title='Alumni') <> 1 then raise exception 'Az Alumni évfolyam nem azonosítható egyértelműen'; end if; update public.explorer_cohorts set shop_open_all=true where title='Alumni'; end $$;
+grant select (shop_open_all) on public.explorer_cohorts to authenticated;

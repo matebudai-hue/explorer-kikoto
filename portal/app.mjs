@@ -4,7 +4,7 @@ import{mountAdminPoints}from'./admin-points.mjs?v=1';
 import{mountVisitReports}from'../explorer/visit-reports.mjs?v=1';
 import{mountAdminInsights,personTestDetails}from'./admin-insights.mjs?v=6';
 import{mountHospitation}from'./hospitation.mjs';
-import{mountContentEditor}from'./content-editor.mjs?v=3';
+import{mountContentEditor}from'./content-editor.mjs?v=4';
 import{getClient,access,checked}from'./access.mjs';
 import{validateState}from'../explorer/persistence.mjs?v=3';
 import{migrateRoom}from'../explorer/room-engine.mjs?v=17';
