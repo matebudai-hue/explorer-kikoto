@@ -80,3 +80,5 @@ nav [data-tab=visitReports]::before{content:'▤'}
 .shared-room-detail .shared-room-preview.zoomed img{min-width:850px}
 .shared-room-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .shared-room-empty{color:#657c85;font-size:.9em}
+
+.upcoming-date.has-bookings{background:#f9e8c8;color:#513b23;border-left:3px solid #c99955;border-radius:4px;padding:4px 7px;width:100%;box-sizing:border-box}.upcoming-date.has-bookings small{color:#675039}
