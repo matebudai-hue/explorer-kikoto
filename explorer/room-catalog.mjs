@@ -4,8 +4,8 @@ export const tones={theme:{name:'A terem színe',value:null},teal:{name:'Türkiz
 Object.assign(tones,{white:{name:'Fehér',value:'#f5f5f0'},black:{name:'Fekete',value:'#24282d'},red:{name:'Piros',value:'#c94b4b'},coral:{name:'Korall',value:'#ed8878'},orange:{name:'Narancs',value:'#e79c43'},yellow:{name:'Napsárga',value:'#f0cd50'},lime:{name:'Lime',value:'#b1c85c'},emerald:{name:'Smaragd',value:'#31816a'},forest:{name:'Erdőzöld',value:'#345b43'},mint:{name:'Menta',value:'#a4d8c2'},cyan:{name:'Élénk türkiz',value:'#28b9c6'},sky:{name:'Égkék',value:'#8ebee3'},cobalt:{name:'Királykék',value:'#3d5bb5'},purple:{name:'Lila',value:'#8063a6'},lavender:{name:'Levendula',value:'#b6a5d3'},pink:{name:'Rózsaszín',value:'#e8a3bd'}});
 export const validTone=t=>Object.hasOwn(tones,t)||typeof t==='string'&&/^#[0-9a-f]{6}$/i.test(t);
 export const toneColor=(tone,fallback='#32959a')=>tones[tone]?.value||(/^#[0-9a-f]{6}$/i.test(tone)?tone:fallback);
-export const themes={ice:{name:'Jégtörő',accent:'#32959a',wall:'#c4e0e3',floor:'oak'},workshop:{name:'Műhely',accent:'#d6a344',wall:'#cbd2d5',floor:'concrete'},living:{name:'Nappali',accent:'#bd7560',wall:'#e4d4bf',floor:'walnut'},minimal:{name:'Letisztult',accent:'#555f68',wall:'#e8e9e5',floor:'light'}};
-export const walls={ice:{name:'Jégkék',value:'#c4e0e3'},sand:{name:'Homok',value:'#e4d4bf'},white:{name:'Törtfehér',value:'#e8e9e5'},sage:{name:'Zsálya',value:'#c6d3c1'},slate:{name:'Palaszürke',value:'#b8c4cb'}};
+export const themes={marine:{name:'Marine',accent:'#165a85',wall:'#075184',floor:'oak'},verde:{name:'Verde',accent:'#729338',wall:'#afc84f',floor:'oak'},ice:{name:'Jégtörő',accent:'#32959a',wall:'#c4e0e3',floor:'oak'},workshop:{name:'Műhely',accent:'#d6a344',wall:'#cbd2d5',floor:'concrete'},living:{name:'Nappali',accent:'#bd7560',wall:'#e4d4bf',floor:'walnut'},minimal:{name:'Letisztult',accent:'#555f68',wall:'#e8e9e5',floor:'light'}};
+export const walls={marine:{name:'Marine · hullámok',value:'#075184'},verde:{name:'Verde · levelek',value:'#afc84f'},ice:{name:'Jégkék',value:'#c4e0e3'},sand:{name:'Homok',value:'#e4d4bf'},white:{name:'Törtfehér',value:'#e8e9e5'},sage:{name:'Zsálya',value:'#c6d3c1'},slate:{name:'Palaszürke',value:'#b8c4cb'}};
 export const floors={oak:{name:'Világos tölgy',value:'#dbc5a2'},walnut:{name:'Dió',value:'#a98569'},light:{name:'Világos padló',value:'#ece8dd'},concrete:{name:'Beton',value:'#cdd2d1'}};
 export const views={water:'Vízpart',garden:'Kert',forest:'Erdő',city:'Város'};
 const data=[
@@ -109,7 +109,7 @@ export const products=data.map(([id,name,category,price,max,w,h,layer,art,levels
 // A már megvásárolt teraszajtó megmarad, újként nem szerepel a kínálatban.
 export const shopProducts=products.filter(p=>p.id!=='terrace');
 export const product=id=>products.find(p=>p.id===id);
-export const defaultSettings=()=>({theme:'ice',wall:'ice',floor:'oak',view:'water',motto:'Itt lehet újrapróbálni.'});
+export const defaultSettings=()=>({theme:'marine',wall:'marine',floor:'oak',view:'water',motto:'Itt lehet újrapróbálni.'});
 
 
 // A széles tárgyak külön, arányos rajzot kapnak; a többi rajza négyzetes.
