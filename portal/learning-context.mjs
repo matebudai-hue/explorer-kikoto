@@ -16,6 +16,7 @@ export async function openLearningContext(){
  ]);
  const cohort=checked(cohortResult),remote=checked(stateResult);cohort.catalog=checked(await client.rpc('explorer_catalog',{p_cohort:cohortId}));
  if(!cohort.catalog?.days?.length)throw Error('Az évfolyam tananyagai még nincsenek feltöltve.');
+ const latestOpenDayId=(cohort.catalog.days.filter(day=>day.open===true).at(-1)||cohort.catalog.days[0]).id;
  if(userAccess.isAdmin)cohort.catalog={...cohort.catalog,days:cohort.catalog.days.map(day=>({...day,open:true}))};
  const key=accountStorageKey(userAccess.user.id,cohortId),draftKey=key+':unsent';
  let restoredDraft=false,initial=remote?.payload||null;
@@ -62,5 +63,5 @@ export async function openLearningContext(){
  checked(await client.rpc('explorer_touch'));
  const profileLink=document.createElement('a');profileLink.href='../';profileLink.textContent='Vissza a portálra';status.append(profileLink);
  if(userAccess.isAdmin){const adminNote=document.createElement('span');adminNote.textContent='Adminisztrátori nézet · minden nap és bolti tárgy nyitva';status.append(adminNote);}
- return{client,cohortId,fullyOpenShop:userAccess.isAdmin||cohort.shop_open_all===true,isAdmin:userAccess.isAdmin,userId:userAccess.user.id,getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
+ return{client,cohortId,latestOpenDayId,fullyOpenShop:userAccess.isAdmin||cohort.shop_open_all===true,isAdmin:userAccess.isAdmin,userId:userAccess.user.id,getSaveStatus:()=>saveStatus,downloadMaterial:material=>downloadMaterial(client,material),key,catalog:cohort.catalog,displayName:userAccess.profile.display_name,queue,flush};
 }
