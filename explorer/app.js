@@ -3,7 +3,7 @@ import{mountDayReflection}from'./day-reflections.mjs?v=1';
 import{mountVisitReports}from'./visit-reports.mjs?v=2';
 import{mountHospitation}from'../portal/hospitation.mjs?v=3';
 import{mountVisitPreview}from'./visit-preview.mjs?v=3';
-import{openLearningContext}from'../portal/learning-context.mjs?v=4';
+import{openLearningContext}from'../portal/learning-context.mjs?v=5';
 import{createPersistence,validateState as validateSavedState,exportFilename}from'./persistence.mjs?v=3';
 import{mountRoom}from'./room-ui.mjs?v=27';
 import{roomSVG}from'./room-art.mjs?v=25';
@@ -21,7 +21,7 @@ function notice(message,actions=[],blocking=false){document.querySelectorAll('he
 const exportCurrent=()=>download({kind:'explorer-result',exportedAt:new Date().toISOString(),state},exportFilename(state?.name));
 const conflict=()=>{storageBlocked=true;notice('Egy másik böngészőfülön megváltozott a haladásod. Ezen a fülön megállítottuk a mentést, hogy ne írja felül az újabb adatokat. Folytasd a másik fülön, vagy töltsd be annak legutóbbi mentését.',[['Legutóbbi mentés betöltése',()=>location.reload()],['Ennek a fülnek a mentése fájlba',exportCurrent]],true);};
 async function loadCatalog(){return cloud.catalog;}
-let catalog=await loadCatalog(),tab='learn',dayId=(catalog.days.filter(d=>d.open).at(-1)||catalog.days[0]).id,reports=[],disposeRoom=()=>{},pendingVisitId=null;
+let catalog=await loadCatalog(),tab='learn',dayId=cloud.latestOpenDayId,reports=[],disposeRoom=()=>{},pendingVisitId=null;
 try{persistence=createPersistence(localStorage,storageKey);state=persistence.raw===null?empty():validateSavedState(JSON.parse(persistence.raw));migrateTests(migrateRoom(state),catalog);}catch{
  await new Promise(resolve=>notice('A böngésző mentése nem olvasható, vagy a böngésző nem engedi a helyi mentést. A korábbi adatokat nem írtuk felül. Töltsd le őket, mielőtt újrakezdesz.',[['Korábbi adatok letöltése',()=>{try{download({raw:localStorage.getItem(storageKey)},'explorer-helyreallitas.json')}catch{toast('A böngésző nem engedi a mentés olvasását.')}}],['Újrakezdés',()=>{if(!confirm('Biztosan törlöd ezen a böngészőn az Explorer korábbi mentését?'))return;try{localStorage.removeItem(storageKey);persistence=createPersistence(localStorage,storageKey);state=migrateTests(empty(),catalog);clearNotice();resolve();}catch{toast('Engedélyezd a böngésző helyi tárhelyét, majd töltsd újra az oldalt.')}}]],true));
 }
